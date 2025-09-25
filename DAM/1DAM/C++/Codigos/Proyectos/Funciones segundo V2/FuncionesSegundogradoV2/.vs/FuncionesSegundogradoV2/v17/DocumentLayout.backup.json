@@ -1,0 +1,57 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Funciones segundo V2\\FuncionesSegundogradoV2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DB43F7DD-5A28-4DB6-A678-A3DC6E61E1DC}|..\\TestingFunciones\\TestingFunciones.vcxproj|D:\\Funciones segundo V2\\TestingFunciones\\TestingFunciones.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD3785F7-49B4-44FC-B85F-9C563BB2BD76}|FuncionesSegundogradoV2.vcxproj|D:\\Funciones segundo V2\\FuncionesSegundogradoV2\\FuncionesSegundogradoV2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AD3785F7-49B4-44FC-B85F-9C563BB2BD76}|FuncionesSegundogradoV2.vcxproj|solutionrelative:FuncionesSegundogradoV2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TestingFunciones.cpp",
+              "DocumentMoniker": "D:\\Funciones segundo V2\\TestingFunciones\\TestingFunciones.cpp",
+              "RelativeDocumentMoniker": "..\\TestingFunciones\\TestingFunciones.cpp",
+              "ToolTip": "D:\\Funciones segundo V2\\TestingFunciones\\TestingFunciones.cpp",
+              "RelativeToolTip": "..\\TestingFunciones\\TestingFunciones.cpp",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-28T07:41:30.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FuncionesSegundogradoV2.cpp",
+              "DocumentMoniker": "D:\\Funciones segundo V2\\FuncionesSegundogradoV2\\FuncionesSegundogradoV2.cpp",
+              "RelativeDocumentMoniker": "FuncionesSegundogradoV2.cpp",
+              "ToolTip": "D:\\Funciones segundo V2\\FuncionesSegundogradoV2\\FuncionesSegundogradoV2.cpp",
+              "RelativeToolTip": "FuncionesSegundogradoV2.cpp",
+              "ViewState": "AgIAACwAAAAAAAAAAAAAAC4AAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-19T07:59:08.192Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

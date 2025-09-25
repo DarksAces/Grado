@@ -1,0 +1,181 @@
+body {
+    margin: 0px;
+
+}
+
+header h1 {
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+header {
+    background-color: rgb(208, 248, 235);
+    margin-top: -21 px;
+}
+
+
+div {
+    margin-bottom: 150px;
+    padding-left: 10px;
+
+
+}
+
+.foto1991 {
+    position: absolute;
+    width: 10%;
+    margin-top: -45px;
+    margin-left: 80px;
+    transition: width 3s;
+}
+
+.t1991 {
+    padding-right: 2%;
+    padding-left: 30%;
+}
+
+.t1992 {
+    padding-right: 40%;
+}
+
+.foto1992 {
+    position: absolute;
+    width: 20%;
+    margin-top: -150px;
+    margin-left: 75%;
+    transition: width 3s;
+}
+
+.tit1 {
+    margin-left: 38%;
+    background-color: greenyellow;
+    margin-right: 36%;
+    border-radius: 50px;
+    text-align: center;
+    transition: 3s;
+}
+
+.tit1:hover {
+    background-color: rgb(211, 135, 100);
+}
+
+.tit2 {
+    margin-left: 38%;
+    background-color: greenyellow;
+    margin-right: 36%;
+    border-radius: 20px;
+    text-align: center;
+    transition: 3s;
+}
+
+.tit2:hover {
+    background-color: rgb(211, 135, 100);
+}
+
+.tit3 {
+    margin-left: 38%;
+    background-color: greenyellow;
+    margin-right: 36%;
+    border-radius: 20px;
+    text-align: center;
+    transition: 3s;
+}
+
+.tit3:hover {
+    background-color: rgb(211, 135, 100);
+}
+
+.t2004 {
+    padding-right: 2%;
+    padding-left: 30%;
+
+}
+
+.foto2004 {
+    position: absolute;
+    width: 10%;
+    margin-top: -45px;
+    margin-left: 80px;
+    transition: width 3s;
+}
+
+.foto1991:hover {
+    filter: saturate(180%);
+    width: 250px;
+    transition: width 3s;
+}
+
+.foto1992:hover {
+    filter: saturate(180%);
+    width: 450px;
+    transition: width 3s;
+}
+
+.foto2004:hover {
+    filter: saturate(180%);
+    width: 250px;
+    transition: width 3s;
+}
+
+.tit4 {
+    margin-left: 38%;
+    background-color: greenyellow;
+    margin-right: 36%;
+    border-radius: 50px;
+    text-align: center;
+    transition: 3s;
+}
+
+.tit4:hover {
+    background-color: rgb(211, 135, 100);
+}
+
+.t2014 {
+    padding-right: 52%;
+}
+
+.foto2014 {
+    position: absolute;
+    width: 20%;
+    margin-top: -150px;
+    margin-left: 75%;
+    transition: width 3s;
+}
+
+.foto2014:hover {
+    filter: saturate(180%);
+    width: 300px;
+    transition: width 3s;
+}
+
+.relleno {
+    color: rgb(255, 255, 255);
+}
+
+footer {
+    background-color: rgb(208, 248, 235);
+    margin-bottom: -10px;
+    height: 104%;
+}
+
+.autor {
+
+    text-align: center;
+}
+
+footer a {
+    position: absolute;
+    text-decoration: none;
+    background-color: #FFC0CB;
+    margin-left: 83%;
+    margin-right: 0px;
+    margin-top: 4px;
+    color: black;
+    border-radius: 10px;
+
+}
+
+footer a:hover {
+    filter: saturate(180%);
+    transition: width 3s;
+}

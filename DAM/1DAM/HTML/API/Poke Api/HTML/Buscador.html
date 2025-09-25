@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex - Buscador</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <script src="../JavaScript/pokedex.js" defer></script>
+</head>
+
+<body id="BuscadorBody">
+    <header>
+        <h1>Pokédex</h1>
+        <nav>
+            <ul><a href="index.html">Home</a></ul>
+            <ul><a href="./habitad.html">Habitad</a></ul>
+            <ul><a href="./objetos.html">Objetos</a></ul>
+            <ul><a href="./Buscador.html" id="Buscador">Buscador</a></ul>
+        </nav>
+    </header>
+
+    <h2>Buscar Pokémon</h2>
+    <input type="text" id="pokemonInput" placeholder="Nombre o número">
+    <button onclick="buscarPokemon()">Buscar</button>
+
+    <div class="container">
+        <h2 id="nombre"></h2>
+        <p><strong>Número:</strong> <span id="numero"></span></p>
+        <p><strong>Tipo:</strong> <span id="tipo"></span></p>
+        <img id="imagen" src="" alt="Imagen del Pokémon">
+        <br>
+        <audio id="sonido" controls></audio>
+    </div>
+</body>
+
+</html>

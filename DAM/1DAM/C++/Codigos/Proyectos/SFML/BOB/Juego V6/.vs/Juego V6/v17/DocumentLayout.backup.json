@@ -1,0 +1,45 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\OneDrive - Centre d\u0027Estudis Monlau\\1. Monlau\\FP\\Cursos\\DAM\\1-DAM\\0487 Entorns de Desvolupament\\Codigos\\Proyectos\\SFML\\BOB\\Juego V6\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{50B40BD7-2E48-42BF-9ABF-002AE5759A71}|Juego V6.csproj|d:\\onedrive - centre d\u0027estudis monlau\\1. monlau\\fp\\cursos\\dam\\1-dam\\0487 entorns de desvolupament\\codigos\\proyectos\\sfml\\bob\\juego v6\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50B40BD7-2E48-42BF-9ABF-002AE5759A71}|Juego V6.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\OneDrive - Centre d\u0027Estudis Monlau\\1. Monlau\\FP\\Cursos\\DAM\\1-DAM\\0487 Entorns de Desvolupament\\Codigos\\Proyectos\\SFML\\BOB\\Juego V6\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\OneDrive - Centre d\u0027Estudis Monlau\\1. Monlau\\FP\\Cursos\\DAM\\1-DAM\\0487 Entorns de Desvolupament\\Codigos\\Proyectos\\SFML\\BOB\\Juego V6\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T07:24:25.423Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+    "hacker": [
+        {
+            "nombre": "Hackeo Exitoso",
+            "descripcion": "Lograste infiltrarte en una base de datos sin ser detectado.",
+            "afecta": "anonimato",
+            "cantidad": 20
+        },
+        {
+            "nombre": "Ataque DDoS",
+            "descripcion": "Tu servidor ha sido atacado, comprometiendo tu seguridad.",
+            "afecta": "anonimato",
+            "cantidad": -30
+        }
+    ],
+    "streamer": [
+        {
+            "nombre": "Video Viral",
+            "descripcion": "Uno de tus videos se vuelve viral, aumentando tus seguidores.",
+            "afecta": "seguidores",
+            "cantidad": 5000
+        },
+        {
+            "nombre": "Problema Técnico en Directo",
+            "descripcion": "Tu transmisión se cae en medio de un stream importante.",
+            "afecta": "seguidores",
+            "cantidad": -1000
+        }
+    ],
+    "deportista": [
+        {
+            "nombre": "Entrenamiento Intenso",
+            "descripcion": "Te has esforzado en el gimnasio y mejoras tu resistencia.",
+            "afecta": "resistencia",
+            "cantidad": 15
+        },
+        {
+            "nombre": "Mala Alimentación",
+            "descripcion": "Descuidas tu dieta y sientes una bajada en tu rendimiento.",
+            "afecta": "resistencia",
+            "cantidad": -10
+        }
+    ],
+    "desarrollador": [
+        {
+            "nombre": "Código Optimizado",
+            "descripcion": "Descubres una forma de mejorar el rendimiento de tu aplicación.",
+            "afecta": "dinero",
+            "cantidad": 2000
+        },
+        {
+            "nombre": "Crash Inesperado",
+            "descripcion": "Tu software presenta errores graves y pierdes clientes.",
+            "afecta": "dinero",
+            "cantidad": -1500
+        }
+    ],
+    "musico": [
+        {
+            "nombre": "Lanzamiento de Hit",
+            "descripcion": "Tu nueva canción es un éxito y aumenta tu fama.",
+            "afecta": "fama",
+            "cantidad": 3000
+        },
+        {
+            "nombre": "Gira Cancelada",
+            "descripcion": "Una situación inesperada te obliga a cancelar una gira importante.",
+            "afecta": "fama",
+            "cantidad": -2000
+        }
+    ],
+    "gamer": [
+        {
+            "nombre": "Victoria en Torneo",
+            "descripcion": "Ganas un torneo importante y mejoras tu reputación en la comunidad.",
+            "afecta": "habilidad_gamer",
+            "cantidad": 20
+        },
+        {
+            "nombre": "Hackers en Partida",
+            "descripcion": "Encuentras hackers en tus partidas, frustrando tu progreso.",
+            "afecta": "habilidad_gamer",
+            "cantidad": -15
+        }
+    ]
+}

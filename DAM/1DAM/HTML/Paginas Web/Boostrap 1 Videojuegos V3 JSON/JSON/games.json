@@ -1,0 +1,103 @@
+{
+    "games": [
+        {
+            "title": "World of Warcraft",
+            "description": "Una aventura epica por Azheroth.",
+            "image": "../Fotos/Cards Juegos/World of Warcraft.png",
+            "calificacion": "⭐⭐⭐⭐⭐",
+            "modal": {
+                "id": "modal1",
+                "title": "Aventura Épica",
+                "body": "Vuelvete el campeon de Azeroth en el eterno enfrentamiento de la Horda y la Alianza. "
+            }
+        },
+        {
+            "title": "Pokemon Blanco y negro",
+            "description": "Vive una aventura por la region de Teselia.",
+            "image": "../Fotos/Cards Juegos/PokemonBlancoyNegro.png",
+            "calificacion": "⭐⭐⭐⭐⭐",
+            "modal": {
+                "id": "modal2",
+                "title": "Vuelvete el campeon de Teselia ",
+                "body": "La cuarta generacion de el juego donde es legal el maltrato animal"
+            }
+        },
+        {
+            "title": "Wii Sports",
+            "description": "Compite en una variedad de deportes.",
+            "image": "../Fotos/Cards Juegos/Wiisports.png",
+            "calificacion": "⭐⭐⭐⭐⭐",
+            "modal": {
+                "id": "modal3",
+                "title": "Campeones del Deporte",
+                "body": "Vive la emoción de los deportes con competiciones sin igual."
+            }
+        },
+        {
+            "title": "The legend of Zelda Tears of the kingdom",
+            "description": "Enbarcate en una emocionante aventura por Hyrule",
+            "image": "../Fotos/Cards Juegos/ZTOK.png",
+            "calificacion": "⭐⭐⭐⭐⭐",
+            "modal": {
+                "id": "modal4",
+                "title": "Salva el reino de hyrule",
+                "body": "El juego donde todo el mundo llama al protagonista como la princesa"
+            }
+        },
+        {
+            "title": "Minecraft",
+            "description": "Deja colar tu imaginacion y construye.",
+            "image": "../Fotos/Cards Juegos/MC.png",
+            "calificacion": "⭐⭐⭐⭐",
+            "modal": {
+                "id": "modal5",
+                "title": "Libera tu imaginacion",
+                "body": "El juego donde vas a matar a una dragona que vive feliz y donde arrasaras aldeas enteras."
+            }
+        },
+        {
+            "title": "Crash of the titans",
+            "description": "Pelea y controla monstruos",
+            "image": "../Fotos/Cards Juegos/Crash.png",
+            "calificacion": "⭐⭐⭐",
+            "modal": {
+                "id": "modal6",
+                "title": "Derrota al mal",
+                "body": "Derrota al mal mientras controlando a monstruos a puñetazos ya que apruebas el maltrato animal "
+            }
+        },
+        {
+            "title": "Mario y luigi compañeros en el tiempo",
+            "description": "Salva el reino champioñon otra vez.",
+            "image": "../Fotos/Cards Juegos/MyL.webp",
+            "calificacion": "⭐⭐⭐⭐⭐",
+            "modal": {
+                "id": "modal7",
+                "title": "Salva el reino champiñon",
+                "body": "Salva el reino champiñon de una invasion de aliens-champiñoes lilas mientras apruevas la explotacion infantil"
+            }
+        },
+        {
+            "title": "Spider-Man",
+            "description": "Vuelvete Spiderman y balanceate por la ciudad",
+            "image": "../Fotos/Cards Juegos/Spiderman.jpg",
+            "calificacion": "⭐⭐⭐⭐⭐",
+            "modal": {
+                "id": "modal8",
+                "title": "Spider-man",
+                "body": "Derrota a villanos como Spider-man y vive la triste y depresiva vida de Peter Parker"
+            }
+        },
+        {
+            "title": "Tetris",
+            "description": "Apila bloques",
+            "image": "../Fotos/Cards Juegos/Tetris.png",
+            "calificacion": "⭐⭐⭐⭐",
+            "modal": {
+                "id": "modal9",
+                "title": "Tetris",
+                "body": "Apila bloques y buscate la vida para no perder"
+            }
+        }
+    ]
+}

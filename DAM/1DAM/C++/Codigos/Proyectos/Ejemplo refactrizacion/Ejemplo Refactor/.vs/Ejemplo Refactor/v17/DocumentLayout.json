@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\OneDrive - Centre d\u0027Estudis Monlau\\1. Monlau\\FP\\Cursos\\DAM\\1-DAM\\0487 Entorns de Desvolupament\\Codigos\\Proyectos\\Ejemplo refactrizacion\\Ejemplo Refactor\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A9F497CE-9B4D-4175-9C81-9E43E8A27519}|Ejemplo Refactor\\Ejemplo Refactor.vcxproj|D:\\OneDrive - Centre d\u0027Estudis Monlau\\1. Monlau\\FP\\Cursos\\DAM\\1-DAM\\0487 Entorns de Desvolupament\\Codigos\\Proyectos\\Ejemplo refactrizacion\\Ejemplo Refactor\\Ejemplo Refactor\\Ejemplo Refactor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9F497CE-9B4D-4175-9C81-9E43E8A27519}|Ejemplo Refactor\\Ejemplo Refactor.vcxproj|solutionrelative:Ejemplo Refactor\\Ejemplo Refactor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Ejemplo Refactor.cpp",
+              "DocumentMoniker": "D:\\OneDrive - Centre d\u0027Estudis Monlau\\1. Monlau\\FP\\Cursos\\DAM\\1-DAM\\0487 Entorns de Desvolupament\\Codigos\\Proyectos\\Ejemplo refactrizacion\\Ejemplo Refactor\\Ejemplo Refactor\\Ejemplo Refactor.cpp",
+              "RelativeDocumentMoniker": "Ejemplo Refactor\\Ejemplo Refactor.cpp",
+              "ToolTip": "D:\\OneDrive - Centre d\u0027Estudis Monlau\\1. Monlau\\FP\\Cursos\\DAM\\1-DAM\\0487 Entorns de Desvolupament\\Codigos\\Proyectos\\Ejemplo refactrizacion\\Ejemplo Refactor\\Ejemplo Refactor\\Ejemplo Refactor.cpp",
+              "RelativeToolTip": "Ejemplo Refactor\\Ejemplo Refactor.cpp",
+              "ViewState": "AgIAABsAAAAAAAAAAAAqwCUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-04T07:19:24.205Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

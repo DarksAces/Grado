@@ -1,0 +1,14 @@
+08:43:05 **** Rebuild of configuration Debug for project PruebaHello ****
+Info: Internal Builder is used for build
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\PruebaHello.o" "..\\src\\PruebaHello.cpp" 
+g++ -o PruebaHello.exe "src\\PruebaHello.o" 
+Info: Nothing to build for PruebaHello
+11:51:12 **** Incremental Build of configuration Debug for project PruebaHello ****
+Info: Internal Builder is used for build
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\PruebaHello.o" "..\\src\\PruebaHello.cpp" 
+g++ -o PruebaHello.exe "src\\PruebaHello.o" 
+08:23:24 **** Rebuild of configuration Debug for project Clases ****
+Info: Internal Builder is used for build
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Clases.o" "..\\src\\Clases.cpp" 
+g++ -o Clases.exe "src\\Clases.o" 
+Info: Nothing to build for Clases

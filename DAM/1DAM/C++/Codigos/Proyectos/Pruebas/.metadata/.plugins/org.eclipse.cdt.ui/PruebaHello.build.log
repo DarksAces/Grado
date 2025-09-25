@@ -1,0 +1,7 @@
+11:51:12 **** Incremental Build of configuration Debug for project PruebaHello ****
+Info: Internal Builder is used for build
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\PruebaHello.o" "..\\src\\PruebaHello.cpp" 
+g++ -o PruebaHello.exe "src\\PruebaHello.o" 
+
+11:51:14 Build Finished. 0 errors, 0 warnings. (took 1s.904ms)
+

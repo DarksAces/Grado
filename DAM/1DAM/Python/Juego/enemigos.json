@@ -1,0 +1,82 @@
+{
+    "enemigos": [
+        {
+            "nombre": "Arthas Menethil (El Rey Exanime)",
+            "vida": 800,
+            "ataque": 50,
+            "descripcion": "El antiguo principe de Lordaeron, ahora lider de los Renegados y portador de la espada maldita Frostmourne. Tiene habilidades de hielo y puede invocar no-muertos."
+        },
+        {
+            "nombre": "Sylvanas Brisaveloz (La Reina Alcatraz)",
+            "vida": 750,
+            "ataque": 75,
+            "descripcion": "La ex lider de los Renegados y actual Reina Alcatraz. Usa arco y flechas oscuras, ademas de poderes de sombra y control mental."
+        },
+        {
+            "nombre": "Garrosh Grito Infernal",
+            "vida": 800,
+            "ataque": 70,
+            "descripcion": "El antiguo jefe de guerra de la Horda. Es un guerrero brutal que usa un hacha enorme y tiene habilidades de furia y tierra."
+        },
+        {
+            "nombre": "Illidan Tempestira",
+            "vida": 900,
+            "ataque": 85,
+            "descripcion": "El cazador de demonios traicionero y lider de los Illidari. Usa alas demoniacas, espadas gemelas y poderes de fuego y sombra."
+        },
+        {
+            "nombre": "Kil'jaeden (El Enganador)",
+            "vida": 1000,
+            "ataque": 90,
+            "descripcion": "Un senor del fuego demoniaco y uno de los lideres de la Legion Ardiente. Tiene habilidades de fuego y caos devastadoras."
+        },
+        {
+            "nombre": "C'Thun (El Dios Antiguo)",
+            "vida": 1100,
+            "ataque": 100,
+            "descripcion": "Un dios antiguo que reside en las profundidades de Ahn'Qiraj. Tiene tentaculos y habilidades de corrupcion y locura."
+        },
+        {
+            "nombre": "Deathwing (Alacuerno el Destructor)",
+            "vida": 1200,
+            "ataque": 120,
+            "descripcion": "El dragon negro corrompido por los dioses antiguos. Causa destruccion masiva con fuego y terremotos."
+        },
+        {
+            "nombre": "Ragnaros (El Senor del Fuego)",
+            "vida": 800,
+            "ataque": 80,
+            "descripcion": "El senyor elemental del fuego que reside en el Nucleo de Magma. Usa ataques de fuego y lava para incinerar a sus enemigos."
+        },
+        {
+            "nombre": "Kael'thas Caminante del Sol",
+            "vida": 750,
+            "ataque": 75,
+            "descripcion": "El principe elfo de sangre que busca venganza contra la Alianza. Usa magia de fuego y habilidades de invocacion."
+        },
+        {
+            "nombre": "Lady Vashj",
+            "vida": 700,
+            "ataque": 70,
+            "descripcion": "La lider de los Naga y una de las lugartenientes de Illidan. Usa magia de agua y electricidad."
+        },
+        {
+            "nombre": "Gul'dan",
+            "vida": 800,
+            "ataque": 80,
+            "descripcion": "El brujo orco que abrio el portal a Draenor. Usa magia oscura y demonios invocados."
+        },
+        {
+            "nombre": "Azshara (La Reina de los Mares)",
+            "vida": 1100,
+            "ataque": 110,
+            "descripcion": "La reina de los Naga y una de las figuras mas poderosas de Azeroth. Usa magia arcana y control sobre los oceanos."
+        },
+        {
+            "nombre": "N'Zoth (El Dios Antiguo de la Corrupcion)",
+            "vida": 1500,
+            "ataque": 140,
+            "descripcion": "El dios antiguo que manipula las mentes y corrompe todo a su alrededor. Tiene habilidades de sombra y locura."
+        }
+    ]
+}

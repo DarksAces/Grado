@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./CSS/Styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./JavaScript/insertar_texto.js" defer></script>
+    <script src="./JavaScript/FuncionesJS/Funciones.js" defer></script>
+    <title>Testing web</title>
+</head>
+
+<body>
+    <header>
+        <h1 id="Nombre_Web"></h1>
+        <img id="js_logo">
+    </header>
+
+    <!-- 1. Comparador de textos -->
+    <div id="Text_comparer">
+        <h3 id="Comparador_textos"></h3>
+        <form>
+            <input type="text" id="texto1" placeholder="Texto 1">
+            <input type="text" id="texto2" placeholder="Texto 2">
+            <p id="resultado"></p>
+        </form>
+    </div>
+
+    <!-- 2. Contador de letras -->
+    <div id="contar30">
+        <h3 id="Contador30"></h3>
+        <input type="text" id="texto" placeholder="Inserta texto" maxlength="30">
+        <label id="contador">0</label> <span>LETRAS</span>
+    </div>
+
+    <!-- 4. Cambio de color -->
+    <div id="colores">
+        <h3 id="colores_header"></h3>
+        <input name="colorH" type="radio" value="green" id="verde_h"> <label for="verde_h">VERDE</label>
+        <input name="colorH" type="radio" value="blue" id="azul_h"> <label for="azul_h">AZUL</label>
+        <input name="colorH" type="radio" value="red" id="rojo_h"> <label for="rojo_h">ROJO</label>
+
+        <h3 id="colores_footer"></h3>
+        <input name="colorF" type="radio" value="green" id="verde_f"> <label for="verde_f">VERDE</label>
+        <input name="colorF" type="radio" value="blue" id="azul_f"> <label for="azul_f">AZUL</label>
+        <input name="colorF" type="radio" value="red" id="rojo_f"> <label for="rojo_f">ROJO</label>
+    </div>
+
+    <div id="cambioTamano">
+        <h3 id="cambio_tamano_header"></h3>
+        <div class="control-tamano">
+            <div>
+                <label for="altura">ALTURA</label>
+                <input type="number" id="altura" value="30" min="10" max="300">
+                <span id="valor-altura">30</span>
+            </div>
+            <div>
+                <label for="anchura">ANCHURA</label>
+                <input type="number" id="anchura" value="30" min="10" max="300">
+                <span id="valor-anchura">30</span>
+            </div>
+        </div>
+        <div class="image-container">
+            <img id="size_preview" src="../Imagenes/Iconos/NineSols.png" alt="Vista previa">
+        </div>
+    </div>
+
+    <div id="raiz">
+        <h3 id="raiz_header"></h3>
+        <input type="number" id="numero" placeholder="Número" min="0">
+        <span>=</span>
+        <input type="text" id="resultado_raiz" readonly>
+    </div>
+
+
+    <div id="cafeteria">
+        <h3 id="cafeteria_header"></h3>
+
+        <div class="cafe-options">
+            <div class="option-group">
+                <h4>Bebida</h4>
+                <div>
+                    <input type="radio" name="bebida" id="te" value="te">
+                    <label for="te">Té</label>
+                </div>
+                <div>
+                    <input type="radio" name="bebida" id="cafe" value="cafe" checked>
+                    <label for="cafe">Café</label>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <h4>Complemento</h4>
+                <div>
+                    <input type="radio" name="complemento" id="sin_leche" value="sin_leche" checked>
+                    <label for="sin_leche">Sin leche</label>
+                </div>
+                <div>
+                    <input type="radio" name="complemento" id="leche" value="leche">
+                    <label for="leche">Leche</label>
+                </div>
+                <div>
+                    <input type="radio" name="complemento" id="leche_sin_lactosa" value="leche_sin_lactosa">
+                    <label for="leche_sin_lactosa">Leche sin lactosa</label>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <h4>Extras</h4>
+                <div>
+                    <input type="radio" name="extras" id="sin_extras" value="sin_extras" checked>
+                    <label for="sin_extras">Sin Extras</label>
+                </div>
+                <div>
+                    <input type="radio" name="extras" id="muffin" value="muffin">
+                    <label for="muffin">Muffin</label>
+                </div>
+                <div>
+                    <input type="radio" name="extras" id="cookie" value="cookie">
+                    <label for="cookie">Cookie</label>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <h4>Vaso</h4>
+                <div>
+                    <input type="radio" name="vaso" id="propio" value="propio" checked>
+                    <label for="propio">Propio - 5% descuento</label>
+                </div>
+                <div>
+                    <input type="radio" name="vaso" id="plastico" value="plastico">
+                    <label for="plastico">Plástico - 5% recargo</label>
+                </div>
+                <div>
+                    <input type="radio" name="vaso" id="sit_in" value="sit_in">
+                    <label for="sit_in">Aqui</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="producto-info">
+            <div class="imagen-producto">
+                <img id="producto_imagen" src="./Imagenes/Iconos/Cafe" alt="Producto">
+            </div>
+            <div class="precio">
+                <label for="total">Precio:</label>
+                <input type="text" id="total" readonly>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Daniel Garcia Brun</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+{
+    "pocion_vida": {
+        "descripcion": "Recupera un 30% de la vida maxima.",
+        "costo": 10
+    },
+    "pocion_danyo": {
+        "descripcion": "Aumenta el danyo en un 50% durante 5 turnos.",
+        "costo": 50
+    },
+    "pocion_escudo": {
+        "descripcion": "Reduce el danyo recibido en un 50% durante 5 turnos.",
+        "costo": 50
+    }
+}

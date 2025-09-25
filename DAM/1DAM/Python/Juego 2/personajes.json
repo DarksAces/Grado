@@ -1,0 +1,44 @@
+[
+    {
+        "nombre": "Streamer",
+        "seguidores": 10000,
+        "energia": 50,
+        "habilidad": "Viralizar contenido",
+        "debilidad": "Cancelación"
+    },
+    {
+        "nombre": "Hacker",
+        "anonimato": 100,
+        "energia": 70,
+        "habilidad": "Burlar firewalls",
+        "debilidad": "Ciberataques"
+    },
+    {
+        "nombre": "Deportista",
+        "resistencia": 90,
+        "energia": 60,
+        "habilidad": "Superar récords",
+        "debilidad": "Fatiga extrema"
+    },
+    {
+        "nombre": "Desarrollador",
+        "dinero": 5000,
+        "energia": 60,
+        "habilidad": "Optimizar código",
+        "debilidad": "Burnout"
+    },
+    {
+        "nombre": "Musico",
+        "fama": 8000,
+        "energia": 60,
+        "habilidad": "Componer éxitos",
+        "debilidad": "Bloqueo creativo"
+    },
+    {
+        "nombre": "Gamer",
+        "habilidad_gamer": 95,
+        "energia": 60,
+        "habilidad": "Reflejos ultra rápidos",
+        "debilidad": "Luz del sol"
+    }
+]
