@@ -1,0 +1,89 @@
+.Verde1 {
+    background-color: rgb(9, 255, 9);
+    height: 50px;
+    border: black 2px solid;
+}
+
+.Verde1 h2 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    text-align: center;
+}
+
+#rojo2 {
+    object-fit: cover;
+
+    margin-top: 10px;
+
+}
+
+
+#rojo2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 2px solid black;
+}
+
+.lila {
+    background-color: purple;
+    height: 50px;
+    margin-top: 20px;
+    border: black 2px solid;
+}
+
+.lila h5 {
+    text-align: center;
+    color: white;
+}
+
+.naranja {
+    background-color: orange;
+    height: 50px;
+    margin-top: 20px;
+    height: 150px;
+    border: black 2px solid;
+}
+
+.naranja img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 2px solid black;
+}
+
+.azul {
+    border-radius: 10px;
+    background-color: aquamarine;
+    height: 50px;
+    margin-top: 20px;
+    height: 70px;
+    border: 2px solid black;
+    text-align: center;
+
+}
+
+.azul button {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 2px solid black;
+    background-color: greenyellow;
+    border-radius: 10px;
+
+}
+
+.Verde2 {
+    background-color: rgb(9, 255, 9);
+    height: 50px;
+    margin-top: 10px;
+    border: black 2px solid;
+}
+
+.Verde2 h2 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    text-align: center;
+}

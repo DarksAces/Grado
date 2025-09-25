@@ -1,0 +1,823 @@
+.Principal {
+    margin-top: -10px;
+    width: 100%;
+    height: 250px;
+}
+
+.colorh {
+    color: yellow;
+}
+
+.Menus {
+    color: yellow;
+    border: 1px;
+    display: inline-block;
+    width: auto;
+    margin: 0 120px;
+    text-align: center;
+}
+
+.Menus a {
+    text-decoration: none;
+}
+
+#m1 {
+    margin-left: 460px;
+}
+
+.colorYellow {
+    background-color: yellow;
+}
+
+.Top3 {
+    margin-top: -21px;
+    margin-right: 1500px;
+    margin-left: 100px;
+    background-color: blanchedalmond
+}
+
+.Noticias {
+    margin-top: -636px;
+    margin-left: 800px;
+    text-align: center;
+    margin-right: 150px;
+}
+
+.Noticia1 {
+    margin-top: -620px;
+    margin-left: 800px;
+    text-align: center;
+    margin-right: 150px;
+    background-color: rgb(101, 218, 101);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.Noticia2 {
+    margin-top: 50px;
+    margin-left: 800px;
+    text-align: center;
+    margin-right: 150px;
+    background-color: rgb(101, 218, 101);
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+.piepagina {
+    background-color: yellow;
+    border: 1px;
+    display: inline-block;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 0px;
+    margin-top: 120px;
+    position: relative;
+}
+
+.piepaginacont {
+    background-color: yellow;
+    border: 1px;
+    display: inline-block;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 0px;
+    margin-top: 120px;
+    position: relative;
+    text-align: center;
+}
+
+.Sociales {
+    border: 1px;
+    display: inline-block;
+    width: auto;
+    text-align: left;
+    margin: 0 60px;
+
+}
+
+.instagram {
+    width: 50px;
+    height: 50px;
+
+}
+
+.Facebook {
+    width: 50px;
+    height: 50px;
+
+}
+
+.twitter {
+    width: 50px;
+    height: 50px;
+
+}
+
+.autor {
+    border: 1px;
+    display: inline-block;
+    width: auto;
+    text-align: left;
+    margin: 0 250px;
+    text-align: center;
+
+}
+
+.pokedex {
+
+    margin-left: 50px;
+}
+
+.ptamaño {
+    width: 200px;
+    height: 200px;
+}
+
+.Latias:hover {
+    scale: 1.15;
+}
+
+.Lucario:hover {
+    scale: 1.15;
+}
+
+.Shaymin:hover {
+    scale: 1.15;
+}
+
+.Noticia1:hover {
+    background-color: aqua;
+
+}
+
+.Noticia2:hover {
+
+    background-color: gray;
+}
+
+.centrado {
+
+    margin-left: 30%;
+}
+
+.formulario {
+    margin-top: -526px;
+    margin-left: 950px;
+    text-align: center;
+    margin-right: 600px;
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 12%;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.datos {
+    text-align: center;
+}
+
+.tabla {
+    margin-left: 50%;
+    padding: 15px;
+    margin: 15px 15px;
+
+
+}
+
+.formulario:hover {
+
+    background-color: goldenrod;
+}
+
+
+
+
+
+.relleno2p {
+    padding-left: 737px;
+
+}
+
+.Region {
+    text-align: center;
+
+}
+
+.kanto {
+    text-align: center;
+    width: 100%;
+    background-color: rgb(0, 217, 255);
+}
+
+.johto {
+    text-align: center;
+    width: 100%;
+    background-color: rgb(0, 217, 255);
+}
+
+.planta {
+    background-color: green;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.electrico {
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+
+
+.PlantaVeneno {
+
+    background: linear-gradient(green, #8F00FF);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.tblanco {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.tipoplanta {
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+    background-color: rgb(12, 202, 12);
+}
+
+.tipoveneno {
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+    background-color: #c175fc;
+
+}
+
+
+.tipofuego {
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+    background-color: rgb(241, 205, 136);
+
+}
+
+.Fuego {
+    background-color: orange;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.FuegoVolador {
+
+    background: linear-gradient(orange, #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Volador {
+    background-color: #95d9eb;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.tipovolador {
+    background-color: #36caf3;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Agua {
+    background-color: cadetblue;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.tipoagua {
+    background-color: rgb(100, 223, 228);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Bicho {
+    background-color: rgb(77, 231, 128);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.tipobicho {
+    background-color: rgb(52, 156, 52);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.BichoVolador {
+    background: linear-gradient(rgb(77, 231, 128), #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.BichoVeneno {
+
+    background: linear-gradient(rgb(77, 231, 128), #8F00FF);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.Normal {
+    background-color: rgb(99, 96, 96);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.NormalVolador {
+    background: linear-gradient(rgb(99, 96, 96), #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.tiponormal {
+    background-color: gray;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Veneno {
+    background-color: #8F00FF;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.Electrico {
+    background-color: #ecc92d;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.tipoelectrico {
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.Tierra {
+    background-color: burlywood;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.tipotierra {
+    background-color: rgb(241, 214, 178);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.VenenoTierra {
+    background: linear-gradient(#8F00FF, rgb(241, 214, 178));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Hada {
+    background-color: pink;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.tipohada {
+    background-color: rgb(230, 167, 177);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.NormalHada {
+    background: linear-gradient(rgb(99, 96, 96), rgb(230, 167, 177));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.VenenoVolador {
+    background: linear-gradient(#8F00FF, #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.BichoPlanta {
+
+    background: linear-gradient(rgb(77, 231, 128), green);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Lucha {
+    background-color: peru;
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.tipolucha {
+    background-color: rgb(241, 171, 100);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.tipopsiquico {
+    background-color: rgb(236, 63, 92);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Psiquico {
+    background-color: rgb(216, 114, 131);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.AguaVeneno {
+    background: linear-gradient(rgb(100, 223, 228), #8F00FF);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.Roca {
+    background-color: rgb(216, 159, 85);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.tiporoca {
+    background-color: rgb(233, 187, 128);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.RocaTierra {
+    background: linear-gradient(burlywood, rgb(216, 159, 85));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.AguaPsiquico {
+    background: linear-gradient(rgb(100, 223, 228), rgb(216, 114, 131));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Acero {
+    background-color: rgb(68, 68, 68);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.tipoacero {
+    background-color: rgb(126, 121, 121);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.ElectricoAcero {
+    background: linear-gradient(yellow, rgb(68, 68, 68));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.hielo {
+    background-color: rgb(109, 229, 233);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.tipohielo {
+    background-color: rgb(144, 230, 233);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.AguaHielo {
+    background: linear-gradient(cadetblue, rgb(109, 229, 233));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.Fantasma {
+    background-color: rgb(90, 10, 219);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.tipofantasma {
+    background-color: rgb(115, 35, 243);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.FantasmaVeneno {
+    background: linear-gradient(rgb(90, 10, 219), #8F00FF);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.PlantaPsiquico {
+    background: linear-gradient(green, rgb(216, 114, 131));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.PsiquicoHada {
+    background: linear-gradient(rgb(216, 114, 131), pink);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.HieloPsiquico {
+    background: linear-gradient(rgb(109, 229, 233), rgb(216, 114, 131));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.AguaVolador {
+    background: linear-gradient(cadetblue, #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.RocaAgua {
+    background: linear-gradient(burlywood, cadetblue);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.RocaVolador {
+    background: linear-gradient(burlywood, #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.HieloVolador {
+    background: linear-gradient(rgb(99, 210, 238), #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.ElectricoVolador {
+    background: linear-gradient(yellow, #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Dragon {
+    background-color: rgb(116, 116, 226);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.tipodragon {
+    background-color: rgb(148, 148, 255);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+
+}
+
+.AguaElectrico {
+    background: linear-gradient(cadetblue, yellow);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.HadaVolador {
+    background: linear-gradient(rgb(230, 167, 177), #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.PsiquicoVolador {
+    background: linear-gradient(rgb(216, 114, 131), #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.AguaHada {
+    background: linear-gradient(#95d9eb, rgb(230, 167, 177));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.AguaLucha {
+    background: linear-gradient(#95d9eb, peru);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.PlantaVolador {
+
+    background: linear-gradient(green, #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.AguaTierra {
+    background: linear-gradient(#95d9eb, rgb(216, 159, 85));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.Siniestro {
+    background-color: rgb(73, 73, 75);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.tiposiniestro {
+    background-color: rgb(54, 54, 54);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.SiniestroVolador {
+    background: linear-gradient(rgb(54, 54, 54), #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.BichoAcero {
+    background: linear-gradient(rgb(77, 231, 128), rgb(68, 68, 68));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+
+}
+
+.aqui {
+
+    color: black;
+}
+
+.NormalPsiquico {
+    background: linear-gradient(rgb(99, 96, 96), rgb(216, 114, 131));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.AceroTierra {
+    background: linear-gradient(rgb(68, 68, 68), rgb(241, 214, 178));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.TierraNormal {
+    background: linear-gradient(rgb(241, 214, 178), rgb(99, 96, 96));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.BichoRoca {
+    background: linear-gradient(rgb(77, 231, 128), rgb(216, 159, 85));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.BichoLucha {
+    background: linear-gradient(rgb(77, 231, 128), peru);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.SiniestroHielo {
+    background: linear-gradient(rgb(54, 54, 54), rgb(109, 229, 233));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.FuegoRoca {
+
+    background: linear-gradient(orange, rgb(216, 159, 85));
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.HieloTierra {
+    background: linear-gradient(rgb(109, 229, 233), burlywood);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}
+
+.AceroVolador {
+    background: linear-gradient(rgb(68, 68, 68), #95d9eb);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+
+}
+
+.SiniestroFuego {
+    background: linear-gradient(rgb(54, 54, 54), orange);
+    padding: 10px;
+    border-radius: 10px;
+    border: black solid;
+}

@@ -1,0 +1,179 @@
+.principalf {
+    height: 600px;
+    width: 2000px;
+    margin-top: 0px;
+    margin-left: 0px;
+    z-index: 2;
+    position: relative;
+}
+
+.menus {
+    background-color: rgb(70, 70, 70);
+    z-index: 10;
+    width: 600px;
+    margin-top: -560px;
+    margin-left: 1350px;
+    margin-right: 600px;
+    position: fixed;
+    display: flex;
+    text-decoration: none;
+    color: white;
+
+}
+
+.menus h1 {
+    padding-left: 40px;
+    text-decoration: none;
+
+}
+
+.aqui {
+    color: rgb(188, 224, 224);
+}
+
+.menuinc {
+    text-decoration: none;
+    color: white;
+}
+
+.menucon {
+    text-decoration: none;
+    color: white;
+}
+
+
+.iconoinicio {
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.formulario {
+    z-index: 5;
+    background-color: gray;
+    margin-left: 800px;
+    margin-top: -100px;
+    position: relative;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: -100px;
+    padding: 10px;
+    width: 20%;
+}
+
+.datosformulario {
+    text-align: left;
+    width: 360px;
+    height: 100px;
+}
+
+body {
+    margin-top: 0px;
+    margin-left: 0px;
+    background-color: rgb(189, 183, 183);
+}
+
+.Noticias {
+    margin-left: 150px;
+    margin-top: -90px;
+    z-index: 5;
+    display: flex;
+    text-decoration: none;
+}
+
+.Noticia1 {
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+    z-index: 10;
+    width: 30%;
+    text-align: center;
+    margin-right: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+
+}
+
+.Noticia1:hover {
+    background-color: rgb(247, 227, 227);
+}
+
+.Noticia2 {
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+    z-index: 10;
+    width: 30%;
+    text-align: center;
+    margin-right: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.Noticia2:hover {
+    background-color: rgb(247, 227, 227);
+}
+
+.Noticia3 {
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+    z-index: 10;
+    width: 30%;
+    text-align: center;
+    margin-right: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.Noticia3:hover {
+    background-color: rgb(247, 227, 227);
+
+}
+
+.FotoN {
+    width: 400px;
+    height: 400px;
+    margin-top: 30px;
+}
+
+.botonformulario {
+    width: 200px;
+    height: 50px;
+    margin-left: 100px;
+}
+
+.botonformulario:hover {
+    background-color: white;
+    opacity: 0.1;
+}
+
+.chimuela {
+    text-align: left;
+    display: inline-block;
+    margin-right: 100px;
+
+}
+
+.chimuela:hover {
+    transform: rotate(360deg);
+    transition-duration: 5s;
+}
+
+.chimuelo:hover {
+    width: 20%;
+    height: 20%;
+}
+
+.Piepag {
+    background-color: gray;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    bottom: 0px;
+    margin-bottom: 0px;
+    margin-top: 200px;
+    position: relative;
+}

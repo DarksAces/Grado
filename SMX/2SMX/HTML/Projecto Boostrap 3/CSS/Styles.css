@@ -1,0 +1,445 @@
+header {
+    background-image: linear-gradient(to bottom, rgb(0, 0, 0), gray);
+
+    text-decoration: none;
+    width: 100%;
+    /* height: 10   px; */
+    background-color: rgb(0, 0, 0);
+    /* height: 300px; */
+    margin: auto;
+}
+
+.Banner {
+    position: relative;
+    text-decoration: none;
+    width: 100%;
+    background-color: gray;
+    height: 261px;
+    display: block;
+    margin: auto;
+    margin-top: -15px;
+    fill-opacity: (0.2);
+}
+
+main {
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 10px;
+    background-color: rgb(70, 67, 67);
+    color: white;
+    height: 100%;
+    margin: 0;
+    box-shadow: 0px -50px 50px 50px rgb(27, 27, 27);
+    z-index: 1;
+}
+
+
+
+#banner {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px;
+    border: 1px solid black;
+    padding: 10px;
+    background-color: #000000;
+    z-index: 10;
+}
+
+#imagen {
+    width: 100%;
+    height: auto;
+    z-index: 10;
+}
+
+#cerrar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.contacto {
+    text-decoration: none;
+    color: #fff;
+}
+
+
+label {
+    display: block;
+    margin-top: 20px;
+    z-index: 1;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    z-index: 1;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: orange;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: rgb(70, 201, 19);
+    transition: background-color 1s;
+}
+
+nav {
+    text-decoration: none;
+    color: #fff;
+}
+
+ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+}
+
+li {
+    text-decoration: none;
+    display: inline;
+    margin-right: 10px;
+    color: #fff;
+
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    ;
+}
+
+button {
+    text-decoration: none;
+
+}
+
+#Aventura {
+    border-radius: 10px;
+    background-color: #070794;
+    color: white;
+    margin-top: 10px;
+    text-decoration: none;
+    width: 100%;
+}
+
+#Aventura a {
+    color: white;
+    text-decoration: none;
+}
+
+#Aventura:hover {
+    background-color: red;
+    height: 105%;
+}
+
+.Community {
+    text-align: center;
+    align-items: center;
+    align-content: center;
+
+
+}
+
+#Historia {
+    margin-top: 10px;
+}
+
+#RP {
+    margin-top: 20px;
+
+}
+
+.FiveM {
+    color: rgb(190, 189, 189);
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
+#video {
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    border-radius: 10px;
+}
+
+#Enlaze {
+    height: 50px;
+    border-radius: 10px;
+    background-color: #070794;
+    color: white;
+    margin-top: 10px;
+    text-decoration: none;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+}
+
+.Arthas {
+    margin-top: -500px;
+    position: absolute;
+    z-index: 1;
+}
+
+.Arthas2 {
+    margin-top: -500px;
+    position: absolute;
+    z-index: 0;
+    filter: grayscale(80%);
+    opacity: 0.4;
+
+
+}
+
+#Enlaze img {
+    width: 20%;
+    height: 80%;
+    align-items: start;
+}
+
+#miEnlace {
+    text-decoration: none;
+
+    color: white;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#miEnlace a {
+    text-decoration: none;
+    color: white;
+}
+
+#Enlaze2 {
+    height: 50px;
+    border-radius: 10px;
+    background-color: #070794;
+    color: white;
+    margin-top: 10px;
+    text-decoration: none;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#miEnlace2 {
+    text-decoration: none;
+
+    color: white;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#miEnlace2 a {
+    text-decoration: none;
+    color: white;
+}
+
+#Enlaze2 img {
+    width: 20%;
+    height: 80%;
+
+}
+
+.cosonegro {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.cosonegro p {
+    margin-top: 20px;
+    background-color: black;
+    margin-top: 10px;
+}
+
+
+.bannermitad {
+    text-decoration: none;
+    width: 100%;
+    height: 618px;
+    margin: auto;
+    z-index: 0;
+    opacity: 0.6;
+    margin-bottom: 42px;
+    margin-top: 0px;
+
+
+}
+
+.titulobannerm {
+    position: absolute;
+    margin-top: 0px;
+    color: white;
+    z-index: 1;
+}
+
+.introduccionbannerm {
+    position: absolute;
+    margin-top: -2 0px;
+    color: white;
+    z-index: 1;
+    padding-top: 168px;
+}
+
+.bannerform {
+    text-decoration: none;
+    width: 100%;
+    height: 700px;
+    margin: auto;
+    z-index: 0;
+    margin-top: -650px;
+
+
+}
+
+form {
+    z-index: 10;
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
+
+
+}
+
+#formulario {
+    position: relative;
+}
+
+.labelnombre {
+    margin-top: 120px;
+}
+
+.Anduin {
+    width: 40px;
+    position: absolute;
+    margin-top: -80px;
+    color: white;
+    z-index: 1;
+    padding-top: 0px;
+
+
+}
+
+.HA {
+    position: absolute;
+    height: 500px;
+    color: white;
+    z-index: 1;
+    padding-top: 10px;
+    filter: opacity(0.6)
+}
+
+.PN {
+    position: absolute;
+    height: 600px;
+    object-fit: cover;
+    color: white;
+    z-index: 1;
+    padding-top: 0px;
+    filter: opacity(0.9)
+}
+
+#PNA {
+    margin-top: -25px;
+    filter: opacity(0.9)
+}
+
+.cosonegro2 {
+    padding-top: 20px;
+    margin-bottom: 10px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.cosonegro2 p {
+    background-color: black;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.Generos {
+    display: flex;
+    align-items: center;
+
+}
+
+label[for="generoHombre"],
+label[for="generoMujer"] {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #000;
+    text-align: center;
+    line-height: 100px;
+    margin: auto;
+    cursor: pointer;
+    background-color: rgb(72, 113, 248);
+    margin-top: 10px
+}
+
+label[for="generoHombre"] {
+    margin-right: 10px;
+}
+
+label[for="generoMujer"] {
+    margin-left: 10px;
+}
+
+
+
+
+input[type="radio"]:checked+label {
+    background-color: rgb(151, 33, 33);
+    border-radius: 10px;
+    transition: 2s;
+}
+
+
+.Gen {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+/* Pie de página  */
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+}
