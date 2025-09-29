@@ -1,0 +1,69 @@
+# ===========================
+# C++
+# ===========================
+*.h linguist-vendored
+*.hpp linguist-vendored
+third_party/** linguist-vendored
+vendor/** linguist-vendored
+
+# ===========================
+# Java
+# ===========================
+*.class linguist-generated
+*.jar linguist-vendored
+
+# ===========================
+# Python
+# ===========================
+__pycache__/** linguist-generated
+*.pyc linguist-generated
+
+# ===========================
+# Jupyter Notebooks
+# ===========================
+*.ipynb checkpoints/** linguist-generated
+
+# ===========================
+# JavaScript / Node / Express
+# ===========================
+node_modules/** linguist-vendored
+dist/** linguist-generated
+build/** linguist-generated
+*.min.js linguist-generated
+
+# ===========================
+# CSS / HTML
+# ===========================
+*.min.css linguist-generated
+
+# ===========================
+# PHP
+# ===========================
+vendor/** linguist-vendored
+
+# ===========================
+# SQL / PL/SQL
+# ===========================
+*.bak linguist-vendored
+*.sql~ linguist-vendored
+
+# ===========================
+# XML / JSON
+# ===========================
+# Ignorar archivos generados o de librerías externas
+*.xml~ linguist-vendored
+*.json~ linguist-vendored
+
+# ===========================
+# C#
+# ===========================
+*.dll linguist-generated
+*.exe linguist-generated
+packages/** linguist-vendored
+
+# ===========================
+# Archivos generales que no quieres contar
+# ===========================
+*.lock linguist-vendored
+*.log linguist-vendored
+*.tmp linguist-vendored
