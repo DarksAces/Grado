@@ -4,40 +4,114 @@
 # Contamos todo el código propio, solo ignoramos librerías externas
 third_party/** linguist-vendored
 vendor/** linguist-vendored
+libs/** linguist-vendored
+dependencies/** linguist-vendored
 
 # ===========================
 # Java
 # ===========================
 *.class linguist-generated
 *.jar linguist-vendored
+target/** linguist-generated
+.gradle/** linguist-generated
+gradle/wrapper/** linguist-vendored
 
 # ===========================
 # Python
 # ===========================
 __pycache__/** linguist-generated
 *.pyc linguist-generated
+*.pyo linguist-generated
+*.pyd linguist-generated
+.venv/** linguist-vendored
+venv/** linguist-vendored
+env/** linguist-vendored
+site-packages/** linguist-vendored
+.pytest_cache/** linguist-generated
 
 # ===========================
 # Jupyter Notebooks
 # ===========================
-*.ipynb checkpoints/** linguist-generated
+*.ipynb linguist-detectable
+.ipynb_checkpoints/** linguist-generated
 
 # ===========================
-# JavaScript / Node / Express
+# JavaScript / Node / Express / React / Vue
 # ===========================
 node_modules/** linguist-vendored
 dist/** linguist-generated
 build/** linguist-generated
+out/** linguist-generated
+.next/** linguist-generated
+.nuxt/** linguist-generated
 *.min.js linguist-generated
+*.bundle.js linguist-generated
+*.chunk.js linguist-generated
+coverage/** linguist-generated
+.nyc_output/** linguist-generated
 
 # ===========================
-# CSS / HTML
+# CSS / SCSS / SASS
 # ===========================
 *.min.css linguist-generated
+*.css.map linguist-generated
+*.scss.map linguist-generated
 
 # ===========================
-# Archivos generales a ignorar
+# Bundlers y herramientas de build
+# ===========================
+webpack.stats.json linguist-generated
+.parcel-cache/** linguist-generated
+
+# ===========================
+# Documentación generada
+# ===========================
+docs/build/** linguist-generated
+docs/_build/** linguist-generated
+*.pdf linguist-generated=true
+
+# ===========================
+# Tests y cobertura
+# ===========================
+coverage/** linguist-generated
+htmlcov/** linguist-generated
+*.coverage linguist-generated
+
+# ===========================
+# Archivos de configuración comunes
 # ===========================
 *.lock linguist-vendored
+yarn.lock linguist-vendored
+package-lock.json linguist-vendored
+Pipfile.lock linguist-vendored
+poetry.lock linguist-vendored
+
+# ===========================
+# Logs y archivos temporales
+# ===========================
 *.log linguist-vendored
 *.tmp linguist-vendored
+*.temp linguist-vendored
+.DS_Store linguist-vendored
+
+# ===========================
+# IDEs y editores
+# ===========================
+.vscode/** linguist-vendored
+.idea/** linguist-vendored
+*.swp linguist-vendored
+*.swo linguist-vendored
+
+# ===========================
+# Archivos específicos de frameworks
+# ===========================
+# Django
+*/migrations/* linguist-generated
+staticfiles/** linguist-generated
+
+# Rails
+db/schema.rb linguist-generated
+
+# Laravel
+bootstrap/cache/** linguist-generated
+storage/framework/** linguist-generated
