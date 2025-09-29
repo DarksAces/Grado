@@ -1,8 +1,7 @@
 # ===========================
-# C++
+# C++ 
 # ===========================
-*.h linguist-vendored
-*.hpp linguist-vendored
+# Contamos todo el código propio, solo ignoramos librerías externas
 third_party/** linguist-vendored
 vendor/** linguist-vendored
 
@@ -37,32 +36,7 @@ build/** linguist-generated
 *.min.css linguist-generated
 
 # ===========================
-# PHP
-# ===========================
-vendor/** linguist-vendored
-
-# ===========================
-# SQL / PL/SQL
-# ===========================
-*.bak linguist-vendored
-*.sql~ linguist-vendored
-
-# ===========================
-# XML / JSON
-# ===========================
-# Ignorar archivos generados o de librerías externas
-*.xml~ linguist-vendored
-*.json~ linguist-vendored
-
-# ===========================
-# C#
-# ===========================
-*.dll linguist-generated
-*.exe linguist-generated
-packages/** linguist-vendored
-
-# ===========================
-# Archivos generales que no quieres contar
+# Archivos generales a ignorar
 # ===========================
 *.lock linguist-vendored
 *.log linguist-vendored
