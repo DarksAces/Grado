@@ -1,7 +1,6 @@
 # ===========================
-# C++ 
+# C++
 # ===========================
-# Contamos todo el código propio, solo ignoramos librerías externas
 third_party/** linguist-vendored
 vendor/** linguist-vendored
 libs/** linguist-vendored
@@ -32,11 +31,11 @@ site-packages/** linguist-vendored
 # ===========================
 # Jupyter Notebooks
 # ===========================
-*.ipynb linguist-detectable
+*.ipynb linguist-language=Jupyter Notebook
 .ipynb_checkpoints/** linguist-generated
 
 # ===========================
-# JavaScript / Node / Express / React / Vue
+# JavaScript / Node / Frontend
 # ===========================
 node_modules/** linguist-vendored
 dist/** linguist-generated
@@ -58,7 +57,7 @@ coverage/** linguist-generated
 *.scss.map linguist-generated
 
 # ===========================
-# Bundlers y herramientas de build
+# Bundlers y herramientas
 # ===========================
 webpack.stats.json linguist-generated
 .parcel-cache/** linguist-generated
@@ -68,7 +67,7 @@ webpack.stats.json linguist-generated
 # ===========================
 docs/build/** linguist-generated
 docs/_build/** linguist-generated
-*.pdf linguist-generated=true
+*.pdf linguist-generated
 
 # ===========================
 # Tests y cobertura
@@ -85,6 +84,9 @@ yarn.lock linguist-vendored
 package-lock.json linguist-vendored
 Pipfile.lock linguist-vendored
 poetry.lock linguist-vendored
+Cargo.lock linguist-vendored
+composer.lock linguist-vendored
+Gemfile.lock linguist-vendored
 
 # ===========================
 # Logs y archivos temporales
@@ -103,15 +105,26 @@ poetry.lock linguist-vendored
 *.swo linguist-vendored
 
 # ===========================
-# Archivos específicos de frameworks
+# Frameworks específicos
 # ===========================
 # Django
-*/migrations/* linguist-generated
+**/migrations/** linguist-generated
 staticfiles/** linguist-generated
 
 # Rails
 db/schema.rb linguist-generated
+db/structure.sql linguist-generated
 
 # Laravel
 bootstrap/cache/** linguist-generated
 storage/framework/** linguist-generated
+storage/logs/** linguist-generated
+
+# ===========================
+# Otros lenguajes (no se ignoran, se cuentan)
+# ===========================
+# PHP, JSON, XML, YAML, etc. — no se marcan como vendored/generated
+
+# Si fuera necesario ignorar archivos específicos JSON/XML (generados), podrías usar:
+# *.generated.json linguist-generated
+# *.swagger.json linguist-generated
