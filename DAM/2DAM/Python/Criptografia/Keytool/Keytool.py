@@ -36,7 +36,57 @@ def listar_alias_keystore(keystore, password):
         return False
 
 
-def generar_keystore(alias, keystore, password, keysize=2048):
+def confirmar_accion(mensaje="¿Estás seguro?"):
+    """Solicita confirmación del usuario"""
+    respuestas_positivas = ['s', 'si', 'sí', 'y', 'yes']
+    respuestas_negativas = ['n', 'no']
+    
+    while True:
+        respuesta = input(f"{mensaje} (si/no): ").strip().lower()
+        
+        if respuesta in respuestas_positivas:
+            return True
+        elif respuesta in respuestas_negativas:
+            return False
+        else:
+            print("[ERROR] Respuesta no válida. Escribe: si, s, yes, y, no o n")
+
+
+def pedir_datos_certificado():
+    """Solicita los datos del Distinguished Name para el certificado"""
+    print("\n--- Datos del certificado ---")
+    
+    cn = input("Nombre común (CN) - ej: Juan Pérez o ejemplo.com: ").strip()
+    if not cn:
+        cn = "Desconocido"
+    
+    ou = input("Unidad organizativa (OU) - ej: Desarrollo: ").strip()
+    if not ou:
+        ou = "Desconocido"
+    
+    o = input("Organización (O) - ej: Mi Empresa S.L.: ").strip()
+    if not o:
+        o = "Desconocido"
+    
+    l = input("Ciudad/Localidad (L) - ej: Madrid: ").strip()
+    if not l:
+        l = "Desconocido"
+    
+    s = input("Estado/Provincia (S) - ej: Madrid: ").strip()
+    if not s:
+        s = "Desconocido"
+    
+    c = input("Código de país (C) - 2 letras, ej: ES: ").strip().upper()
+    while len(c) != 2 or not c.isalpha():
+        print("[ERROR] El código de país debe tener exactamente 2 letras.")
+        c = input("Código de país (C) - 2 letras, ej: ES: ").strip().upper()
+    
+    dname = f"CN={cn}, OU={ou}, O={o}, L={l}, S={s}, C={c}"
+    
+    return dname
+
+
+def generar_keystore(alias, keystore, password, dname, keysize=2048):
     """Genera un nuevo keystore con un par de claves"""
     try:
         # Verificar si el keystore existe y si el alias ya está en uso
@@ -54,7 +104,7 @@ def generar_keystore(alias, keystore, password, keysize=2048):
             "-storepass", password,
             "-keypass", password,
             "-keysize", str(keysize),
-            "-dname", "CN=Ejemplo, OU=Org, O=Empresa, L=Ciudad, S=Provincia, C=ES"
+            "-dname", dname
         ]
         subprocess.run(comando, check=True, capture_output=True)
         print(f"[OK] Keystore '{keystore}' generado correctamente con alias '{alias}'.")
@@ -78,8 +128,7 @@ def exportar_certificado(alias, keystore, password, archivo_cert):
         
         # Verificar si el archivo de certificado ya existe
         if os.path.exists(archivo_cert):
-            respuesta = input(f"[AVISO] El archivo '{archivo_cert}' ya existe. ¿Deseas sobrescribirlo? (s/n): ").strip().lower()
-            if respuesta != 's':
+            if not confirmar_accion(f"El archivo '{archivo_cert}' ya existe. ¿Deseas sobrescribirlo?"):
                 print("[INFO] Operación cancelada.")
                 return False
         
@@ -170,8 +219,7 @@ def opcion_generar():
         if not keystore_nuevo and password:
             if verificar_alias_existe(alias, keystore, password):
                 print(f"[ERROR] El alias '{alias}' ya existe en este keystore.")
-                respuesta = input("¿Deseas intentar con otro alias? (s/n): ").strip().lower()
-                if respuesta != 's':
+                if not confirmar_accion("¿Deseas intentar con otro alias?"):
                     print("[INFO] Operación cancelada.")
                     return
                 continue
@@ -181,12 +229,28 @@ def opcion_generar():
     if password is None:
         # Si es keystore nuevo, pedir confirmación
         password = pedir_password(confirmar=True)
+    
+    # Pedir datos del certificado
+    dname = pedir_datos_certificado()
 
     # Usar 2048 por defecto
     keysize = 2048
-    print(f"[INFO] Usando tamaño de clave: {keysize} bits")
+    
+    # Mostrar resumen y confirmar
+    print("\n" + "="*50)
+    print("RESUMEN DE LA OPERACIÓN")
+    print("="*50)
+    print(f"Keystore: {keystore}")
+    print(f"Alias: {alias}")
+    print(f"Tamaño de clave: {keysize} bits")
+    print(f"Distinguished Name: {dname}")
+    print("="*50)
+    
+    if not confirmar_accion("¿Deseas continuar con la generación del keystore?"):
+        print("[INFO] Operación cancelada.")
+        return
 
-    generar_keystore(alias, keystore, password, keysize)
+    generar_keystore(alias, keystore, password, dname, keysize)
 
 
 def opcion_exportar():
@@ -224,8 +288,7 @@ def opcion_exportar():
         # Verificar que el alias exista
         if not verificar_alias_existe(alias, keystore, password):
             print(f"[ERROR] El alias '{alias}' no existe en el keystore.")
-            respuesta = input("¿Deseas intentar con otro alias? (s/n): ").strip().lower()
-            if respuesta != 's':
+            if not confirmar_accion("¿Deseas intentar con otro alias?"):
                 print("[INFO] Operación cancelada.")
                 return
             continue
@@ -239,6 +302,19 @@ def opcion_exportar():
                 archivo_cert += '.crt'
             break
         print("[ERROR] El nombre del archivo no puede estar vacío.")
+    
+    # Mostrar resumen y confirmar
+    print("\n" + "="*50)
+    print("RESUMEN DE LA OPERACIÓN")
+    print("="*50)
+    print(f"Keystore: {keystore}")
+    print(f"Alias: {alias}")
+    print(f"Archivo de salida: {archivo_cert}")
+    print("="*50)
+    
+    if not confirmar_accion("¿Deseas continuar con la exportación del certificado?"):
+        print("[INFO] Operación cancelada.")
+        return
 
     exportar_certificado(alias, keystore, password, archivo_cert)
 
