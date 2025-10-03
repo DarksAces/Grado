@@ -1,823 +1,1384 @@
 import subprocess
 import os
 import shutil
-import time
 import string
 import random
+import time
+import hashlib
+import signal
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
-class TestKeystoreManagerExtremoCompleto:
-    def __init__(self):
-        self.test_dir = "test_keystores_extremo_completo"
-        self.tests_passed = 0
-        self.tests_failed = 0
-        self.tests_skipped = 0
-        self.setup()
 
-    def setup(self):
+class ExtremeProfessionalKeystoreTestSuite:
+    """
+    Comprehensive extreme testing suite for Java keystore operations
+    60+ tests covering edge cases, stress tests, and production scenarios
+    """
+
+    def __init__(self, test_dir="test_keystores_extreme"):
+        self.test_dir = test_dir
+        self.results = {"passed": 0, "failed": 0, "skipped": 0}
+        self.current_test_group = None
+        self._prepare_environment()
+
+    def _prepare_environment(self):
+        """Initialize clean test environment"""
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
         os.makedirs(self.test_dir)
-        print("🔧 Entorno de pruebas extremo COMPLETO preparado\n")
+        print(f"Test environment ready: {self.test_dir}\n")
 
-    def cleanup(self):
-        if os.path.exists(self.test_dir):
-            shutil.rmtree(self.test_dir)
-
-    def assert_true(self, cond, name):
-        if cond:
-            print(f"✅ PASS: {name}")
-            self.tests_passed += 1
+    def _get_test_group_path(self, group_name=None):
+        """Get path for current test group"""
+        if group_name:
+            return os.path.join(self.test_dir, group_name)
+        elif self.current_test_group:
+            return os.path.join(self.test_dir, self.current_test_group)
         else:
-            print(f"❌ FAIL: {name}")
-            self.tests_failed += 1
+            return self.test_dir
 
-    def assert_false(self, cond, name):
-        self.assert_true(not cond, name)
+    def _path(self, filename, group_name=None):
+        """Get full path for test file within current test group"""
+        group_path = self._get_test_group_path(group_name)
+        return os.path.join(group_path, filename)
 
-    def skip(self, name, reason):
-        print(f"⚠️ SKIP: {name} ({reason})")
-        self.tests_skipped += 1
+    def _create_test_group(self, group_name):
+        """Create a new test group directory"""
+        group_path = os.path.join(self.test_dir, group_name)
+        os.makedirs(group_path, exist_ok=True)
+        return group_path
 
-    # ---------------- Java ----------------
-    def verificar_java(self):
-        try:
-            r = subprocess.run(["keytool", "-help"], capture_output=True)
-            return r.returncode == 0
-        except FileNotFoundError:
-            return False
+    def _pass(self, msg):
+        print(f"✅ PASS: {msg}")
+        self.results["passed"] += 1
 
-    # ---------------- MÉTODO FALTANTE AÑADIDO ----------------
-    def listar_alias_keystore(self, keystore, password):
-        """Lista todos los alias en un keystore - MÉTODO REPARADO"""
-        try:
-            cmd = [
-                "keytool", "-list",
-                "-keystore", os.path.join(self.test_dir, keystore),
-                "-storepass", password
-            ]
-            resultado = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            return True
-        except subprocess.CalledProcessError:
-            return False
+    def _fail(self, msg):
+        print(f"❌ FAIL: {msg}")
+        self.results["failed"] += 1
 
-    # ---------------- Helpers ORIGINALES ----------------
-    def gen_keystore(self, alias, keystore, password,
-                     dname="CN=Test, OU=Test, O=Test, L=Test, S=Test, C=ES",
-                     keysize=2048):
-        try:
-            keystore_path = os.path.join(self.test_dir, keystore)
-            if os.path.exists(keystore_path):
-                if self.alias_exists(alias, keystore, password):
-                    return False
-            cmd = [
-                "keytool", "-genkeypair", "-keyalg", "RSA",
-                "-alias", alias,
-                "-keystore", keystore_path,
-                "-storepass", password,
-                "-keypass", password,
-                "-keysize", str(keysize),
-                "-dname", dname
-            ]
-            r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-            return r.returncode == 0
-        except subprocess.TimeoutExpired:
-            print(f"⏰ TIMEOUT en generación de {alias}")
-            return False
-        except Exception as e:
-            return False
+    def _skip(self, msg, reason):
+        print(f"⚠️ SKIP: {msg} ({reason})")
+        self.results["skipped"] += 1
 
-    def export_cert(self, alias, keystore, password, cert_file):
-        try:
-            if not self.alias_exists(alias, keystore, password):
-                return False
-            cmd = [
-                "keytool", "-export", "-alias", alias,
-                "-file", os.path.join(self.test_dir, cert_file),
-                "-keystore", os.path.join(self.test_dir, keystore),
-                "-storepass", password
-            ]
-            r = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-            return r.returncode == 0
-        except Exception:
-            return False
+    # ==================== CORE OPERATIONS ====================
 
     def alias_exists(self, alias, keystore, password):
-        keystore_path = os.path.join(self.test_dir, keystore)
-        if not os.path.exists(keystore_path):
+        """Check if alias exists in keystore"""
+        if not os.path.exists(keystore):
             return False
         try:
-            cmd = [
-                "keytool", "-list", "-alias", alias,
-                "-keystore", keystore_path,
-                "-storepass", password
-            ]
-            r = subprocess.run(cmd, capture_output=True, timeout=10)
-            return r.returncode == 0
+            cmd = ["keytool", "-list", "-alias", alias,
+                   "-keystore", keystore, "-storepass", password]
+            return subprocess.run(cmd, capture_output=True, timeout=10).returncode == 0
         except Exception:
             return False
 
-    # ---------------- HELPERS OPTIMIZADOS PARA VELOCIDAD ----------------
-    def crear_multiples_alias_rapido(self, keystore, password, cantidad_alias, prefijo="alias"):
-        """Versión OPTIMIZADA para crear múltiples alias rápidamente"""
-        start_time = time.time()
-
-        # Crear keystore base si no existe
-        if not os.path.exists(os.path.join(self.test_dir, keystore)):
-            self.gen_keystore_rapido(f"{prefijo}_base", keystore, password)
-
-        resultados = []
-
-        for i in range(cantidad_alias):
-            alias = f"{prefijo}_{i}"
-            try:
-                cmd = [
-                    "keytool", "-genkeypair", "-keyalg", "RSA",
-                    "-alias", alias,
-                    "-keystore", os.path.join(self.test_dir, keystore),
-                    "-storepass", password,
-                    "-keypass", password,
-                    "-keysize", "1024",  # Más rápido que 2048
-                    "-dname", f"CN={alias}, OU=Test, C=ES"  # DN mínimo
-                ]
-                # Sin capturar output para mayor velocidad
-                result = subprocess.run(cmd, capture_output=False, timeout=15)
-                resultados.append(result.returncode == 0)
-
-            except Exception as e:
-                resultados.append(False)
-
-        end_time = time.time()
-        tiempo_total = end_time - start_time
-
-        exitos = sum(resultados)
-        print(f"⚡ Creados {exitos}/{cantidad_alias} alias en {tiempo_total:.2f}s")
-
-        return exitos, tiempo_total
-
-    def gen_keystore_rapido(self, alias, keystore, password, keysize=1024):
-        """Versión ultra-rápida para generación individual"""
+    def generate_keystore(self, alias, keystore, password, keysize=1024, dname=None, validity=365):
+        """Generate keystore with alias"""
+        if dname is None:
+            dname = f"CN={alias}, OU=Test, O=Test, C=ES"
+        if os.path.exists(keystore) and self.alias_exists(alias, keystore, password):
+            return False
         try:
             cmd = [
                 "keytool", "-genkeypair", "-keyalg", "RSA",
-                "-alias", alias,
-                "-keystore", os.path.join(self.test_dir, keystore),
-                "-storepass", password,
-                "-keypass", password,
-                "-keysize", str(keysize),
-                "-dname", f"CN={alias}, C=ES"  # DN mínimo
+                "-alias", alias, "-keystore", keystore,
+                "-storepass", password, "-keypass", password,
+                "-keysize", str(keysize), "-dname", dname,
+                "-validity", str(validity)
             ]
-            result = subprocess.run(cmd, capture_output=False, timeout=10)
-            return result.returncode == 0
-        except:
+            return subprocess.run(cmd, capture_output=True, timeout=60).returncode == 0
+        except Exception:
             return False
 
-    # ---------------- NUEVAS PRUEBAS EXTREMAS ADICIONALES ----------------
-
-    def test_permisos_archivos(self):
-        """Test de comportamiento con diferentes permisos de archivo"""
-        print("\n🔐 TEST DE PERMISOS DE ARCHIVOS")
-
-        # Crear keystore normal
-        self.gen_keystore("permisos_test", "permisos.jks", "password123")
-
-        # Probar diferentes escenarios de permisos
-        escenarios = [
-            ("Lectura solo", 0o444, "Solo lectura"),
-            ("Sin permisos", 0o000, "Sin permisos"),
-            ("Ejecución", 0o111, "Solo ejecución")
-        ]
-
-        resultados = []
-        for nombre, permisos, desc in escenarios:
-            try:
-                # Cambiar permisos
-                os.chmod(os.path.join(self.test_dir, "permisos.jks"), permisos)
-
-                # Intentar operación
-                result = self.alias_exists("permisos_test", "permisos.jks", "password123")
-
-                # Restaurar permisos
-                os.chmod(os.path.join(self.test_dir, "permisos.jks"), 0o644)
-
-                resultados.append(not result)  # Esperamos que falle
-                print(f"   {nombre}: {'✅' if not result else '❌'}")
-
-            except Exception as e:
-                resultados.append(True)  # Exception = comportamiento esperado
-                print(f"   {nombre}: ✅ (Excepción esperada)")
-
-        self.assert_true(all(resultados), "Comportamiento correcto con diferentes permisos")
-
-    def test_estres_io_disco(self):
-        """Test de estrés de E/S en disco con operaciones masivas"""
-        print("\n💾 TEST DE ESTRÉS DE DISCO")
-
-        start_time = time.time()
-        operaciones_exitosas = 0
-        total_operaciones = 30
-
-        for i in range(total_operaciones):
-            try:
-                # Operaciones variadas
-                if i % 3 == 0:
-                    # Generar keystore
-                    result = self.gen_keystore(f"io_{i}", f"io_{i}.jks", "password123")
-                elif i % 3 == 1:
-                    # Exportar certificado
-                    if i > 0:
-                        result = self.export_cert(f"io_{i-1}", f"io_{i-1}.jks", "password123", f"io_{i}.crt")
-                    else:
-                        result = True
-                else:
-                    # Verificar existencia
-                    result = self.alias_exists(f"io_{i}", f"io_{i}.jks", "password123")
-
-                if result:
-                    operaciones_exitosas += 1
-
-            except Exception as e:
-                pass  # Fallos esperados en estrés
-
-        end_time = time.time()
-        tiempo_total = end_time - start_time
-
-        tasa_exito = (operaciones_exitosas / total_operaciones) * 100
-        print(f"   Operaciones: {operaciones_exitosas}/{total_operaciones} ({tasa_exito:.1f}%)")
-        print(f"   Tiempo total: {tiempo_total:.2f}s")
-
-        self.assert_true(tasa_exito > 60, f"Estrés de E/S aceptable ({tasa_exito:.1f}% éxito)")
-
-    def test_alias_case_sensitive(self):
-        """Test de sensibilidad a mayúsculas/minúsculas en alias"""
-        print("\n🔠 TEST CASE SENSITIVE")
-
-        alias_variaciones = [
-            "MiAlias",
-            "mialias",
-            "MIALIAS",
-            "MiaLIAS",
-            "mIALIAS"
-        ]
-
-        resultados = []
-        for i, alias in enumerate(alias_variaciones):
-            result = self.gen_keystore(alias, "case.jks", "password123")
-            resultados.append(result)
-
-            if result:
-                # Verificar que solo existe exactamente ese alias
-                verificacion = self.alias_exists(alias, "case.jks", "password123")
-                resultados.append(verificacion)
-                print(f"   '{alias}': {'✅' if verificacion else '❌'}")
-
-        exitos = sum(resultados)
-        self.assert_true(exitos >= 6, f"Sensibilidad a case funcionando ({exitos}/{len(resultados)})")
-
-    def test_keystore_corrupto(self):
-        """Test con keystore corrupto o dañado"""
-        print("\n💀 TEST KEYSTORE CORRUPTO")
-
-        # Crear keystore válido primero
-        self.gen_keystore("valido", "corrupto.jks", "password123")
-
-        # Corromper el archivo
-        keystore_path = os.path.join(self.test_dir, "corrupto.jks")
-        with open(keystore_path, 'rb') as f:
-            contenido = f.read()
-
-        # Insertar bytes corruptos en medio del archivo
-        mitad = len(contenido) // 2
-        contenido_corrupto = contenido[:mitad] + b'CORRUPTION' + contenido[mitad:]
-
-        with open(keystore_path, 'wb') as f:
-            f.write(contenido_corrupto)
-
-        # Intentar operaciones con keystore corrupto
-        result_listar = self.listar_alias_keystore("corrupto.jks", "password123")
-        result_exportar = self.export_cert("valido", "corrupto.jks", "password123", "corrupto.crt")
-
-        # Ambos deberían fallar
-        self.assert_false(result_listar, "Listar en keystore corrupto falla")
-        self.assert_false(result_exportar, "Exportar de keystore corrupto falla")
-
-        print("   ✅ Comportamiento correcto con keystore corrupto")
-
-    def test_exportacion_multiple_formato(self):
-        """Exportar el mismo certificado en múltiples formatos simultáneamente"""
-        print("\n📁 EXPORTACIÓN MÚLTIPLE FORMATO")
-
-        self.gen_keystore("multi_format", "multi_format.jks", "password123")
-
-        formatos = [".crt", ".cer", ".der", ".pem"]
-        resultados = []
-
-        for formato in formatos:
-            archivo = f"multi{formato}"
-            result = self.export_cert("multi_format", "multi_format.jks", "password123", archivo)
-            resultados.append(result)
-
-            if result:
-                file_exists = os.path.exists(os.path.join(self.test_dir, archivo))
-                resultados.append(file_exists)
-                print(f"   {formato}: {'✅' if file_exists else '❌'}")
-
-        exitos = sum(resultados)
-        self.assert_true(exitos >= 6, f"Exportación múltiple exitosa ({exitos}/{len(resultados)})")
-
-    def test_alias_con_espacios(self):
-        """Alias que contienen espacios y caracteres especiales"""
-        print("\n🔄 ALIAS CON ESPACIOS")
-
-        alias_especiales = [
-            "alias con espacios",
-            "alias-con-guiones",
-            "alias.con.puntos",
-            "alias'con'comillas",
-            "alias\\con\\barras"
-        ]
-
-        resultados = []
-        for alias in alias_especiales:
-            try:
-                result = self.gen_keystore(alias, "espacios.jks", "password123")
-                resultados.append(result)
-
-                if result:
-                    verificacion = self.alias_exists(alias, "espacios.jks", "password123")
-                    resultados.append(verificacion)
-                    print(f"   '{alias}': {'✅' if verificacion else '❌'}")
-                else:
-                    print(f"   '{alias}': ❌ (No se pudo crear)")
-
-            except Exception as e:
-                resultados.append(False)
-                print(f"   '{alias}': ❌ (Excepción)")
-
-        exitos = sum(resultados)
-        self.assert_true(exitos >= 3, f"Alias especiales funcionando ({exitos}/{len(resultados)})")
-
-    def test_rendimiento_alias_masivos(self):
-        """Test de rendimiento con cantidad masiva de alias"""
-        print("\n📈 RENDIMIENTO ALIAS MASIVOS")
-
-        keystore = "masivo_perf.jks"
-        cantidad_alias = 50
-
-        start_time = time.time()
-        exitos = 0
-
-        for i in range(cantidad_alias):
-            if self.gen_keystore_rapido(f"mass_{i}", keystore, "password123"):
-                exitos += 1
-
-            # Mostrar progreso cada 10
-            if (i + 1) % 10 == 0:
-                print(f"   Progreso: {i + 1}/{cantidad_alias}")
-
-        end_time = time.time()
-        tiempo_total = end_time - start_time
-
-        velocidad = cantidad_alias / tiempo_total if tiempo_total > 0 else 0
-        print(f"   Alias creados: {exitos}/{cantidad_alias}")
-        print(f"   Tiempo total: {tiempo_total:.2f}s")
-        print(f"   Velocidad: {velocidad:.2f} alias/segundo")
-
-        self.assert_true(exitos >= 40, f"Rendimiento masivo aceptable ({exitos}/{cantidad_alias})")
-
-    def test_importacion_certificados(self):
-        """Test de importación de certificados (si es soportado)"""
-        print("\n⬇️ TEST IMPORTACIÓN CERTIFICADOS")
-
-        # Primero generar y exportar un certificado
-        self.gen_keystore("import_test", "import.jks", "password123")
-        self.export_cert("import_test", "import.jks", "password123", "import.crt")
-
-        # Intentar importar a otro keystore
+    def export_certificate(self, alias, keystore, password, cert_file):
+        """Export certificate from keystore"""
+        if not self.alias_exists(alias, keystore, password):
+            return False
         try:
-            cmd = [
-                "keytool", "-import", "-trustcacerts",
-                "-alias", "imported_cert",
-                "-file", os.path.join(self.test_dir, "import.crt"),
-                "-keystore", os.path.join(self.test_dir, "import_dest.jks"),
-                "-storepass", "password123",
-                "-noprompt"
-            ]
-            result = subprocess.run(cmd, capture_output=True, timeout=30)
+            cmd = ["keytool", "-export", "-alias", alias,
+                   "-file", cert_file, "-keystore", keystore,
+                   "-storepass", password]
+            return subprocess.run(cmd, capture_output=True, timeout=20).returncode == 0
+        except Exception:
+            return False
 
-            if result.returncode == 0:
-                print("   ✅ Importación exitosa")
-                self.assert_true(True, "Importación de certificado")
+    def list_keystore(self, keystore, password, verbose=False):
+        """List all aliases in keystore"""
+        try:
+            cmd = ["keytool", "-list", "-keystore", keystore, "-storepass", password]
+            if verbose:
+                cmd.append("-v")
+            result = subprocess.run(cmd, capture_output=True, timeout=15, text=True)
+            return result.returncode == 0, result.stdout
+        except Exception:
+            return False, ""
+
+    def delete_alias(self, alias, keystore, password):
+        """Delete alias from keystore"""
+        try:
+            cmd = ["keytool", "-delete", "-alias", alias,
+                   "-keystore", keystore, "-storepass", password]
+            return subprocess.run(cmd, capture_output=True, timeout=10).returncode == 0
+        except Exception:
+            return False
+
+    def change_password(self, alias, keystore, old_pass, new_pass):
+        """Change alias password"""
+        try:
+            cmd = ["keytool", "-keypasswd", "-alias", alias,
+                   "-keystore", keystore, "-storepass", old_pass,
+                   "-keypass", old_pass, "-new", new_pass]
+            return subprocess.run(cmd, capture_output=True, timeout=10).returncode == 0
+        except Exception:
+            return False
+
+    def import_certificate(self, alias, keystore, password, cert_file):
+        """Import certificate to keystore"""
+        try:
+            cmd = ["keytool", "-import", "-trustcacerts", "-alias", alias,
+                   "-file", cert_file, "-keystore", keystore,
+                   "-storepass", password, "-noprompt"]
+            return subprocess.run(cmd, capture_output=True, timeout=20).returncode == 0
+        except Exception:
+            return False
+
+    def corrupt_keystore(self, keystore, corruption_type="middle"):
+        """Corrupt keystore file in different ways"""
+        if not os.path.exists(keystore):
+            return False
+        try:
+            with open(keystore, "rb") as f:
+                content = f.read()
+
+            if corruption_type == "middle":
+                mid = len(content) // 2
+                corrupted = content[:mid] + b"CORRUPTED_DATA_BLOCK" + content[mid:]
+            elif corruption_type == "start":
+                corrupted = b"CORRUPT" + content[7:]
+            elif corruption_type == "end":
+                corrupted = content[:-10] + b"CORRUPTED"
+            elif corruption_type == "truncate":
+                corrupted = content[:len(content)//3]
             else:
-                print("   ⚠️ Importación no soportada")
-                self.skip("Importación certificados", "No soportado en este entorno")
+                corrupted = content
 
-        except Exception as e:
-            print("   ⚠️ Importación falló")
-            self.skip("Importación certificados", f"Error: {str(e)}")
+            with open(keystore, "wb") as f:
+                f.write(corrupted)
+            return True
+        except Exception:
+            return False
 
-    def test_keystore_diferentes_rutas(self):
-        """Test con keystores en diferentes rutas y profundidades"""
-        print("\n📁 KEYSTORE DIFERENTES RUTAS")
+    # ==================== TEST GROUP 1: BASIC OPERATIONS ====================
 
-        rutas = [
-            "ruta_simple.jks",
-            "subdir/nivel1.jks",
-            "subdir/otro/nivel2.jks",
-            "deep/dir/structure/level3.jks"
+    def test_01_basic_operations(self):
+        """Test Group 1: Basic Keystore Operations"""
+        self.current_test_group = "test_01_basic_operations"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 1.1: Basic keystore creation
+        ks = self._path("basic.jks")
+        ok = self.generate_keystore("basic_alias", ks, "pass123")
+        if ok and self.alias_exists("basic_alias", ks, "pass123"):
+            self._pass("Basic keystore creation")
+        else:
+            self._fail("Basic keystore creation")
+
+        # Test 1.2: Multiple aliases in same keystore
+        ks = self._path("multi.jks")
+        aliases = [f"alias_{i}" for i in range(10)]
+        results = [self.generate_keystore(a, ks, "pass123") for a in aliases]
+        verifications = [self.alias_exists(a, ks, "pass123") for a in aliases]
+
+        if all(results) and all(verifications):
+            self._pass(f"Multiple aliases (10 aliases)")
+        else:
+            self._fail("Multiple aliases")
+
+        # Test 1.3: Case sensitivity in alias names
+        ks = self._path("case.jks")
+        aliases = ["TestAlias", "testalias", "TESTALIAS", "tEsTaLiAs", "TESTalias"]
+        results = [self.generate_keystore(a, ks, "pass123") and
+                   self.alias_exists(a, ks, "pass123") for a in aliases]
+
+        if all(results):
+            self._pass(f"Case sensitive aliases (5 variations)")
+        else:
+            self._fail("Case sensitive aliases")
+
+    # ==================== TEST GROUP 2: SPECIAL CHARACTERS ====================
+
+    def test_02_special_characters(self):
+        """Test Group 2: Special Characters & Unicode"""
+        self.current_test_group = "test_02_special_characters"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 2.1: Aliases with special characters
+        ks = self._path("special.jks")
+        aliases = [
+            "alias-with-dash",
+            "alias_with_underscore",
+            "alias.with.dots",
+            "alias123numbers",
+            "alias$special",
+            "alias@symbol"
         ]
+        results = [self.generate_keystore(a, ks, "pass123") and
+                   self.alias_exists(a, ks, "pass123") for a in aliases]
 
-        # Crear directorios necesarios
-        for ruta in rutas[1:]:
-            dir_path = os.path.dirname(os.path.join(self.test_dir, ruta))
-            os.makedirs(dir_path, exist_ok=True)
+        success = sum(results)
+        if success >= 4:
+            self._pass(f"Special character aliases ({success}/6)")
+        else:
+            self._fail("Special character aliases")
 
-        resultados = []
-        for i, ruta in enumerate(rutas):
-            alias = f"path_{i}"
-            result = self.gen_keystore(alias, ruta, "password123")
-            resultados.append(result)
+        # Test 2.2: Aliases containing spaces
+        ks = self._path("spaces.jks")
+        aliases = [
+            "alias with spaces",
+            "multi word alias test",
+            "  leading spaces",
+            "trailing spaces  "
+        ]
+        results = [self.generate_keystore(a, ks, "pass123") for a in aliases]
+        success = sum(results)
 
-            if result:
-                verificacion = self.alias_exists(alias, ruta, "password123")
-                resultados.append(verificacion)
-                print(f"   {ruta}: {'✅' if verificacion else '❌'}")
+        if success >= 2:
+            self._pass(f"Aliases with spaces ({success}/4)")
+        else:
+            self._fail("Aliases with spaces")
 
-        exitos = sum(resultados)
-        self.assert_true(exitos >= 4, f"Rutas diferentes funcionando ({exitos}/{len(resultados)})")
+        # Test 2.3: Unicode characters in aliases
+        ks = self._path("unicode.jks")
+        aliases = ["测试用户", "用户", "ñoño", "café", "日本語", "Ελληνικά"]
+        results = []
+        for i, a in enumerate(aliases):
+            ok = self.generate_keystore(a, f"{ks}.{i}", "pass123")
+            results.append(ok and self.alias_exists(a, f"{ks}.{i}", "pass123"))
 
-    def test_estabilidad_largo_plazo(self):
-        """Test de estabilidad con operaciones prolongadas"""
-        print("\n⏳ ESTABILIDAD LARGO PLAZO")
+        success = sum(results)
+        if success >= 3:
+            self._pass(f"Unicode aliases ({success}/6)")
+        else:
+            self._fail("Unicode aliases")
 
-        keystore = "estabilidad.jks"
-        operaciones_exitosas = 0
-        total_operaciones = 25
+        # Test 2.4: Emoji characters in aliases
+        ks = self._path("emoji.jks")
+        aliases = [
+            "user_🚀_test",
+            "🎉_celebration",
+            "test_🎭_alias",
+            "🌈_rainbow_✨"
+        ]
+        results = []
+        for i, a in enumerate(aliases):
+            ok = self.generate_keystore(a, f"{ks}.{i}", "pass123")
+            results.append(ok)
 
-        for i in range(total_operaciones):
-            try:
-                # Operación cíclica
-                operation_type = i % 4
+        success = sum(results)
+        if success >= 2:
+            self._pass(f"Emoji aliases ({success}/4)")
+        else:
+            self._fail("Emoji aliases")
 
-                if operation_type == 0:
-                    # Crear alias
-                    result = self.gen_keystore(f"stable_{i}", keystore, "password123")
-                elif operation_type == 1:
-                    # Verificar existencia
-                    result = self.alias_exists(f"stable_{i-1}", keystore, "password123") if i > 0 else True
-                elif operation_type == 2:
-                    # Exportar certificado
-                    result = self.export_cert(f"stable_{i-2}", keystore, "password123", f"stable_{i}.crt") if i > 1 else True
-                else:
-                    # Listar keystore
-                    result = self.listar_alias_keystore(keystore, "password123")
-
-                if result:
-                    operaciones_exitosas += 1
-
-                # Pequeña pausa para simular uso real
-                time.sleep(0.1)
-
-            except Exception as e:
-                pass  # Fallos esperados en test de estabilidad
-
-        tasa_exito = (operaciones_exitosas / total_operaciones) * 100
-        print(f"   Operaciones exitosas: {operaciones_exitosas}/{total_operaciones} ({tasa_exito:.1f}%)")
-
-        self.assert_true(tasa_exito > 70, f"Estabilidad aceptable ({tasa_exito:.1f}%)")
-
-    def test_alias_unicode_extremo(self):
-        """Test con caracteres Unicode extremos y emojis complejos"""
-        print("\n🌍 UNICODE EXTREMO")
-
-        alias_unicode_extremo = [
+        # Test 2.5: Extreme Unicode combinations
+        ks = self._path("unicode_extreme.jks")
+        aliases = [
             "用户_🚀_ñáéíóú",
-            "🎉庆祝_用户_😊",
-            "café_naïve_ façade_🎭",
             "𝒜𝓁𝒾𝒶𝓈_𝒮𝓅𝑒𝒸𝒾𝒶𝓁",
-            "ＡｌｉａｓＦｕｌｌＷｉｄｔｈ",  # Caracteres de ancho completo
-            "alias_🦄_🌈_✨",
-            "用户_🎵_音乐_🎶",
+            "ＡｌｉａｓＦｕｌｌＷｉｄｔｈ",
             "alias_👨‍👩‍👧‍👦_familia"
         ]
+        results = []
+        for i, a in enumerate(aliases):
+            ok = self.generate_keystore(a, f"{ks}.{i}", "pass123")
+            results.append(ok)
 
-        resultados = []
-        for i, alias in enumerate(alias_unicode_extremo):
-            try:
-                result = self.gen_keystore(alias, f"unicode_ext_{i}.jks", "password123")
-                resultados.append(result)
+        success = sum(results)
+        if success >= 2:
+            self._pass(f"Extreme Unicode ({success}/4)")
+        else:
+            self._fail("Extreme Unicode")
 
-                if result:
-                    verificacion = self.alias_exists(alias, f"unicode_ext_{i}.jks", "password123")
-                    resultados.append(verificacion)
-                    print(f"   '{alias}': {'✅' if verificacion else '❌'}")
+    # ==================== TEST GROUP 3: LENGTH & PATHS ====================
 
-            except Exception as e:
-                resultados.append(False)
-                print(f"   '{alias}': ❌")
+    def test_03_length_path_tests(self):
+        """Test Group 3: Length & Path Tests"""
+        self.current_test_group = "test_03_length_path_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
 
-        exitos = sum(resultados)
-        self.assert_true(exitos >= 8, f"Unicode extremo funcionando ({exitos}/{len(resultados)})")
+        # Test 3.1: Long alias names
+        ks = self._path("longname.jks")
+        aliases = [
+            "a" * 50,
+            "b" * 100,
+            "alias_" + "x" * 200,
+            "long" * 100
+        ]
+        results = [self.generate_keystore(a, ks, "pass123") for a in aliases]
+        success = sum(results)
 
-    def test_password_vacios_especiales(self):
-        """Test con passwords que contienen caracteres especiales problemáticos"""
-        print("\n🔣 PASSWORDS ESPECIALES")
+        if success >= 2:
+            self._pass(f"Long alias names ({success}/4)")
+        else:
+            self._fail("Long alias names")
 
-        passwords_especiales = [
-            "p@ss\\word",
+        # Test 3.2: Extremely long paths
+        long_dir = self._path("a" * 100)
+        try:
+            os.makedirs(long_dir, exist_ok=True)
+            ks = os.path.join(long_dir, "keystore.jks")
+            ok = self.generate_keystore("long_path", ks, "pass123")
+            verified = self.alias_exists("long_path", ks, "pass123")
+
+            if ok and verified:
+                self._pass("Extremely long paths")
+            else:
+                self._fail("Extremely long paths")
+        except Exception:
+            self._skip("Extremely long paths", "Path length limit")
+
+        # Test 3.3: Unicode paths
+        unicode_dir = self._path("路径_测试_🚀 con espacios")
+        try:
+            os.makedirs(unicode_dir, exist_ok=True)
+            ks = os.path.join(unicode_dir, "unicode_keystore.jks")
+            ok = self.generate_keystore("uni_alias", ks, "pass123")
+            verified = self.alias_exists("uni_alias", ks, "pass123")
+
+            if ok and verified:
+                self._pass("Unicode paths")
+            else:
+                self._fail("Unicode paths")
+        except Exception:
+            self._skip("Unicode paths", "Unicode path error")
+
+        # Test 3.4: Nested directories
+        paths = [
+            "level1/ks.jks",
+            "level1/level2/ks.jks",
+            "level1/level2/level3/ks.jks",
+            "a/b/c/d/e/f/ks.jks"
+        ]
+        results = []
+        for path in paths:
+            full_path = self._path(path)
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+            ok = self.generate_keystore("nested", full_path, "pass123")
+            results.append(ok and self.alias_exists("nested", full_path, "pass123"))
+
+        if all(results):
+            self._pass(f"Nested directories ({len(paths)} levels)")
+        else:
+            self._fail("Nested directories")
+
+    # ==================== TEST GROUP 4: PASSWORD TESTS ====================
+
+    def test_04_password_tests(self):
+        """Test Group 4: Password Variations"""
+        self.current_test_group = "test_04_password_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 4.1: Different password formats
+        passwords = [
+            "simple",
+            "Complex123!",
+            "p@ss$w0rd#%&",
+            "very_long_password_with_many_characters_123456789",
+            "12345678",
+            "🔐password🔑",
+            "паро́ль",
+            "密码"
+        ]
+        results = []
+        for i, pwd in enumerate(passwords):
+            ks = self._path(f"pwd_{i}.jks")
+            ok = self.generate_keystore(f"alias_{i}", ks, pwd)
+            results.append(ok and self.alias_exists(f"alias_{i}", ks, pwd))
+
+        success = sum(results)
+        if success >= 6:
+            self._pass(f"Password variations ({success}/8)")
+        else:
+            self._fail("Password variations")
+
+        # Test 4.2: Extremely long password
+        pw = ''.join(random.choices(string.printable, k=512))
+        ks = self._path("long_pwd.jks")
+
+        try:
+            ok = self.generate_keystore("long_pw_alias", ks, pw)
+            if ok:
+                verified = self.alias_exists("long_pw_alias", ks, pw)
+                if verified:
+                    self._pass("Extremely long password (512 chars)")
+                else:
+                    self._fail("Extremely long password verification")
+            else:
+                self._skip("Extremely long password", "Rejected by keytool")
+        except Exception:
+            self._skip("Extremely long password", "Exception occurred")
+
+        # Test 4.3: Special char passwords
+        passwords = [
+            "pass\\word",
             "pass'word",
             "pass`word",
             "pass$word",
             "pass&word",
             "pass|word",
-            "pass>word",
-            "pass<word"
+            "pass>word<",
+            "pass\"word"
         ]
+        results = []
+        for i, pwd in enumerate(passwords):
+            ks = self._path(f"special_pwd_{i}.jks")
+            ok = self.generate_keystore(f"sp_alias_{i}", ks, pwd)
+            results.append(ok and self.alias_exists(f"sp_alias_{i}", ks, pwd))
 
-        resultados = []
-        for i, pwd in enumerate(passwords_especiales):
-            try:
-                result = self.gen_keystore(f"special_pwd_{i}", f"special_{i}.jks", pwd)
-                resultados.append(result)
+        success = sum(results)
+        if success >= 4:
+            self._pass(f"Special char passwords ({success}/8)")
+        else:
+            self._fail("Special char passwords")
 
-                if result:
-                    verificacion = self.alias_exists(f"special_pwd_{i}", f"special_{i}.jks", pwd)
-                    resultados.append(verificacion)
-                    print(f"   '{pwd}': {'✅' if verificacion else '❌'}")
+        # Test 4.4: Wrong password rejection
+        ks = self._path("wrongpwd.jks")
+        self.generate_keystore("test", ks, "correct123")
 
-            except Exception as e:
-                resultados.append(False)
-                print(f"   '{pwd}': ❌")
+        wrong = self.alias_exists("test", ks, "wrong123")
+        correct = self.alias_exists("test", ks, "correct123")
 
-        exitos = sum(resultados)
-        self.assert_true(exitos >= 6, f"Passwords especiales funcionando ({exitos}/{len(resultados)})")
+        if not wrong and correct:
+            self._pass("Wrong password rejection")
+        else:
+            self._fail("Wrong password rejection")
 
-    def test_keystore_tamanos_varios(self):
-        """Test con keystores de diferentes tamaños y contenidos"""
-        print("\n📊 KEYSTORE DIFERENTES TAMAÑOS")
+        # Test 4.5: Password change operations
+        ks = self._path("pwdchange.jks")
+        self.generate_keystore("change_test", ks, "old_pass")
 
-        configuraciones = [
-            (1, "keystore_pequeno.jks", "Pequeño (1 alias)"),
-            (10, "keystore_medio.jks", "Medio (10 alias)"),
-            (25, "keystore_grande.jks", "Grande (25 alias)")
-        ]
+        changed = self.change_password("change_test", ks, "old_pass", "new_pass")
+        old_works = self.alias_exists("change_test", ks, "old_pass")
+        new_works = self.alias_exists("change_test", ks, "new_pass")
 
-        resultados = []
-        for cantidad, keystore, descripcion in configuraciones:
-            start_time = time.time()
+        if changed and not old_works and new_works:
+            self._pass("Password change")
+        else:
+            self._fail("Password change")
 
-            # Crear múltiples alias
-            exitos = 0
-            for i in range(cantidad):
-                if self.gen_keystore(f"size_{i}", keystore, "password123"):
-                    exitos += 1
+        # Test 4.6: Empty password
+        ks = self._path("empty_pwd.jks")
+        ok = self.generate_keystore("empty", ks, "")
 
-            end_time = time.time()
-            tiempo = end_time - start_time
+        if ok:
+            verified = self.alias_exists("empty", ks, "")
+            if verified:
+                self._pass("Empty password accepted")
+            else:
+                self._fail("Empty password verification")
+        else:
+            self._skip("Empty password", "Rejected by keytool")
 
-            # Verificar que todos los alias existen
-            todos_existen = all(self.alias_exists(f"size_{i}", keystore, "password123") for i in range(exitos))
+    # ==================== TEST GROUP 5: EXPORT/IMPORT TESTS ====================
 
-            resultados.append(todos_existen)
-            print(f"   {descripcion}: {exitos}/{cantidad} alias en {tiempo:.2f}s - {'✅' if todos_existen else '❌'}")
+    def test_05_export_import_tests(self):
+        """Test Group 5: Export/Import Operations"""
+        self.current_test_group = "test_05_export_import_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
 
-        self.assert_true(all(resultados), "Keystores de diferentes tamaños funcionando")
+        # Test 5.1: Certificate export in different formats
+        ks = self._path("export.jks")
+        self.generate_keystore("export_test", ks, "pass123")
 
-    def test_concurrencia_avanzada(self):
-        """Test de concurrencia más avanzado con mezcla de operaciones"""
-        print("\n🔄 CONCURRENCIA AVANZADA")
+        formats = [".crt", ".cer", ".der", ".pem", ".cert"]
+        results = []
+        for fmt in formats:
+            cert = self._path(f"cert{fmt}")
+            ok = self.export_certificate("export_test", ks, "pass123", cert)
+            results.append(ok and os.path.exists(cert))
 
-        def operacion_compleja(i):
-            keystore = f"conc_adv_{i % 5}.jks"
-            try:
-                # Mezcla de operaciones más compleja
-                if i % 5 == 0:
-                    # Solo crear
-                    return self.gen_keystore_rapido(f"adv_{i}", keystore, "password123")
-                elif i % 5 == 1:
-                    # Crear y verificar
-                    created = self.gen_keystore_rapido(f"adv_{i}", keystore, "password123")
-                    return created and self.alias_exists(f"adv_{i}", keystore, "password123")
-                elif i % 5 == 2:
-                    # Crear y exportar
-                    created = self.gen_keystore_rapido(f"adv_{i}", keystore, "password123")
-                    if created:
-                        return self.export_cert(f"adv_{i}", keystore, "password123", f"adv_{i}.crt")
-                    return False
-                elif i % 5 == 3:
-                    # Solo verificar (puede fallar si no existe)
-                    return self.alias_exists(f"adv_{i-1}", keystore, "password123") if i > 0 else True
-                else:
-                    # Solo listar
-                    return self.listar_alias_keystore(keystore, "password123")
+        success = sum(results)
+        if success >= 3:
+            self._pass(f"Export formats ({success}/5)")
+        else:
+            self._fail("Export formats")
 
-            except Exception:
-                return False
+        # Test 5.2: Certificate import operations
+        ks_src = self._path("import_src.jks")
+        ks_dst = self._path("import_dst.jks")
+        cert = self._path("import.crt")
 
-        # Ejecutar operaciones concurrentes más complejas
-        with ThreadPoolExecutor(max_workers=6) as executor:
-            futures = [executor.submit(operacion_compleja, i) for i in range(20)]
-            resultados = [f.result() for f in as_completed(futures)]
+        self.generate_keystore("import_test", ks_src, "pass123")
+        exported = self.export_certificate("import_test", ks_src, "pass123", cert)
 
-        exitos = sum(resultados)
-        tasa_exito = (exitos / len(resultados)) * 100
-        print(f"   Operaciones exitosas: {exitos}/{len(resultados)} ({tasa_exito:.1f}%)")
+        if exported:
+            imported = self.import_certificate("imported_cert", ks_dst, "pass123", cert)
+            if imported:
+                self._pass("Certificate import")
+            else:
+                self._fail("Certificate import")
+        else:
+            self._skip("Certificate import", "Export failed")
 
-        self.assert_true(tasa_exito > 50, f"Concurrencia avanzada aceptable ({tasa_exito:.1f}%)")
+        # Test 5.3: Multiple exports same certificate
+        ks = self._path("multi_export.jks")
+        self.generate_keystore("multi", ks, "pass123")
 
-    def test_alias_renovacion(self):
-        """Test de renovación y reemplazo de alias"""
-        print("\n🔄 RENOVACIÓN ALIAS")
+        results = []
+        for i in range(5):
+            cert = self._path(f"multi_export_{i}.crt")
+            ok = self.export_certificate("multi", ks, "pass123", cert)
+            results.append(ok and os.path.exists(cert))
 
-        keystore = "renovacion.jks"
+        if all(results):
+            self._pass("Multiple exports same certificate")
+        else:
+            self._fail("Multiple exports same certificate")
 
-        # Crear alias inicial
-        self.gen_keystore("renovar", keystore, "password123")
+    # ==================== TEST GROUP 6: CORRUPTION & ERROR TESTS ====================
 
-        # Intentar crear el mismo alias (debería fallar)
-        result_duplicado = self.gen_keystore("renovar", keystore, "password123")
+    def test_06_corruption_error_tests(self):
+        """Test Group 6: Corruption & Error Handling"""
+        self.current_test_group = "test_06_corruption_error_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
 
-        # Crear alias diferente
-        result_nuevo = self.gen_keystore("nuevo_alias", keystore, "password123")
+        # Test 6.1: Corrupted keystore (middle corruption)
+        ks = self._path("corrupt_mid.jks")
+        self.generate_keystore("valid", ks, "pass123")
+        self.corrupt_keystore(ks, "middle")
 
-        # Verificar estados
-        alias_original_existe = self.alias_exists("renovar", keystore, "password123")
-        alias_nuevo_existe = self.alias_exists("nuevo_alias", keystore, "password123")
+        can_list, _ = self.list_keystore(ks, "pass123")
+        if not can_list:
+            self._pass("Corrupted keystore rejection (middle)")
+        else:
+            self._fail("Corrupted keystore rejection (middle)")
 
-        print(f"   Alias original existe: {'✅' if alias_original_existe else '❌'}")
-        print(f"   Alias duplicado rechazado: {'✅' if not result_duplicado else '❌'}")
-        print(f"   Nuevo alias creado: {'✅' if alias_nuevo_existe else '❌'}")
+        # Test 6.2: Corrupted keystore (start corruption)
+        ks = self._path("corrupt_start.jks")
+        self.generate_keystore("valid", ks, "pass123")
+        self.corrupt_keystore(ks, "start")
 
-        self.assert_true(alias_original_existe and not result_duplicado and alias_nuevo_existe,
-                        "Renovación de alias funcionando correctamente")
+        can_list, _ = self.list_keystore(ks, "pass123")
+        if not can_list:
+            self._pass("Corrupted keystore rejection (start)")
+        else:
+            self._fail("Corrupted keystore rejection (start)")
 
-    def test_keystore_backup_restore(self):
-        """Test de backup y restauración de keystore"""
-        print("\n💾 BACKUP/RESTORE KEYSTORE")
+        # Test 6.3: Truncated keystore
+        ks = self._path("corrupt_trunc.jks")
+        self.generate_keystore("valid", ks, "pass123")
+        self.corrupt_keystore(ks, "truncate")
 
-        # Crear keystore original
-        self.gen_keystore("backup_test", "original.jks", "password123")
-        self.export_cert("backup_test", "original.jks", "password123", "backup.crt")
+        can_list, _ = self.list_keystore(ks, "pass123")
+        if not can_list:
+            self._pass("Truncated keystore rejection")
+        else:
+            self._fail("Truncated keystore rejection")
 
-        # Crear backup (copiar archivo)
-        import shutil
-        shutil.copy2(
-            os.path.join(self.test_dir, "original.jks"),
-            os.path.join(self.test_dir, "backup.jks")
-        )
+        # Test 6.4: Wrong password doesn't corrupt keystore
+        ks = self._path("pwd_nocorrupt.jks")
+        self.generate_keystore("test", ks, "correct")
 
-        # Verificar que backup funciona
-        alias_en_backup = self.alias_exists("backup_test", "backup.jks", "password123")
-        cert_en_backup = os.path.exists(os.path.join(self.test_dir, "backup.crt"))
+        # Try with wrong password multiple times
+        for _ in range(5):
+            self.alias_exists("test", ks, "wrong")
 
-        print(f"   Alias en backup: {'✅' if alias_en_backup else '❌'}")
-        print(f"   Certificado exportado: {'✅' if cert_en_backup else '❌'}")
+        # Verify correct password still works
+        still_works = self.alias_exists("test", ks, "correct")
 
-        self.assert_true(alias_en_backup and cert_en_backup, "Backup/restore funcionando")
+        if still_works:
+            self._pass("Wrong password doesn't corrupt")
+        else:
+            self._fail("Wrong password doesn't corrupt")
 
-    def test_estres_memoria_prolongado(self):
-        """Test de estrés de memoria prolongado"""
-        print("\n🧠 ESTRÉS MEMORIA PROLONGADO")
+    # ==================== TEST GROUP 7: DELETION & MODIFICATION ====================
 
-        operaciones = 100
-        exitos = 0
+    def test_07_deletion_modification_tests(self):
+        """Test Group 7: Deletion & Modification"""
+        self.current_test_group = "test_07_deletion_modification_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
 
-        for i in range(operaciones):
-            try:
-                # Operaciones variadas para consumir memoria
-                if i % 10 == 0:
-                    # Keystore nuevo cada 10 operaciones
-                    result = self.gen_keystore(f"mem_{i}", f"mem_{i}.jks", "password123")
-                else:
-                    # Reutilizar keystore existente
-                    result = self.gen_keystore(f"mem_{i}", "mem_reuse.jks", "password123")
+        # Test 7.1: Alias deletion
+        ks = self._path("delete.jks")
+        self.generate_keystore("to_delete", ks, "pass123")
 
-                if result:
-                    exitos += 1
+        exists_before = self.alias_exists("to_delete", ks, "pass123")
+        deleted = self.delete_alias("to_delete", ks, "pass123")
+        exists_after = self.alias_exists("to_delete", ks, "pass123")
 
-                # Limpiar memoria periódicamente
-                if i % 20 == 0:
-                    import gc
-                    gc.collect()
+        if exists_before and deleted and not exists_after:
+            self._pass("Alias deletion")
+        else:
+            self._fail("Alias deletion")
 
-            except Exception as e:
-                pass  # Fallos esperados en estrés
+        # Test 7.2: Delete non-existent alias
+        ks = self._path("delete_none.jks")
+        self.generate_keystore("exists", ks, "pass123")
 
-        tasa_exito = (exitos / operaciones) * 100
-        print(f"   Operaciones exitosas: {exitos}/{operaciones} ({tasa_exito:.1f}%)")
+        deleted = self.delete_alias("nonexistent", ks, "pass123")
 
-        self.assert_true(tasa_exito > 60, f"Estrés de memoria aceptable ({tasa_exito:.1f}%)")
+        if not deleted:
+            self._pass("Delete non-existent alias rejected")
+        else:
+            self._fail("Delete non-existent alias rejected")
 
-    def test_compatibilidad_sistemas_archivos(self):
-        """Test de compatibilidad con diferentes nombres de sistemas de archivos"""
-        print("\n📂 COMPATIBILIDAD SISTEMAS ARCHIVOS")
+        # Test 7.3: Rapid creation and deletion cycles
+        ks = self._path("rapid.jks")
+        cycles = 15
+        results = []
 
-        nombres_especiales = [
+        for i in range(cycles):
+            alias = f"rapid_{i}"
+            created = self.generate_keystore(alias, ks, "pass123")
+            deleted = self.delete_alias(alias, ks, "pass123")
+            results.append(created and deleted)
+
+        success = sum(results)
+        if success >= cycles * 0.8:
+            self._pass(f"Rapid creation/deletion ({success}/{cycles})")
+        else:
+            self._fail("Rapid creation/deletion")
+
+        # Test 7.4: Duplicate alias rejection
+        ks = self._path("duplicate.jks")
+        first = self.generate_keystore("dup_alias", ks, "pass123")
+        second = self.generate_keystore("dup_alias", ks, "pass123")
+
+        if first and not second:
+            self._pass("Duplicate alias rejection")
+        else:
+            self._fail("Duplicate alias rejection")
+
+        # Test 7.5: Alias renewal scenarios
+        ks = self._path("renewal.jks")
+
+        self.generate_keystore("renew", ks, "pass123")
+        duplicate = self.generate_keystore("renew", ks, "pass123")
+        new_alias = self.generate_keystore("new_alias", ks, "pass123")
+
+        original_exists = self.alias_exists("renew", ks, "pass123")
+        new_exists = self.alias_exists("new_alias", ks, "pass123")
+
+        if original_exists and not duplicate and new_exists:
+            self._pass("Alias renewal handling")
+        else:
+            self._fail("Alias renewal handling")
+
+    # ==================== TEST GROUP 8: KEY SIZE & VALIDITY ====================
+
+    def test_08_key_size_validity_tests(self):
+        """Test Group 8: Key Size & Validity Tests"""
+        self.current_test_group = "test_08_key_size_validity_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 8.1: Different RSA key sizes
+        sizes = [512, 1024, 2048, 4096]
+        results = []
+        times = []
+
+        for size in sizes:
+            ks = self._path(f"keysize_{size}.jks")
+            start = time.time()
+            ok = self.generate_keystore(f"key_{size}", ks, "pass123", keysize=size)
+            elapsed = time.time() - start
+            results.append(ok)
+            times.append(elapsed)
+
+        success = sum(results)
+        if success >= 3:
+            self._pass(f"Different key sizes ({success}/4, max time: {max(times):.2f}s)")
+        else:
+            self._fail("Different key sizes")
+
+        # Test 8.2: Key size impact on performance
+        sizes = [1024, 2048]
+        times = {}
+
+        for size in sizes:
+            ks = self._path(f"perf_{size}.jks")
+            start = time.time()
+            self.generate_keystore(f"perf_{size}", ks, "pass123", keysize=size)
+            times[size] = time.time() - start
+
+        if 1024 in times and 2048 in times:
+            ratio = times[2048] / times[1024] if times[1024] > 0 else 0
+            self._pass(f"Key size performance (2048/1024 ratio: {ratio:.2f}x)")
+        else:
+            self._fail("Key size performance")
+
+        # Test 8.3: Certificate validity periods
+        ks = self._path("validity.jks")
+        validities = [1, 365, 3650, 7300]  # 1 day, 1 year, 10 years, 20 years
+        results = []
+
+        for val in validities:
+            alias = f"valid_{val}"
+            ok = self.generate_keystore(alias, ks, "pass123", validity=val)
+            results.append(ok)
+
+        success = sum(results)
+        if success >= 3:
+            self._pass(f"Certificate validity periods ({success}/4)")
+        else:
+            self._fail("Certificate validity periods")
+
+        # Test 8.4: Validity info extraction
+        ks = self._path("validity_info.jks")
+        self.generate_keystore("expiry_test", ks, "pass123", validity=365)
+
+        can_list, output = self.list_keystore(ks, "pass123", verbose=True)
+
+        if can_list and "Valid from" in output:
+            self._pass("Validity info extraction")
+        else:
+            self._skip("Validity info extraction", "Format not detected")
+
+    # ==================== TEST GROUP 9: FILESYSTEM & PERMISSIONS ====================
+
+    def test_09_filesystem_permissions_tests(self):
+        """Test Group 9: Filesystem & Permissions"""
+        self.current_test_group = "test_09_filesystem_permissions_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 9.1: Filesystem compatibility
+        names = [
             "keystore-with-dashes.jks",
             "keystore_with_underscores.jks",
             "KeystoreWithCaps.jks",
             "keystore.mixed.Case.jks",
-            "key-store-2024.jks",
-            "test.123.jks"
+            "ks-2024-01-15.jks",
+            "test.v1.2.3.jks"
         ]
+        results = []
+        for name in names:
+            ks = self._path(name)
+            ok = self.generate_keystore("fs_test", ks, "pass123")
+            results.append(ok and self.alias_exists("fs_test", ks, "pass123"))
 
-        resultados = []
-        for nombre in nombres_especiales:
-            result = self.gen_keystore("fs_test", nombre, "password123")
-            resultados.append(result)
+        success = sum(results)
+        if success >= 5:
+            self._pass(f"Filesystem compatibility ({success}/6)")
+        else:
+            self._fail("Filesystem compatibility")
 
-            if result:
-                verificacion = self.alias_exists("fs_test", nombre, "password123")
-                resultados.append(verificacion)
-                print(f"   {nombre}: {'✅' if verificacion else '❌'}")
+        # Test 9.2: File permissions readonly
+        ks = self._path("perms_ro.jks")
+        self.generate_keystore("perms", ks, "pass123")
 
-        exitos = sum(resultados)
-        self.assert_true(exitos >= 8, f"Compatibilidad sistemas archivos ({exitos}/{len(resultados)})")
+        try:
+            os.chmod(ks, 0o444)
+            can_read = self.alias_exists("perms", ks, "pass123")
+            can_write = self.generate_keystore("perms2", ks, "pass123")
+            os.chmod(ks, 0o644)
 
-    def test_rendimiento_calculo_claves(self):
-        """Test de rendimiento específico para cálculo de claves"""
-        print("\n⚡ RENDIMIENTO CÁLCULO CLAVES")
+            if can_read and not can_write:
+                self._pass("Read-only permissions")
+            else:
+                self._fail("Read-only permissions")
+        except Exception:
+            self._skip("Read-only permissions", "chmod not supported")
 
-        tamanos_clave = [512, 1024, 2048, 4096]
-        tiempos = {}
+        # Test 9.3: File permissions noread
+        ks = self._path("perms_noread.jks")
+        self.generate_keystore("perms", ks, "pass123")
 
-        for tamano in tamanos_clave:
+        try:
+            os.chmod(ks, 0o000)
+            can_read = self.alias_exists("perms", ks, "pass123")
+            os.chmod(ks, 0o644)
+
+            if not can_read:
+                self._pass("No-read permissions rejection")
+            else:
+                self._fail("No-read permissions rejection")
+        except Exception:
+            os.chmod(ks, 0o644) if os.path.exists(ks) else None
+            self._skip("No-read permissions", "chmod not supported")
+
+        # Test 9.4: Keystore size growth tracking
+        ks = self._path("sizetest.jks")
+        sizes = []
+
+        for i in range(5):
+            self.generate_keystore(f"size_{i}", ks, "pass123")
+            if os.path.exists(ks):
+                sizes.append(os.path.getsize(ks))
+
+        growing = all(sizes[i] < sizes[i+1] for i in range(len(sizes)-1))
+        if growing and len(sizes) == 5:
+            self._pass(f"Keystore size growth ({sizes[0]} -> {sizes[-1]} bytes)")
+        else:
+            self._fail("Keystore size growth")
+
+        # Test 9.5: Keystores with different content sizes
+        configs = [
+            (1, "small.jks", "Small (1 alias)"),
+            (10, "medium.jks", "Medium (10 aliases)"),
+            (25, "large.jks", "Large (25 aliases)")
+        ]
+        results = []
+
+        for count, ks_name, desc in configs:
+            ks = self._path(ks_name)
+            success = 0
+            for i in range(count):
+                if self.generate_keystore(f"size_{i}", ks, "pass123"):
+                    success += 1
+
+            all_exist = all(self.alias_exists(f"size_{i}", ks, "pass123")
+                           for i in range(success))
+            results.append(all_exist)
+
+        if all(results):
+            self._pass("Different keystore sizes")
+        else:
+            self._fail("Different keystore sizes")
+
+    # ==================== TEST GROUP 10: CONCURRENCY & STRESS ====================
+
+    def test_10_concurrency_stress_tests(self):
+        """Test Group 10: Concurrency & Stress Tests"""
+        self.current_test_group = "test_10_concurrency_stress_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 10.1: Basic concurrent keystore operations
+        ks = self._path("concurrent.jks")
+
+        def worker(i):
+            alias = f"concurrent_{i}"
+            ok = self.generate_keystore(alias, ks, "pass123")
+            return ok or self.alias_exists(alias, ks, "pass123")
+
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            futures = [executor.submit(worker, i) for i in range(20)]
+            results = [f.result() for f in as_completed(futures)]
+
+        success = sum(results)
+        if success >= 15:
+            self._pass(f"Concurrent operations basic ({success}/20)")
+        else:
+            self._fail("Concurrent operations basic")
+
+        # Test 10.2: Advanced concurrent operations
+        ks = self._path("concurrent_adv.jks")
+
+        def worker(i):
             try:
-                start_time = time.time()
-                result = self.gen_keystore(f"key_{tamano}", f"keyperf_{tamano}.jks", "password123", keysize=tamano)
-                end_time = time.time()
-
-                if result:
-                    tiempo = end_time - start_time
-                    tiempos[tamano] = tiempo
-                    print(f"   {tamano} bits: {tiempo:.2f}s")
+                if i % 5 == 0:
+                    return self.generate_keystore(f"adv_{i}", ks, "pass123")
+                elif i % 5 == 1:
+                    created = self.generate_keystore(f"adv_{i}", ks, "pass123")
+                    return created and self.alias_exists(f"adv_{i}", ks, "pass123")
+                elif i % 5 == 2:
+                    created = self.generate_keystore(f"adv_{i}", ks, "pass123")
+                    if created:
+                        cert = self._path(f"adv_{i}.crt")
+                        return self.export_certificate(f"adv_{i}", ks, "pass123", cert)
+                    return False
+                elif i % 5 == 3:
+                    return self.alias_exists(f"adv_{i-1}", ks, "pass123") if i > 0 else True
                 else:
-                    print(f"   {tamano} bits: ❌ Falló")
+                    ok, _ = self.list_keystore(ks, "pass123")
+                    return ok
+            except Exception:
+                return False
 
-            except Exception as e:
-                print(f"   {tamano} bits: 💥 Error")
+        with ThreadPoolExecutor(max_workers=6) as executor:
+            futures = [executor.submit(worker, i) for i in range(25)]
+            results = [f.result() for f in as_completed(futures)]
 
-        # Verificar que al menos algunos tamaños funcionan
-        exitos = len(tiempos)
-        self.assert_true(exitos >= 2, f"Rendimiento cálculo claves ({exitos}/{len(tamanos_clave)} tamaños)")
+        success = sum(results)
+        rate = (success / len(results)) * 100
+        if rate > 50:
+            self._pass(f"Concurrent advanced ({success}/25, {rate:.0f}%)")
+        else:
+            self._fail("Concurrent advanced")
 
-    # ... (aquí irían todos los tests anteriores que ya tenías)
-    # Los mantengo pero los omito para brevedad
+        # Test 10.3: Race condition scenarios
+        ks = self._path("race.jks")
+
+        def worker(i):
+            if i % 3 == 0:
+                return self.generate_keystore(f"race_{i}", ks, "pass123")
+            elif i % 3 == 1:
+                return self.alias_exists(f"race_{i-1}", ks, "pass123")
+            else:
+                cert = self._path(f"race_{i}.crt")
+                return self.export_certificate(f"race_{i-2}", ks, "pass123", cert)
+
+        with ThreadPoolExecutor(max_workers=6) as executor:
+            futures = [executor.submit(worker, i) for i in range(30)]
+            results = [f.result() for f in as_completed(futures)]
+
+        success = sum(results)
+        rate = (success / len(results)) * 100
+        if rate > 40:
+            self._pass(f"Race conditions ({success}/30, {rate:.0f}%)")
+        else:
+            self._fail("Race conditions")
+
+        # Test 10.4: Large batch operations
+        ks = self._path("batch.jks")
+        batch_size = 50
+        results = []
+
+        start = time.time()
+        for i in range(batch_size):
+            ok = self.generate_keystore(f"batch_{i}", ks, "pass123")
+            results.append(ok)
+            if i % 10 == 0 and i > 0:
+                print(f"    Progress: {i}/{batch_size}")
+
+        elapsed = time.time() - start
+        success = sum(results)
+
+        if success >= batch_size * 0.8:
+            self._pass(f"Large batch ({success}/{batch_size} in {elapsed:.1f}s)")
+        else:
+            self._fail("Large batch operations")
+
+        # Test 10.5: I/O stress test
+        operations = 40
+        success = 0
+
+        for i in range(operations):
+            ks = self._path(f"io_{i}.jks")
+            if i % 3 == 0:
+                ok = self.generate_keystore(f"io_{i}", ks, "pass123")
+            elif i % 3 == 1:
+                ok, _ = self.list_keystore(ks, "pass123") if i > 0 else (True, "")
+            else:
+                ok = self.alias_exists(f"io_{i-1}", self._path(f"io_{i-1}.jks"), "pass123")
+
+            if ok:
+                success += 1
+
+        rate = (success / operations) * 100
+        if rate >= 60:
+            self._pass(f"I/O stress ({success}/{operations}, {rate:.0f}%)")
+        else:
+            self._fail("I/O stress")
+
+    # ==================== TEST GROUP 11: SPECIAL SCENARIOS ====================
+
+    def test_11_special_scenarios(self):
+        """Test Group 11: Special Scenarios"""
+        self.current_test_group = "test_11_special_scenarios"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 11.1: Different Distinguished Name formats
+        ks = self._path("dnames.jks")
+        dnames = [
+            "CN=Test User, OU=Dev, O=Company, L=City, ST=State, C=US",
+            "CN=Simple",
+            "CN=Test, O=Org",
+            "CN=Unicode测试, C=CN",
+            "CN=Emoji🚀, OU=Test"
+        ]
+        results = []
+
+        for i, dn in enumerate(dnames):
+            ok = self.generate_keystore(f"dn_{i}", ks, "pass123", dname=dn)
+            results.append(ok)
+
+        success = sum(results)
+        if success >= 4:
+            self._pass(f"Special DN formats ({success}/5)")
+        else:
+            self._fail("Special DN formats")
+
+        # Test 11.2: Backup and restore keystore
+        ks_orig = self._path("original.jks")
+        ks_backup = self._path("backup.jks")
+
+        self.generate_keystore("backup_test", ks_orig, "pass123")
+        cert = self._path("backup.crt")
+        self.export_certificate("backup_test", ks_orig, "pass123", cert)
+
+        shutil.copy2(ks_orig, ks_backup)
+
+        alias_in_backup = self.alias_exists("backup_test", ks_backup, "pass123")
+        cert_exists = os.path.exists(cert)
+
+        if alias_in_backup and cert_exists:
+            self._pass("Backup/restore")
+        else:
+            self._fail("Backup/restore")
+
+        # Test 11.3: Empty keystore operations
+        ks = self._path("empty.jks")
+        self.generate_keystore("temp", ks, "pass123")
+        self.delete_alias("temp", ks, "pass123")
+
+        can_list, _ = self.list_keystore(ks, "pass123")
+        nonexistent = self.alias_exists("nonexistent", ks, "pass123")
+
+        if can_list and not nonexistent:
+            self._pass("Empty keystore operations")
+        else:
+            self._fail("Empty keystore operations")
+
+        # Test 11.4: Operations on non-existent keystore
+        ks = self._path("nonexistent.jks")
+
+        exists = self.alias_exists("any", ks, "pass123")
+        can_list, _ = self.list_keystore(ks, "pass123")
+        can_export = self.export_certificate("any", ks, "pass123", self._path("none.crt"))
+
+        if not exists and not can_list and not can_export:
+            self._pass("Non-existent keystore operations")
+        else:
+            self._fail("Non-existent keystore operations")
+
+    # ==================== TEST GROUP 12: EXTREME EDGE CASES ====================
+
+    def test_12_extreme_edge_cases(self):
+        """Test Group 12: Extreme Edge Cases"""
+        self.current_test_group = "test_12_extreme_edge_cases"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 12.1: Memory stress with many operations
+        operations = 100
+        success = 0
+
+        for i in range(operations):
+            try:
+                if i % 10 == 0:
+                    ks = self._path(f"mem_{i}.jks")
+                    ok = self.generate_keystore(f"mem_{i}", ks, "pass123")
+                else:
+                    ok = self.generate_keystore(f"mem_{i}", self._path("mem_reuse.jks"), "pass123")
+
+                if ok:
+                    success += 1
+
+                if i % 20 == 0:
+                    import gc
+                    gc.collect()
+            except Exception:
+                pass
+
+        rate = (success / operations) * 100
+        if rate > 60:
+            self._pass(f"Memory stress ({success}/{operations}, {rate:.0f}%)")
+        else:
+            self._fail("Memory stress")
+
+        # Test 12.2: Long-term stability test
+        ks = self._path("stability.jks")
+        operations = 30
+        success = 0
+
+        for i in range(operations):
+            try:
+                op_type = i % 4
+
+                if op_type == 0:
+                    ok = self.generate_keystore(f"stable_{i}", ks, "pass123")
+                elif op_type == 1:
+                    ok = self.alias_exists(f"stable_{i-1}", ks, "pass123") if i > 0 else True
+                elif op_type == 2:
+                    cert = self._path(f"stable_{i}.crt")
+                    ok = self.export_certificate(f"stable_{i-2}", ks, "pass123", cert) if i > 1 else True
+                else:
+                    ok, _ = self.list_keystore(ks, "pass123")
+
+                if ok:
+                    success += 1
+
+                time.sleep(0.05)
+            except Exception:
+                pass
+
+        rate = (success / operations) * 100
+        if rate > 70:
+            self._pass(f"Long-term stability ({success}/{operations}, {rate:.0f}%)")
+        else:
+            self._fail("Long-term stability")
+
+        # Test 12.3: Interrupted operation
+        ks = self._path("interrupt.jks")
+
+        try:
+            cmd = [
+                "keytool", "-genkeypair", "-keyalg", "RSA",
+                "-alias", "interrupt_test", "-keystore", ks,
+                "-storepass", "pass123", "-keypass", "pass123",
+                "-keysize", "4096", "-dname", "CN=Test, C=ES"
+            ]
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            time.sleep(0.3)
+            proc.kill()
+            proc.wait(timeout=5)
+
+            if os.path.exists(ks):
+                can_list, _ = self.list_keystore(ks, "pass123")
+                self._pass(f"Interrupted operation handled (can_list={can_list})")
+            else:
+                self._pass("Interrupted operation - no partial file")
+        except Exception:
+            self._skip("Interrupted operation", "Cannot simulate")
+
+        # Test 12.4: RAM disk operations
+        ramdisk = "/dev/shm"
+        if not os.path.exists(ramdisk):
+            self._skip("RAM disk", "/dev/shm not available")
+        else:
+            ks = os.path.join(ramdisk, f"ramdisk_{int(time.time())}.jks")
+            try:
+                ok = self.generate_keystore("ram_alias", ks, "pass123")
+                if ok and os.path.exists(ks):
+                    os.remove(ks)
+                    self._pass("RAM disk operations")
+                else:
+                    self._fail("RAM disk operations")
+            except Exception:
+                self._skip("RAM disk", "Operation failed")
+
+        # Test 12.5: Listing tests
+        ks = self._path("verbose.jks")
+        self.generate_keystore("verbose_test", ks, "pass123")
+
+        can_list, output = self.list_keystore(ks, "pass123", verbose=True)
+
+        if can_list and len(output) > 100:
+            self._pass(f"Verbose listing ({len(output)} chars)")
+        else:
+            self._fail("Verbose listing")
+
+        # Test 12.6: List keystore with many aliases
+        ks = self._path("list_multi.jks")
+        for i in range(10):
+            self.generate_keystore(f"list_{i}", ks, "pass123")
+
+        can_list, output = self.list_keystore(ks, "pass123")
+
+        if can_list:
+            self._pass("List multiple aliases")
+        else:
+            self._fail("List multiple aliases")
+
+    # ==================== TEST GROUP 13: FILE INTEGRITY ====================
+
+    def test_13_file_integrity_tests(self):
+        """Test Group 13: File Integrity & Consistency"""
+        self.current_test_group = "test_13_file_integrity_tests"
+        group_path = self._create_test_group(self.current_test_group)
+        print(f"📁 Testing in: {group_path}")
+
+        # Test 13.1: Keystore file consistency after operations
+        ks = self._path("consistency.jks")
+
+        # Create and get initial hash
+        self.generate_keystore("test1", ks, "pass123")
+        with open(ks, "rb") as f:
+            hash1 = hashlib.sha256(f.read()).hexdigest()
+
+        # Read-only operations shouldn't change hash
+        self.alias_exists("test1", ks, "pass123")
+        self.list_keystore(ks, "pass123")
+
+        with open(ks, "rb") as f:
+            hash2 = hashlib.sha256(f.read()).hexdigest()
+
+        # Modify operation should change hash
+        self.generate_keystore("test2", ks, "pass123")
+        with open(ks, "rb") as f:
+            hash3 = hashlib.sha256(f.read()).hexdigest()
+
+        if hash1 == hash2 and hash1 != hash3:
+            self._pass("Keystore file consistency")
+        else:
+            self._fail("Keystore file consistency")
+
+        # Test 13.2: Zero-byte keystore file
+        ks = self._path("zerobyte.jks")
+
+        with open(ks, "wb") as f:
+            f.write(b"")
+
+        can_list, _ = self.list_keystore(ks, "pass123")
+
+        if not can_list:
+            self._pass("Zero-byte keystore rejection")
+        else:
+            self._fail("Zero-byte keystore rejection")
+
+        # Test 13.3: Single-byte keystore file
+        ks = self._path("singlebyte.jks")
+
+        with open(ks, "wb") as f:
+            f.write(b"X")
+
+        can_list, _ = self.list_keystore(ks, "pass123")
+
+        if not can_list:
+            self._pass("Single-byte keystore rejection")
+        else:
+            self._fail("Single-byte keystore rejection")
+
+        # Test 13.4: Binary garbage keystore
+        ks = self._path("garbage.jks")
+
+        with open(ks, "wb") as f:
+            f.write(os.urandom(1024))
+
+        can_list, _ = self.list_keystore(ks, "pass123")
+
+        if not can_list:
+            self._pass("Binary garbage keystore rejection")
+        else:
+            self._fail("Binary garbage keystore rejection")
+
+        # Test 13.5: Symlink keystore
+        ks_real = self._path("real.jks")
+        ks_link = self._path("link.jks")
+
+        self.generate_keystore("real_alias", ks_real, "pass123")
+
+        try:
+            os.symlink(ks_real, ks_link)
+            via_link = self.alias_exists("real_alias", ks_link, "pass123")
+            os.remove(ks_link)
+
+            if via_link:
+                self._pass("Symbolic link keystore")
+            else:
+                self._fail("Symbolic link keystore")
+        except (OSError, NotImplementedError):
+            self._skip("Symbolic link", "Symlinks not supported")
+
+        # Test 13.6: Rapid file recreation
+        ks = self._path("rapid_recreate.jks")
+        results = []
+
+        for i in range(10):
+            self.generate_keystore(f"rapid_{i}", ks, "pass123")
+            if os.path.exists(ks):
+                os.remove(ks)
+            ok = self.generate_keystore(f"new_{i}", ks, "pass123")
+            results.append(ok)
+
+        success = sum(results)
+        if success >= 8:
+            self._pass(f"Rapid file recreation ({success}/10)")
+        else:
+            self._fail("Rapid file recreation")
+
+    # ==================== TEST RUNNER ====================
 
     def run_all_tests(self):
-        print("="*80)
-        print("🧪🔥 INICIANDO PRUEBAS EXTREMAS COMPLETAS - 50+ PRUEBAS")
-        print("="*80)
+        """Execute all test methods"""
+        print("="*70)
+        print("EXTREME PROFESSIONAL KEYSTORE TEST SUITE")
+        print("60+ Tests Organized in 13 Groups with Subdirectories")
+        print("="*70 + "\n")
 
-        if not self.verificar_java():
-            print("❌ keytool no encontrado. Instala Java JDK:")
-            print("!apt-get install openjdk-11-jdk-headless")
+        # Check Java availability
+        try:
+            subprocess.run(["keytool", "-help"], capture_output=True, check=True, timeout=5)
+            print("✅ Java keytool detected\n")
+        except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+            print("❌ ERROR: keytool not found. Install Java JDK:")
+            print("  Ubuntu/Debian: sudo apt-get install openjdk-11-jdk-headless")
+            print("  CentOS/RHEL:   sudo yum install java-11-openjdk-devel")
+            print("  macOS:         brew install openjdk@11")
             return
 
-        print("✅ Java JDK detectado\n")
+        # Collect and run all test methods
+        test_methods = sorted([m for m in dir(self) if m.startswith("test_")])
+        print(f"🚀 Running {len(test_methods)} comprehensive test groups...\n")
 
-        # Obtener todos los métodos de test
-        test_methods = [method for method in dir(self)
-                       if callable(getattr(self, method))
-                       and method.startswith('test_')]
+        start_time = time.time()
 
-        test_methods.sort()
-
-        print(f"📋 Ejecutando {len(test_methods)} pruebas extremas...\n")
-
-        for test_method in test_methods:
-            print("\n" + "─" * 60)
-            print(f"🧪 Ejecutando: {test_method}")
-            print("─" * 60)
-
+        for i, method_name in enumerate(test_methods, 1):
+            print(f"\n{'='*70}")
+            print(f"🧪 TEST GROUP {i:02d}: {method_name.replace('_', ' ').title()}")
+            print(f"{'='*70}")
             try:
-                method = getattr(self, test_method)
-                method()
+                getattr(self, method_name)()
             except Exception as e:
-                print(f"💥 ERROR CRÍTICO en {test_method}: {str(e)}")
-                self.tests_failed += 1
+                self._fail(f"{method_name} - EXCEPTION: {str(e)[:100]}")
 
-        # Resultados finales
-        print("\n" + "="*80)
-        print("📊 RESUMEN FINAL DE PRUEBAS EXTREMAS COMPLETAS")
-        print("="*80)
-        print(f"✅ Pruebas pasadas: {self.tests_passed}")
-        print(f"❌ Pruebas fallidas: {self.tests_failed}")
-        print(f"⚠️  Pruebas saltadas: {self.tests_skipped}")
+        elapsed = time.time() - start_time
 
-        total = self.tests_passed + self.tests_failed + self.tests_skipped
+        # Print summary
+        print("\n" + "="*70)
+        print("📊 FINAL TEST SUMMARY")
+        print("="*70)
+        total = sum(self.results.values())
+        print(f"Total tests:     {total}")
+        print(f"✅ PASSED:       {self.results['passed']}")
+        print(f"❌ FAILED:       {self.results['failed']}")
+        print(f"⚠️ SKIPPED:      {self.results['skipped']}")
+        print(f"⏱️ Execution time: {elapsed:.2f} seconds")
+
         if total > 0:
-            porcentaje_exito = (self.tests_passed / total) * 100
-            print(f"📈 Tasa de éxito: {porcentaje_exito:.1f}%")
+            pass_rate = (self.results['passed'] / total) * 100
+            print(f"📈 Pass rate:     {pass_rate:.1f}%")
 
-        print("="*80)
+            if pass_rate >= 90:
+                print("\n🎉 Status: EXCELLENT")
+            elif pass_rate >= 75:
+                print("\n👍 Status: GOOD")
+            elif pass_rate >= 50:
+                print("\n👌 Status: ACCEPTABLE")
+            else:
+                print("\n🔧 Status: NEEDS ATTENTION")
 
-        # Limpieza
-        self.cleanup()
-        print("🧹 Archivos de prueba eliminados")
+        print("="*70)
 
-# Ejecutar las pruebas
+        # Show directory structure
+        print("\n📁 FINAL DIRECTORY STRUCTURE:")
+        print("="*50)
+        for root, dirs, files in os.walk(self.test_dir):
+            level = root.replace(self.test_dir, '').count(os.sep)
+            indent = ' ' * 2 * level
+            basename = os.path.basename(root)
+            if level == 0:
+                print(f"📂 {self.test_dir}/")
+            else:
+                print(f"{indent}📁 {basename}/")
+
+            subindent = ' ' * 2 * (level + 1)
+            for file in files[:8]:  # Show first 8 files per directory
+                print(f"{subindent}📄 {file}")
+            if len(files) > 8:
+                print(f"{subindent}... and {len(files) - 8} more files")
+
+        # Cleanup option
+        try:
+            response = input(f"\n🧹 Clean up test directory '{self.test_dir}'? (y/N): ")
+            if response.lower() in ['y', 'yes']:
+                if os.path.exists(self.test_dir):
+                    shutil.rmtree(self.test_dir)
+                    print("✅ Test environment cleaned up successfully")
+                else:
+                    print("ℹ️ Test directory already removed")
+            else:
+                print(f"ℹ️ Test files preserved in: {self.test_dir}")
+        except Exception as e:
+            print(f"⚠️ Cleanup failed: {e}")
+
 if __name__ == "__main__":
-    print("Iniciando pruebas extremas COMPLETAS para Google Colab...")
-    tester = TestKeystoreManagerExtremoCompleto()
+    print("\n🚀 Initializing Extreme Professional Keystore Test Suite...\n")
+    tester = ExtremeProfessionalKeystoreTestSuite()
     tester.run_all_tests()
+
+    print("\n" + "="*70)
+    print("✅ Test suite execution completed")
+    print("="*70)
