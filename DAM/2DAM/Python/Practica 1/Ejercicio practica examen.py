@@ -10,6 +10,9 @@ print(3 * 'ab')
 
 persona = {'nombre': 'Ana', 'edad': 30, 'ciudad': 'Madrid'}
 
+print (persona.get('nombre'))
+print (persona.get('edad'))
+print (persona.get('ciudad'))
 
 
 print('Línea1', end=' ')
