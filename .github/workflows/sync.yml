@@ -1,42 +1,41 @@
 name: Sync JesusCrust
 
-# Se ejecuta cada vez que hay un push al repo original o cada hora
 on:
-  push:
-    branches:
-      - main  # se ejecuta cuando hay cambios en main del repo original
   schedule:
-    - cron: '0 * * * *'  # cada hora en minuto 0 (UTC)
+    # Ejecuta cada hora
+    - cron: '0 * * * *'
+  workflow_dispatch: # Permite ejecutar manualmente desde GitHub Actions
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+
     steps:
-      # Clonar el repo original
-      - name: Checkout original repo
-        uses: actions/checkout@v3
-        with:
-          repository: ericmorrou/JesusCrust
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: original
+    # Clonar repo original público
+    - name: Checkout original repo
+      uses: actions/checkout@v3
+      with:
+        repository: ericmorrou/JesusCrust
+        path: original
 
-      # Clonar tu repo donde se aplicarán los cambios
-      - name: Checkout my repo
-        uses: actions/checkout@v3
-        with:
-          path: myrepo
+    # Clonar tu repo (para push)
+    - name: Checkout my repo
+      uses: actions/checkout@v3
+      with:
+        path: myrepo
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Copiar los cambios del original al tuyo
-      - name: Copy changes
-        run: |
-          rsync -a --delete original/ myrepo/
+    # Sincronizar cambios
+    - name: Sync changes
+      run: |
+        rsync -a --delete original/ myrepo/
 
-      # Commit y push de los cambios a tu repo
-      - name: Commit and push changes
-        run: |
-          cd myrepo
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add .
-          git commit -m "Sync from original repo" || echo "No changes to commit"
-          git push
+    # Commit y push si hay cambios
+    - name: Commit and push
+      run: |
+        cd myrepo
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git diff-index --quiet HEAD || git commit -m "Sync from original repo"
+        git push
