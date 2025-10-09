@@ -19,10 +19,10 @@ jobs:
         run: |
           git clone https://github.com/ericmorrou/JesusCrust.git temp_original
       
-      # 3️⃣ Copiar archivos del original a tu repo (excluyendo .git)
+      # 3️⃣ Copiar archivos del original a tu repo (excluyendo .git y temp_original)
       - name: Sync files
         run: |
-          rsync -a --delete --exclude='.git' temp_original/ ./
+          rsync -a --delete --exclude='.git' --exclude='temp_original' temp_original/ ./
           rm -rf temp_original
       
       # 4️⃣ Commit y push SOLO si hay cambios
@@ -36,4 +36,4 @@ jobs:
           else
             git commit -m "🔄 Sync from ericmorrou/JesusCrust"
             git push
-          fi
+          fi  
