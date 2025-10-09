@@ -28,15 +28,16 @@ jobs:
           rsync -a --delete --exclude='.git' temp_original/ DAM/2DAM/Proyectos/JesusCrust/
           rm -rf temp_original
       
-      # 4️⃣ Commit y push SOLO si hay cambios
-      - name: Commit and push changes
+      # 4️⃣ Commit y push SOLO si hay cambios en la rama jesuscrust
+      - name: Commit and push changes to jesuscrust branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B jesuscrust  # Crear o resetear la rama jesuscrust
           git add DAM/2DAM/Proyectos/JesusCrust
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
             git commit -m "🔄 Sync JesusCrust from ericmorrou/JesusCrust"
-            git push
+            git push -u origin jesuscrust --force
           fi
