@@ -1,43 +1,39 @@
 name: Sync JesusCrust
-
 on:
   schedule:
-    # Ejecuta cada hora
-    - cron: '0 * * * *'
-  workflow_dispatch: # Permite ejecución manual
+    - cron: '0 * * * *'  # Cada hora
+  workflow_dispatch:  # Ejecución manual
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-
     steps:
-      # 1️⃣ Clonar el repo original (solo lectura)
-      - name: Checkout original repo
-        uses: actions/checkout@v3
-        with:
-          repository: ericmorrou/JesusCrust
-          path: original
-          # No token necesario si el repo es público
-
-      # 2️⃣ Clonar tu repo (para hacer push)
+      # 1️⃣ Clonar TU repo (DarksAces/Grado)
       - name: Checkout my repo
         uses: actions/checkout@v3
         with:
-          path: myrepo
-
-      # 3️⃣ Copiar archivos del original a tu repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      # 2️⃣ Clonar el repo original en una carpeta temporal
+      - name: Clone original repo
+        run: |
+          git clone https://github.com/ericmorrou/JesusCrust.git temp_original
+      
+      # 3️⃣ Copiar archivos del original a tu repo (excluyendo .git)
       - name: Sync files
         run: |
-          rsync -a --delete original/ myrepo/
-
-      # 4️⃣ Commit y push solo si hay cambios
-      - name: Commit & Push changes
+          rsync -a --delete --exclude='.git' temp_original/ ./
+          rm -rf temp_original
+      
+      # 4️⃣ Commit y push SOLO si hay cambios
+      - name: Commit and push changes
         run: |
-          cd myrepo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff --cached --quiet || git commit -m "Sync from original repo"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🔄 Sync from ericmorrou/JesusCrust"
+            git push
+          fi
