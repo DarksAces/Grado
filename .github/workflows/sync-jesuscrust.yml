@@ -13,16 +13,18 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
       
       # 2️⃣ Clonar el repo original en una carpeta temporal
       - name: Clone original repo
         run: |
           git clone https://github.com/ericmorrou/JesusCrust.git temp_original
       
-      # 3️⃣ Copiar archivos del original a tu repo (excluyendo .git y temp_original)
-      - name: Sync files
+      # 3️⃣ Crear la carpeta destino si no existe y copiar archivos
+      - name: Sync files to target folder
         run: |
-          rsync -a --delete --exclude='.git' --exclude='temp_original' temp_original/ ./
+          mkdir -p DAM/2DAM/Proyectos/JesusCrust
+          rsync -a --delete --exclude='.git' temp_original/ DAM/2DAM/Proyectos/JesusCrust/
           rm -rf temp_original
       
       # 4️⃣ Commit y push SOLO si hay cambios
@@ -30,10 +32,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
+          git add DAM/2DAM/Proyectos/JesusCrust
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "🔄 Sync from ericmorrou/JesusCrust"
+            git commit -m "🔄 Sync JesusCrust from ericmorrou/JesusCrust"
             git push
-          fi  
+          fi
