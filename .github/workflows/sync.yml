@@ -1,37 +1,43 @@
-name: JesusCrust
+name: Sync JesusCrust
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Ejecutar cada hora
-  workflow_dispatch:     # Permite ejecución manual
+    # Ejecuta cada hora
+    - cron: '0 * * * *'
+  workflow_dispatch: # Permite ejecución manual
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar el repositorio original
+      # 1️⃣ Clonar el repo original (solo lectura)
+      - name: Checkout original repo
         uses: actions/checkout@v3
         with:
           repository: ericmorrou/JesusCrust
           path: original
+          # No token necesario si el repo es público
 
-      - name: Clonar tu repositorio
+      # 2️⃣ Clonar tu repo (para hacer push)
+      - name: Checkout my repo
         uses: actions/checkout@v3
         with:
           path: myrepo
 
-      - name: Sincronizar archivos
+      # 3️⃣ Copiar archivos del original a tu repo
+      - name: Sync files
         run: |
           rsync -a --delete original/ myrepo/
 
-      - name: Commit y Push de los cambios
+      # 4️⃣ Commit y push solo si hay cambios
+      - name: Commit & Push changes
         run: |
           cd myrepo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff --cached --quiet || git commit -m "Sincronización con el repositorio original"
+          git diff --cached --quiet || git commit -m "Sync from original repo"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
