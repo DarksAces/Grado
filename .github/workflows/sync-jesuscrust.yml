@@ -1,7 +1,8 @@
 name: Sync JesusCrust
 on:
   schedule:
-    - cron: '0 * * * *'  # Cada hora
+    # Lunes a Viernes de 14:00 a 20:00 (cada hora)
+    - cron: '0 14-20 * * 1-5'
   workflow_dispatch:  # Ejecución manual
 
 jobs:
