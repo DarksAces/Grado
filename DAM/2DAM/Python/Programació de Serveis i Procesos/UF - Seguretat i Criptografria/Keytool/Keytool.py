@@ -1,12 +1,14 @@
 import subprocess
 import os
+import argparse
+import sys
 
+# ===================== Funciones =====================
 
 def verificar_alias_existe(alias, keystore, password):
     """Verifica si un alias ya existe en el keystore"""
     if not os.path.exists(keystore):
         return False
-
     try:
         comando = [
             "keytool",
@@ -19,7 +21,6 @@ def verificar_alias_existe(alias, keystore, password):
         return resultado.returncode == 0
     except Exception:
         return False
-
 
 def listar_alias_keystore(keystore, password):
     """Lista todos los alias en un keystore"""
@@ -35,66 +36,13 @@ def listar_alias_keystore(keystore, password):
     except subprocess.CalledProcessError:
         return False
 
-
-def confirmar_accion(mensaje="¿Estás seguro?"):
-    """Solicita confirmación del usuario"""
-    respuestas_positivas = ['s', 'si', 'sí', 'y', 'yes']
-    respuestas_negativas = ['n', 'no']
-
-    while True:
-        respuesta = input(f"{mensaje} (si/no): ").strip().lower()
-
-        if respuesta in respuestas_positivas:
-            return True
-        elif respuesta in respuestas_negativas:
-            return False
-        else:
-            print("[ERROR] Respuesta no válida. Escribe: si, s, yes, y, no o n")
-
-
-def pedir_datos_certificado():
-    """Solicita los datos del Distinguished Name para el certificado"""
-    print("\n--- Datos del certificado ---")
-
-    cn = input("Nombre común (CN) - ej: Juan Pérez o ejemplo.com: ").strip()
-    if not cn:
-        cn = "Desconocido"
-
-    ou = input("Unidad organizativa (OU) - ej: Desarrollo: ").strip()
-    if not ou:
-        ou = "Desconocido"
-
-    o = input("Organización (O) - ej: Mi Empresa S.L.: ").strip()
-    if not o:
-        o = "Desconocido"
-
-    l = input("Ciudad/Localidad (L) - ej: Madrid: ").strip()
-    if not l:
-        l = "Desconocido"
-
-    s = input("Estado/Provincia (S) - ej: Madrid: ").strip()
-    if not s:
-        s = "Desconocido"
-
-    c = input("Código de país (C) - 2 letras, ej: ES: ").strip().upper()
-    while len(c) != 2 or not c.isalpha():
-        print("[ERROR] El código de país debe tener exactamente 2 letras.")
-        c = input("Código de país (C) - 2 letras, ej: ES: ").strip().upper()
-
-    dname = f"CN={cn}, OU={ou}, O={o}, L={l}, S={s}, C={c}"
-
-    return dname
-
-
 def generar_keystore(alias, keystore, password, dname, keysize=2048):
     """Genera un nuevo keystore con un par de claves"""
     try:
-        # Verificar si el keystore existe y si el alias ya está en uso
         if os.path.exists(keystore):
             if verificar_alias_existe(alias, keystore, password):
                 print(f"[ERROR] El alias '{alias}' ya existe en el keystore '{keystore}'.")
                 return False
-
         comando = [
             "keytool",
             "-genkeypair",
@@ -116,22 +64,14 @@ def generar_keystore(alias, keystore, password, dname, keysize=2048):
         print("[ERROR] keytool no encontrado. Asegúrate de tener Java JDK instalado.")
         return False
 
-
 def exportar_certificado(alias, keystore, password, archivo_cert):
     """Exporta el certificado desde el keystore"""
     try:
-        # Verificar si el alias existe
         if not verificar_alias_existe(alias, keystore, password):
             print(f"[ERROR] El alias '{alias}' no existe en el keystore '{keystore}'.")
-            print("[INFO] Verifica que el alias y la contraseña sean correctos.")
             return False
-
-        # Verificar si el archivo de certificado ya existe
         if os.path.exists(archivo_cert):
-            if not confirmar_accion(f"El archivo '{archivo_cert}' ya existe. ¿Deseas sobrescribirlo?"):
-                print("[INFO] Operación cancelada.")
-                return False
-
+            print(f"[INFO] El archivo '{archivo_cert}' ya existe. Será sobrescrito.")
         comando = [
             "keytool",
             "-export",
@@ -150,233 +90,46 @@ def exportar_certificado(alias, keystore, password, archivo_cert):
         print("[ERROR] keytool no encontrado. Asegúrate de tener Java JDK instalado.")
         return False
 
+# ===================== CLI con argparse =====================
 
-def pedir_password(confirmar=False):
-    """Solicita y valida la contraseña"""
-    while True:
-        pwd = input("Escribe la contraseña (mínimo 6 caracteres, sin espacios): ")
-        if " " in pwd:
-            print("[ERROR] La contraseña no puede contener espacios.")
-            continue
-        if len(pwd) < 6:
-            print("[ERROR] La contraseña debe tener al menos 6 caracteres.")
-            continue
+def main():
+    parser = argparse.ArgumentParser(description="Herramienta para gestionar keystores y certificados.")
+    subparsers = parser.add_subparsers(dest="comando", required=True)
 
-        # Si se requiere confirmación
-        if confirmar:
-            pwd_confirm = input("Confirma la contraseña: ")
-            if pwd != pwd_confirm:
-                print("[ERROR] Las contraseñas no coinciden. Inténtalo de nuevo.")
-                continue
+    # Subcomando: generar
+    gen_parser = subparsers.add_parser("generar", help="Generar un keystore con un alias")
+    gen_parser.add_argument("--keystore", required=True, help="Nombre del keystore .jks")
+    gen_parser.add_argument("--alias", required=True, help="Alias para la clave")
+    gen_parser.add_argument("--password", required=True, help="Contraseña del keystore y clave")
+    gen_parser.add_argument("--keysize", type=int, default=2048, help="Tamaño de la clave (default: 2048)")
+    gen_parser.add_argument("--cn", default="Desconocido", help="Nombre común CN")
+    gen_parser.add_argument("--ou", default="Desconocido", help="Unidad organizativa OU")
+    gen_parser.add_argument("--o", default="Desconocido", help="Organización O")
+    gen_parser.add_argument("--l", default="Desconocido", help="Localidad L")
+    gen_parser.add_argument("--s", default="Desconocido", help="Estado S")
+    gen_parser.add_argument("--c", default="ES", help="Código de país C (2 letras)")
 
-        return pwd
+    # Subcomando: exportar
+    exp_parser = subparsers.add_parser("exportar", help="Exportar certificado de un alias")
+    exp_parser.add_argument("--keystore", required=True, help="Nombre del keystore .jks")
+    exp_parser.add_argument("--alias", required=True, help="Alias de la clave")
+    exp_parser.add_argument("--password", required=True, help="Contraseña del keystore")
+    exp_parser.add_argument("--archivo", required=True, help="Archivo de salida .crt")
 
+    args = parser.parse_args()
 
-def menu_principal():
-    """Muestra el menú principal y maneja las opciones"""
-    print("\n" + "="*50)
-    print("HERRAMIENTA KEYTOOL - GESTION DE CERTIFICADOS")
-    print("="*50)
-    print("1. Generar keystore (generar par de claves)")
-    print("2. Exportar certificado")
-    print("3. Ayuda")
-    print("0. Salir")
-    print("="*50)
+    if args.comando == "generar":
+        dname = f"CN={args.cn}, OU={args.ou}, O={args.o}, L={args.l}, S={args.s}, C={args.c}"
+        if os.path.exists(args.keystore) and verificar_alias_existe(args.alias, args.keystore, args.password):
+            print(f"[ERROR] El alias '{args.alias}' ya existe en el keystore '{args.keystore}'.")
+            sys.exit(1)
+        generar_keystore(args.alias, args.keystore, args.password, dname, args.keysize)
 
-    opcion = input("Selecciona una opción: ").strip()
-    return opcion
+    elif args.comando == "exportar":
+        if not verificar_alias_existe(args.alias, args.keystore, args.password):
+            print(f"[ERROR] El alias '{args.alias}' no existe en '{args.keystore}'.")
+            sys.exit(1)
+        exportar_certificado(args.alias, args.keystore, args.password, args.archivo)
 
-
-def opcion_generar():
-    """Maneja la opción de generar keystore"""
-    print("\nGENERAR KEYSTORE")
-    print("-" * 50)
-
-    # Pedir nombre del fichero primero
-    while True:
-        keystore = input("Nombre del fichero .jks (ej: miClave.jks): ").strip()
-        if keystore:
-            if not keystore.endswith('.jks'):
-                keystore += '.jks'
-            break
-        print("[ERROR] El nombre del fichero no puede estar vacío.")
-
-    # Si el keystore existe, pedir contraseña para verificar alias
-    password = None
-    keystore_nuevo = not os.path.exists(keystore)
-
-    if not keystore_nuevo:
-        print(f"[INFO] El keystore '{keystore}' ya existe. Se agregará un nuevo alias.")
-        password = input("Contraseña del keystore existente: ")
-
-    # Pedir alias
-    while True:
-        alias = input("Escribe el alias: ").strip()
-        if not alias:
-            print("[ERROR] El alias no puede estar vacío.")
-            continue
-
-        # Si el keystore existe, verificar que el alias no exista
-        if not keystore_nuevo and password:
-            if verificar_alias_existe(alias, keystore, password):
-                print(f"[ERROR] El alias '{alias}' ya existe en este keystore.")
-                if not confirmar_accion("¿Deseas intentar con otro alias?"):
-                    print("[INFO] Operación cancelada.")
-                    return
-                continue
-        break
-
-    # Pedir password si no se pidió antes
-    if password is None:
-        # Si es keystore nuevo, pedir confirmación
-        password = pedir_password(confirmar=True)
-
-    # Pedir datos del certificado
-    dname = pedir_datos_certificado()
-
-    # Usar 2048 por defecto
-    keysize = 2048
-
-    # Mostrar resumen y confirmar
-    print("\n" + "="*50)
-    print("RESUMEN DE LA OPERACIÓN")
-    print("="*50)
-    print(f"Keystore: {keystore}")
-    print(f"Alias: {alias}")
-    print(f"Tamaño de clave: {keysize} bits")
-    print(f"Distinguished Name: {dname}")
-    print("="*50)
-
-    if not confirmar_accion("¿Deseas continuar con la generación del keystore?"):
-        print("[INFO] Operación cancelada.")
-        return
-
-    generar_keystore(alias, keystore, password, dname, keysize)
-
-
-def opcion_exportar():
-    """Maneja la opción de exportar certificado"""
-    print("\nEXPORTAR CERTIFICADO")
-    print("-" * 50)
-
-    # Pedir nombre del keystore
-    while True:
-        keystore = input("Nombre del fichero .jks: ").strip()
-        if keystore:
-            if not keystore.endswith('.jks'):
-                keystore += '.jks'
-            if not os.path.exists(keystore):
-                print(f"[ERROR] El fichero '{keystore}' no existe.")
-                continue
-            break
-        print("[ERROR] El nombre del fichero no puede estar vacío.")
-
-    # Pedir password
-    password = input("Contraseña del keystore: ")
-
-    # Verificar que la contraseña sea correcta listando el keystore
-    if not listar_alias_keystore(keystore, password):
-        print("[ERROR] Contraseña incorrecta o keystore corrupto.")
-        return
-
-    # Pedir alias
-    while True:
-        alias = input("Escribe el alias: ").strip()
-        if not alias:
-            print("[ERROR] El alias no puede estar vacío.")
-            continue
-
-        # Verificar que el alias exista
-        if not verificar_alias_existe(alias, keystore, password):
-            print(f"[ERROR] El alias '{alias}' no existe en el keystore.")
-            if not confirmar_accion("¿Deseas intentar con otro alias?"):
-                print("[INFO] Operación cancelada.")
-                return
-            continue
-        break
-
-    # Pedir nombre del certificado a exportar
-    while True:
-        archivo_cert = input("Nombre del archivo certificado .crt (ej: miCertificado.crt): ").strip()
-        if archivo_cert:
-            if not archivo_cert.endswith('.crt'):
-                archivo_cert += '.crt'
-            break
-        print("[ERROR] El nombre del archivo no puede estar vacío.")
-
-    # Mostrar resumen y confirmar
-    print("\n" + "="*50)
-    print("RESUMEN DE LA OPERACIÓN")
-    print("="*50)
-    print(f"Keystore: {keystore}")
-    print(f"Alias: {alias}")
-    print(f"Archivo de salida: {archivo_cert}")
-    print("="*50)
-
-    if not confirmar_accion("¿Deseas continuar con la exportación del certificado?"):
-        print("[INFO] Operación cancelada.")
-        return
-
-    exportar_certificado(alias, keystore, password, archivo_cert)
-    
-    
-def opcion_help():
-    """Muestra la ayuda del programa con menú persistente"""
-    while True:
-        # Mostrar menú en cada iteración
-        print("\n" + "=" * 50)
-        print("AYUDA - HERRAMIENTA KEYTOOL")
-        print("=" * 50)
-        print("Este programa permite gestionar certificados y keystores.\n")
-        print("Opciones disponibles:")
-        print("1. Generar un nuevo keystore")
-        print("2. Exportar un certificado")
-        print("3. Mostrar esta ayuda")
-        print("0. Volver al menú principal")
-        print("=" * 50)
-
-        # Preguntar al usuario
-        opcion = input("\nSelecciona una opción para ver su ayuda: ").strip()
-
-        if opcion == "1":
-            print("\n🧩 AYUDA - Generar keystore")
-            print("- Crea o amplía un keystore (.jks) con un par de claves RSA.")
-            print("- Se solicita alias, contraseña y datos del certificado (DN).")
-            print("- Si el keystore existe, puedes añadir un nuevo alias.")
-            print("- Se usa clave RSA de 2048 bits por defecto.")
-        elif opcion == "2":
-            print("\n📦 AYUDA - Exportar certificado")
-            print("- Exporta un certificado (.crt) desde un alias existente.")
-            print("- Se requiere la contraseña del keystore.")
-            print("- Si el archivo ya existe, puedes sobrescribirlo o cancelar.")
-        elif opcion == "3":
-            print("\nℹ️ Esta opción muestra este mismo menú de ayuda.")
-        elif opcion == "0":
-            print("\nVolviendo al menú principal...")
-            break
-        else:
-            print("[ERROR] Opción no válida. Escribe 1, 2, 3 o 0.")
-
-        # Pequeña pausa antes de volver a imprimir el menú
-        input("\nPresiona Enter para continuar...")
-
-
-    
-    
 if __name__ == "__main__":
-    while True:
-        opcion = menu_principal()
-
-        if opcion == "1":
-            opcion_generar()
-        elif opcion == "2":
-            opcion_exportar()
-        elif opcion == "3":
-            opcion_help()            
-        elif opcion == "0":
-            print("\nHasta luego!")
-            break
-        else:
-            print("\n[ERROR] Opción no válida. Intenta de nuevo.")
-
-        input("\nPresiona Enter para continuar...")
+    main()
