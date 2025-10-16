@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenDev Inv/Des</title>
+    <link rel="stylesheet" href="../CSS/Styles4.css">
+    <script src="https://kit.fontawesome.com/9b280daf16.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+</head>
+
+<body>
+    <header>
+        <div>
+            <img class=" " src="../Imagenes/logo.jpg" alt="">
+            <div class="col-lg-12  col-md-12 col-sm-12 col-12">
+                <nav>
+                    <ul>
+                        <li class="col-lg-3 col-md-3 col-6  col-sm-3 "><a href="../Index.html">Inicio</a></li>
+                        <li class="col-lg-3  col-md-3 col-6  col-sm-3 "><a href="./servicios.html">Servicios</a></li>
+                        <li class="col-lg-3  col-md-3 col-6  col-sm-3 "><a
+                                href="./sostenibilidad.html">Sostenibilidad</a></li>
+                        <li class="col-lg-3  col-md-3 col-6  col-sm-3  "><a id="ID" href="#">I+D</a></li>
+                        <li class="col-lg-3  col-md-3 col-6  col-sm-3  "><a href="./contacto.html">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <div class="SoluTec col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <h1>Soluciones tecnológicas con bajo impacto de CO2</h1>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <ul id="solutionList">
+                <li onclick="toggleVisibility(this)">
+                    <h2>Energías Renovables</h2>
+                    <div class="expanded-content">
+                        <h3> Energía Solar </h3>
+                        <h5>Paneles Solares de Alta Eficiencia:</h5>
+                        <p>GreenDev trabaja en el desarrollo de paneles solares que capturan más energía del sol con
+                            menos superficie, utilizando materiales avanzados y técnicas de fabricación innovadoras.</p>
+                        <h5>Sistemas de Almacenamiento de Energía</h5>
+                        <p>La empresa investiga soluciones de almacenamiento eficientes, como baterías de larga
+                            duración, para asegurar que la energía solar capturada pueda ser utilizada incluso cuando el
+                            sol no está brillando.</p>
+                        <h5>Integración en Infraestructuras</h5>
+                        <p>GreenDev está desarrollando tecnologías para integrar paneles solares en edificios y otras
+                            infraestructuras urbanas, promoviendo la generación de energía descentralizada y reduciendo
+                            la dependencia de la red eléctrica tradicional</p>
+                        <h3>Energía Eólica</h3>
+                        <h5>Turbinas Eólicas Avanzadas:</h5>
+                        <p>La investigación se centra en diseñar turbinas más eficientes y duraderas, capaces de generar
+                            más electricidad con vientos de menor velocidad y en condiciones climáticas diversas.</p>
+                        <h3>Parques Eólicos Marinos</h3>
+                        <p>GreenDev está explorando la instalación de parques eólicos en alta mar, donde los vientos son
+                            más constantes y fuertes, lo que aumenta la capacidad de generación de energía</p>
+                        <h3>Minimización del Impacto Ambiental:</h3>
+                        <p> La empresa también investiga formas de reducir el impacto ambiental de las turbinas eólicas,
+                            incluyendo el ruido y los efectos sobre la fauna local.</p>
+                    </div>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2>Eficiencia Energética</h2>
+                    <div class="expanded-content">
+                        <h3>Optimización del uso de energía.</h3>
+                        <h4>Tecnologías y Estrategias</h4>
+                        <h5>Sistemas Inteligentes de Gestión Energética</h5>
+                        <p>Implementación de sistemas que monitorizan y gestionan el consumo de energía en tiempo real,
+                            permitiendo ajustes automáticos para mejorar la eficiencia.</p>
+                        <h5>Iluminación Eficiente</h5>
+                    </div>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2> Movilidad Sostenible</h2>
+                    <div class="expanded-content">
+                        <h3>Innovación en vehículos eléctricos.</h3>
+                        <p>Baterías: Las baterías son cruciales para los vehículos eléctricos, determinando su capacidad
+                            de almacenar y suministrar energía.</p>
+                        <p>Sistemas de carga: Se están creando sistemas de carga más rápidos y accesibles, lo que
+                            facilita la adopción de vehículos eléctricos al reducir el tiempo necesario para recargar
+                            las baterías.</p>
+                        <p>Motores eléctricos: Los motores están siendo diseñados para ser más eficientes y compactos,
+                            lo que mejora el rendimiento y la eficiencia energética de los vehículos.</p>
+                    </div>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2>Captura de Carbono </h2>
+                    <div class="expanded-content">
+                        <h3>Tecnologías para capturar y almacenar CO2.</h3>
+                        <h5>Captura de Carbono:</h5>
+                        <p>Postcombustión: Captura el CO2 después de la combustión de combustibles fósiles mediante
+                            solventes químicos.</p>
+                        <p>Precombustión: Convierte combustibles fósiles en gas de síntesis (H2 y CO2) antes de la
+                            combustión, capturando el CO2 en el proceso.</p>
+                        <p>Oxi-combustión: Quema combustibles fósiles en oxígeno puro en lugar de aire, produciendo una
+                            corriente de gases rica en CO2 que es más fácil de capturar</p>
+                        <h5>Almacenamiento de Carbono:</h5>
+                        <p>Almacenamiento Geológico: Inyección de CO2 en formaciones geológicas subterráneas, como
+                            acuíferos salinos profundos o yacimientos de petróleo y gas agotados.</p>
+                        <p>Almacenamiento Oceánico: Inyección de CO2 en las profundidades oceánicas, aunque esta técnica
+                            es menos común debido a preocupaciones ambientales</p>
+                        <h5>Reutilización de CO2:</h5>
+                        <p>Conversión a Combustibles: Transformar el CO2 capturado en combustibles sintéticos como
+                            metanol o etanol.</p>
+                        <p>Producción de Materiales: Utilizar CO2 en la fabricación de materiales como plásticos,
+                            hormigón y productos químicos.</p>
+                    </div>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2>Economía Circular</h2>
+                    <div class="expanded-content">
+                        <h3>Reciclaje y reutilización de materiales.</h3>
+                        <p>El reciclaje descompone productos en componentes básicos para crear nuevos, mientras que la
+                            reutilización extiende la vida útil de objetos sin procesarlos. Ambos procesos conservan
+                            recursos naturales, reducen residuos y requieren menos energía que la producción de nuevos
+                            materiales, contribuyendo así a la sostenibilidad ambiental.</p>
+                    </div>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2>Materiales Sostenibles</h2>
+                    <div class="expanded-content">
+                        <h3>Desarrollo de materiales biodegradables.</h3>
+                        <p>El desarrollo de materiales biodegradables se centra en crear productos que se descomponen de
+                            manera natural y no contaminan el medio ambiente. Estos materiales, como plásticos a base de
+                            almidón y fibras naturales, se descomponen gracias a la acción de microorganismos como
+                            bacterias y hongos. Este proceso reduce la acumulación de residuos y las emisiones de
+                            carbono, promoviendo una economía más sostenible12. Además, los materiales biodegradables
+                            pueden ser reciclables y compostables, ofreciendo una alternativa ecológica a los plásticos
+                            convencionales</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <script src="../JavaScript/I+DSolucionesTec.js">
+        </script>
+    </div>
+    <div class="col-lg-2 offset-lg-5 col-md-5 offset-md-4 col-sm-12 col-6">
+        <div class="ProDev col-lg-7 offset-lg-2 col-md-12 col-sm-12 col-12">
+            <h1> Proyectos </h1>
+        </div>
+    </div>
+    <div class=" col-lg-5 offset-lg-3 d-flex col-md-12 col-sm-12 col-12">
+        <div class=" ProDev  col-lg-4  col-md-4 col-sm-12 col-12">
+            <h4 class=" "> Optimización Energética en Aplicaciones</h4>
+
+        </div>
+        <div class=" ProDev col-lg-4 offset-lg-1  col-md-4 col-sm-12 col-12">
+            <h4 class="  "> Reducción de la Huella de Carbono en Centros de Datos</h4>
+        </div>
+        <div class=" ProDev col-lg-4 offset-lg-1 col-md-4 col-sm-12 col-12">
+            <h4 class="  "> Proyectos de Energía Renovable</h4>
+        </div>
+    </div>
+    <div class="col-lg-11 col-md-12 col-sm-12 col-12">
+        <h1 class="ods col-lg-5 offset-lg-4 col-md-12 col-sm-12 col-12">Objetivos y metas de desarrollo sostenible</h1>
+
+    </div>
+
+
+
+    <div class="container">
+        <div class="row ods1-4">
+            <div class="col-lg-2 offset-lg-2 col-md-2 offset-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS1.png" class="img-fluid" onclick="toggleExplanation('explanation1')">
+                <div id="explanation1" class="explanation">
+                    <p>Erradicar la pobreza en todas sus formas y en todo el mundo</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS2.png" class="img-fluid" onclick="toggleExplanation('explanation2')">
+                <div id="explanation2" class="explanation">
+                    <p> Poner fin al hambre, lograr la seguridad alimentaria y mejorar la nutrición, y promover la
+                        agricultura sostenible.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS3.png" class="img-fluid" onclick="toggleExplanation('explanation3')">
+                <div id="explanation3" class="explanation">
+                    <p>Garantizar una vida sana y promover el bienestar para todos en todas las edades.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS4.png" class="img-fluid" onclick="toggleExplanation('explanation4')">
+                <div id="explanation4" class="explanation">
+                    <p>Garantizar una educación inclusiva, equitativa y de calidad, y promover oportunidades de
+                        aprendizaje durante toda la vida para todos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row ods5-8">
+            <div class="col-lg-2 offset-lg-2 col-md-2 offset-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS5.png" class="img-fluid" onclick="toggleExplanation('explanation5')">
+                <div id="explanation5" class="explanation">
+                    <p>Lograr la igualdad entre los géneros y empoderar a todas las mujeres y niñas.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS6.png" class="img-fluid" onclick="toggleExplanation('explanation6')">
+                <div id="explanation6" class="explanation">
+                    <p>Garantizar la disponibilidad de agua y su gestión sostenible y el saneamiento para todos.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6 ">
+                <img src="../Imagenes/ODS/ODS7.png" class="img-fluid" onclick="toggleExplanation('explanation7')">
+                <div id="explanation7" class="explanation">
+                    <p>Garantizar el acceso a una energía asequible, fiable, sostenible y moderna para todos</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS8.png" class="img-fluid" onclick="toggleExplanation('explanation8')">
+                <div id="explanation8" class="explanation">
+                    <p>Promover el crecimiento económico sostenido, inclusivo y sostenible, el empleo pleno y
+                        productivo, y el trabajo decente para todos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row ods9-12  ">
+            <div class="col-lg-2 offset-lg-2 col-md-2 offset-md-2 col-6 ">
+                <img src="../Imagenes/ODS/ODS9.png" class="img-fluid" onclick="toggleExplanation('explanation9')">
+                <div id="explanation9" class="explanation">
+                    <p>Construir infraestructuras resilientes, promover la industrialización inclusiva y sostenible, y
+                        fomentar la innovación.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS10.png" class="img-fluid" onclick="toggleExplanation('explanation10')">
+                <div id="explanation10" class="explanation">
+                    <p>Reducir la desigualdad en y entre los países.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS11.png" class="img-fluid" onclick="toggleExplanation('explanation11')">
+                <div id="explanation11" class="explanation">
+                    <p>Lograr que las ciudades y los asentamientos humanos sean inclusivos, seguros, resilientes y
+                        sostenibles.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS12.png" class="img-fluid" onclick="toggleExplanation('explanation12')">
+                <div id="explanation12" class="explanation">
+                    <p>Garantizar modalidades de consumo y producción sostenibles.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row ods13-16">
+            <div class="col-lg-2 offset-lg-2 col-md-2 offset-md-2 col-6 ">
+                <img src="../Imagenes/ODS/ODS13.png" class="img-fluid" onclick="toggleExplanation('explanation13')">
+                <div id="explanation13" class="explanation">
+                    <p>Adoptar medidas urgentes para combatir el cambio climático y sus efectos.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS14.png" class="img-fluid" onclick="toggleExplanation('explanation14')">
+                <div id="explanation14" class="explanation">
+                    <p>Conservar y utilizar de manera sostenible los océanos, los mares y los recursos marinos para el
+                        desarrollo sostenible.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS15.png" class="img-fluid" onclick="toggleExplanation('explanation15')">
+                <div id="explanation15" class="explanation">
+                    <p>Gestionar sosteniblemente los bosques, luchar contra la desertificación, detener e invertir la
+                        degradación de las tierras y detener la pérdida de biodiversidad.</p>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-6">
+                <img src="../Imagenes/ODS/ODS16.png" class="img-fluid" onclick="toggleExplanation('explanation16')">
+                <div id="explanation16" class="explanation">
+                    <p>Promover sociedades pacíficas e inclusivas para el desarrollo sostenible, facilitar el acceso a
+                        la justicia para todos y crear instituciones eficaces, responsables e inclusivas a todos los
+                        niveles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../JavaScript/Ods.js">
+
+    </script>
+    <div class="SoluTec col-lg-7 offset-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <h1>Medidas Sostenibles para Reducir el Impacto Ambiental</h1>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <ul id="solutionList">
+                <li onclick="toggleVisibility(this)">
+                    <h2>Acuerdo de París:</h2>
+                    <div class="expanded-content">
+                        <p>Un tratado internacional que busca limitar el calentamiento global a menos de 2°C por encima
+                            de los niveles preindustriales1. Los países se comprometen a reducir sus emisiones de gases
+                            de efecto invernadero y a aumentar la resiliencia climática.</p>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2>Objetivos de Desarrollo Sostenible (ODS):</h2>
+                    <div class="expanded-content">
+                        <p> Un conjunto de 17 objetivos adoptados por todos los Estados Miembros de la ONU en 2015, que
+                            incluyen metas específicas para la acción climática y la sostenibilidad ambiental2.</p>
+                    </div>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2> Estrategias Nacionales de Energía Renovable: </h2>
+                    <div class="expanded-content">
+                        <p>Muchos países están implementando políticas para aumentar el uso de energías renovables, como
+                            la solar y la eólica, y reducir la dependencia de combustibles fósiles.</p>
+                    </div>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2>Economía Circular: </h2>
+                    <div class="expanded-content">
+                        <p>Promueve la reutilización, reparación y reciclaje de productos para minimizar los residuos y
+                            el uso de recursos naturales..</p>
+                    </div>
+                </li>
+
+        </div>
+        </li>
+        </ul>
+    </div>
+    <div class="SoluTec col-lg-7 offset-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <h1>Desarrollo Sostenible</h1>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <ul id="solutionList">
+                <li onclick="toggleVisibility(this)">
+                    <h2>Concepto de Desarrollo Sostenible</h2>
+                    <div class="expanded-content">
+                        <p>Un tratado internacional que busca limitar el calentamiento global a menos de 2°C por encima
+                            de los niveles preindustriales1. Los países se comprometen a reducir sus emisiones de gases
+                            de efecto invernadero y a aumentar la resiliencia climática.</p>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2>Contribución de las Empresas</h2>
+                    <div class="expanded-content">
+                        <p> Proyectos Económicamente Viables: Invertir en tecnologías y prácticas rentables a largo
+                            plazo.</p>
+                        <p>Equidad Social: Promover condiciones laborales justas e inclusión.</p>
+                        <p>Responsabilidad Ambiental: Minimizar el impacto ambiental y adoptar prácticas sostenibles.
+                        </p>
+                    </div>
+                </li>
+                <li onclick="toggleVisibility(this)">
+                    <h2> Beneficios a Largo Plazo </h2>
+                    <div class="expanded-content">
+                        <p>Sostenibilidad Financiera: Empresas más resilientes y competitivas.</p>
+                        <p>Bienestar Social: Mejora de la calidad de vida de las comunidades.</p>
+                        <p>Protección Ambiental: Conservación de recursos naturales y reducción de la contaminación.</p>
+
+                    </div>
+                </li>
+
+
+        </div>
+        </li>
+        </ul>
+    </div>
+    <script src="../JavaScript/I+DSolucionesTec.js">
+    </script>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="SoluTec col-lg-7 offset-lg-3 col-md-12 col-sm-12 col-12">
+            <h1> Testimonios y equipos </h1>
+            <blockquote> <strong>EcoTech Solutions</strong>: “Gracias a GreenDev, hemos reducido nuestras emisiones de
+                carbono en un 40% en solo un año. Sus soluciones innovadoras y su enfoque personalizado nos han
+                permitido optimizar nuestros procesos y ser más sostenibles.” </blockquote>
+            <blockquote> <strong>GreenFarm Co.</strong>: “Implementar las tecnologías de GreenDev ha sido un cambio
+                radical para nuestra empresa. No solo hemos disminuido nuestro consumo de energía en un 30%, sino que
+                también hemos mejorado la eficiencia de nuestros recursos hídricos. ¡Estamos encantados con los
+                resultados!” </blockquote>
+            <blockquote> <strong>UrbanGreen Initiatives</strong>: “Con la ayuda de GreenDev, hemos transformado nuestros
+                espacios urbanos en áreas más verdes y sostenibles. Sus soluciones nos han permitido reducir los
+                residuos y promover prácticas ecológicas entre nuestros empleados y la comunidad.” </blockquote>
+            <blockquote> <strong> Nuestro Equipo </strong>
+                En GreenDev, contamos con un equipo de expertos apasionados por la sostenibilidad y las tecnologías
+                verdes. Aquí te presentamos a algunos de nuestros miembros clave:
+
+                Ana Martínez - CEO y Fundadora: Con más de 15 años de experiencia en el sector de las energías
+                renovables, Ana ha liderado numerosos proyectos de sostenibilidad a nivel global. Su visión y liderazgo
+                han sido fundamentales para el crecimiento de GreenDev.
+                Carlos López - Director de Tecnología: Ingeniero en tecnologías ambientales, Carlos ha desarrollado
+                soluciones innovadoras que han sido implementadas en diversas industrias. Su enfoque en la eficiencia
+                energética y la reducción de residuos ha sido clave para nuestros clientes.
+                Laura Gómez - Gerente de Proyectos: Con una sólida formación en gestión ambiental, Laura ha coordinado
+                proyectos que han logrado significativas reducciones en el impacto ambiental de las empresas. Su
+                habilidad para gestionar equipos y recursos asegura el éxito de cada iniciativa.
+                Miguel Torres - Especialista en Energías Renovables: Experto en energía solar y eólica, Miguel ha
+                trabajado en la implementación de sistemas de energía renovable en múltiples países. Su conocimiento
+                técnico y su compromiso con la sostenibilidad son invaluables para GreenDev.
+        </div>
+
+    </div>
+
+
+
+
+
+    <footer>
+        <div class="container">
+            <p>Contacto:</p>
+            <p>Email: contacto@greendev.com</p>
+            <p>Teléfono: +34 123 456 789</p>
+            <p>Dirección: Calle de la Sostenibilidad, 123, 08001 Barcelona, España</p>
+            <p>GreenDev se compromete a alcanzar la neutralidad de CO2 para 2030, implementando prácticas sostenibles y
+                reduciendo nuestras emisiones de carbono.</p>
+            <p>&copy; 2024 GreenDev. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

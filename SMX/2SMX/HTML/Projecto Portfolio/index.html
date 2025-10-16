@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="CSS/Styles.css">
+  <script src="https://kit.fontawesome.com/9b280daf16.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Daniel Garcia Brun</h1>
+
+    <nav>
+      <ul>
+        <li><a href="#Sobremi" class="li1">Sobre mi <i class="fa-solid fa-user"></i> </a> </li>
+        <li><a href="#estudios" class="li1">Estudios <i class="fa-solid fa-graduation-cap"></i> </a> </li>
+        <li><a href="#experiencia" class="li1">Experiencia <i class="fa-solid fa-briefcase"></i> </a> </li>
+        <li><a href="#contacto" class="li1">Contacto <i class="fa-solid fa-address-book"></i> </a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1 id="Sobremi" class="relleno">test </h1>
+  <section class="apartados">
+    <h2>Sobre mi <i class="fa-solid fa-user"></i> </h2>
+    <p> Soy un Daniel de 19 años actualmente cursando el segundo año de SMX (Sistemas Microinformáticos y Redes) en el
+      centro de estudios Monlau. Mi pasión por la tecnología me ha llevado a explorar el mundo de la informática y me ha
+      impulsado a considerar la posibilidad de continuar mis estudios en el ciclo formativo de Desarrollo de
+      Aplicaciones Multiplataforma (DAM). Me motiva la idea de seguir aprendiendo sobre desarrollo de software y
+      programación para poder contribuir al mundo digital de manera significativa. </p>
+
+    <h1 class="relleno">test </h1>
+    <div class="Aficion">
+      <section class="apartados">
+        <div class="GrupoA">
+          <h2>Aficiones </h2>
+          <div class="AficionPatin">
+            <img class="AficionP" src="Fotos/Patinar.jpg">
+            <p class="patinar">Patinar: A través del patinaje, he desarrollado habilidades de equilibrio, coordinación y
+              perseverancia. Esta actividad me ha enseñado la importancia de la práctica constante y el enfoque en el
+              progreso personal.</p>
+          </div>
+          <div class="AficionVideoj">
+            <img class="AficionJ" src="Fotos/videojuegos.jpg">
+            <p class="videojuegos">Los videojuegos me han brindado la oportunidad de mejorar mi capacidad de resolución
+              de problemas, toma de decisiones estratégicas y trabajo en equipo, especialmente en entornos multijugador.
+            </p>
+          </div>
+          <div class="AficionMonitor">
+            <img class="AficionM" src="Fotos/Monitor.jpg">
+            <p class="monitor">Monitor de hockey: Desempeñar el rol de monitor de hockey me ha permitido cultivar
+              habilidades de liderazgo, comunicación efectiva y gestión de grupos, al tiempo que fomento la pasión por
+              el deporte en otros.</p>
+          </div>
+        </div>
+    </div>
+    <div class="estudiante">
+      <h1 id="estudios" class="relleno">test </h1>
+      <section class="apartados">
+        <h2>Estudios <i class="fa-solid fa-graduation-cap"> </i> </h2>
+        <p>Primaria: Realicé mis estudios de primaria en el Colegio de Santa Coloma de Gramanet Singuerlin. En tercer
+          grado, continué mi educación en el Fort Pienc.
+
+          ESO: Completé la Educación Secundaria Obligatoria (ESO) en la escuela especializada La Sagrera, y
+          posteriormente la finalicé en Monlau, donde actualmente estoy cursando el segundo año de SMX. </p>
+      </section>
+
+
+    </div>
+    <h1 id="experiencia" class="relleno">test </h1>
+    <section class="apartados">
+      <h2>Experiencia <i class="fa-solid fa-briefcase"></i> </h2>
+      <p> Prácticas en la UPC: Realicé prácticas en el ámbito informático en la Facultad de Matemáticas y Estadística de
+        la UPC, donde adquirí conocimientos y habilidades específicas relacionadas con mi formación en SMX.
+
+        Bar familiar: Contribuí al negocio familiar desempeñando el rol de camarero, lo que me permitió desarrollar
+        habilidades de atención al cliente, trabajo en equipo y gestión de situaciones dinámicas.
+
+        Entrenador de hockey: Tuve la oportunidad de ser entrenador de hockey, lo que me brindó experiencia en
+        liderazgo, organización y gestión de un grupo, así como la capacidad de trabajar con personas de diferentes
+        edades y habilidades.</p>
+    </section>
+
+
+    <h1 id="contacto" class="relleno">test </h1>
+    <section class="apartados">
+      <h2>Contacto <i class="fa-solid fa-address-book"></i></h2>
+      <h2>Formulario de Contacto</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+" title="Solo se aceptan letras"
+            placeholder="Yoel" required>
+        </div>
+        <div class="form-group">
+          <label for="apellido">Apellidos:</label>
+          <input type="text" id="apellido" name="apellido" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+            title="Solo se aceptan letras" placeholder="Sanchez Costas" required>
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input type="tel" id="telefono" name="telefono" pattern="[0-9]{9}"
+            title="El número de teléfono debe tener 9 dígitos" placeholder="674905224" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Correo electrónico:</label>
+          <input type="email" id="email" name="email" placeholder="yoelsancos@hotmail.com" required>
+        </div>
+        <div class="form-group">
+          <label for="Mensajes">Mensaje:</label>
+          <input class="mensajess" type="text" id="Mensajes" name="Mensajes" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+            title="Solo se aceptan letras" placeholder="Escribeme" required>
+        </div>
+
+        <button class="submit">Enviar</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; Curso 2023-2024
+        <a href="https://www.linkedin.com/in/daniel-garcia-brun-98a54b274/"> <i class="fa-brands fa-linkedin"></a></i>
+        <a href="https://www.instagram.com"> <i class="fa-brands fa-instagram"></a></i>
+        <a href="https://twitter.com/?lang=es"> <i class="fa-brands fa-x-twitter"></a></i>
+        <a href="https://www.facebook.com/?locale=es_ES"><i class="fa-brands fa-facebook"></a></i>
+      </p>
+    </footer>
+</body>
+
+</html>

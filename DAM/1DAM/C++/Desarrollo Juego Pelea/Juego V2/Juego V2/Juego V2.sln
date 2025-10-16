@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Juego V2", "Juego V2.vcxproj", "{69BC0BC4-1928-4AEF-939F-352B858F3023}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69BC0BC4-1928-4AEF-939F-352B858F3023}.Debug|x64.ActiveCfg = Debug|x64
+		{69BC0BC4-1928-4AEF-939F-352B858F3023}.Debug|x64.Build.0 = Debug|x64
+		{69BC0BC4-1928-4AEF-939F-352B858F3023}.Debug|x86.ActiveCfg = Debug|Win32
+		{69BC0BC4-1928-4AEF-939F-352B858F3023}.Debug|x86.Build.0 = Debug|Win32
+		{69BC0BC4-1928-4AEF-939F-352B858F3023}.Release|x64.ActiveCfg = Release|x64
+		{69BC0BC4-1928-4AEF-939F-352B858F3023}.Release|x64.Build.0 = Release|x64
+		{69BC0BC4-1928-4AEF-939F-352B858F3023}.Release|x86.ActiveCfg = Release|Win32
+		{69BC0BC4-1928-4AEF-939F-352B858F3023}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C82216C3-4DC6-4E89-BB4F-7EDB157E20BB}
+	EndGlobalSection
+EndGlobal

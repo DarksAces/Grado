@@ -1,0 +1,23 @@
+h1 {
+    font-size: 40px;
+    color: darkblue;
+}
+
+#t1 {
+    font-size: 50px;
+    color: darkred;
+}
+
+.titulo {
+    background-color: #0fc56a;
+    text-align: center;
+    height: 400px;
+    align-items: center;
+    border-radius: 50px;
+}
+
+
+
+.subtitulo {
+    padding-top: 150px;
+}

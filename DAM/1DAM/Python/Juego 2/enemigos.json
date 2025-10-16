@@ -1,0 +1,84 @@
+{
+    "hacker": [
+        {
+            "nombre": "Caida de la VPN",
+            "descripcion": "Tu VPN ha caído y tu información está expuesta.",
+            "afecta": "anonimato",
+            "cantidad": -30
+        },
+        {
+            "nombre": "InterPol",
+            "descripcion": "La InterPol te ha rastreado y está en camino a tu ubicación.",
+            "afecta": "anonimato",
+            "cantidad": -50
+        }
+    ],
+    "streamer": [
+        {
+            "nombre": "Impuestos",
+            "descripcion": "El Gobierbno te solicita que pagues tus impuestos.",
+            "afecta": "seguidores",
+            "cantidad": -500
+        },
+        {
+            "nombre": "Evasor de Impuestos",
+            "descripcion": "Te han acusado de evasión de impuestos.",
+            "afecta": "seguidores",
+            "cantidad": -2000
+        }
+    ],
+    "deportista": [
+        {
+            "nombre": "Panza",
+            "descripcion": "Te empieza a salir panza",
+            "afecta": "resistencia",
+            "cantidad": -20
+        },
+        {
+            "nombre": "Llados",
+            "descripcion": "Tu primer millon en un minuto",
+            "afecta": "resistencia",
+            "cantidad": -30
+        }
+    ], "Desarrollador": [
+        {
+            "nombre": "Polillas",
+            "descripcion": "Aparece una polilla en la placa base probocando un bug",
+            "afecta": "dinero",
+            "cantidad": -1000
+        },
+        {
+            "nombre": "Practicas de sistemas",
+            "descripcion": "Tu maquina virtual con las practicas de sistemas ha muerto",
+            "afecta": "dinero",
+            "cantidad": -2000
+        }
+    ], "musico": [
+        {
+            "nombre": "Bloqueo Creativo",
+            "descripcion": "Te quedas sin inspiración y no puedes componer nada decente, afectando tu confianza.",
+            "afecta": "fama",
+            "cantidad": -1000
+        },
+        {
+            "nombre": "Contrato Abusivo",
+            "descripcion": "Una discográfica se aprovecha de ti con condiciones injustas y pagos miserables.",
+            "afecta": "fama",
+            "cantidad": -2000
+        }
+    ],
+    "gamer": [
+        {
+            "nombre": "Lag Extremo",
+            "descripcion": "Tu conexión a internet sufre retrasos constantes, arruinando tus partidas competitivas.",
+            "afecta": "habilidad_gamer",
+            "cantidad": -10
+        },
+        {
+            "nombre": "Nerfeo en el Parche",
+            "descripcion": "El juego que dominas recibe una actualización que debilita tu personaje principal.",
+            "afecta": "habilidad_gamer",
+            "cantidad": -15
+        }
+    ]
+}

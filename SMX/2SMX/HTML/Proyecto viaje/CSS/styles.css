@@ -1,0 +1,271 @@
+.debajofoto {
+  background-color: #00CED1;
+  padding: 20px;
+  color: white;
+  text-align: center;
+
+
+
+}
+
+body {
+  margin: 0px;
+}
+
+.Viaje {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  transition-duration: 5s;
+}
+
+.cabezera {
+  margin-top: 10px;
+
+}
+
+
+.icon {
+  width: 40px;
+  height: 40px;
+
+}
+
+.iconviaje {
+  width: 40px;
+  height: 40px;
+  display: flex;
+
+}
+
+.icons {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+  display: inline;
+  align-items: center;
+  margin-left: 900px;
+
+
+}
+
+.figura {
+  align-items: center;
+}
+
+.Piepag {
+  background-color: #00CED1;
+  color: white;
+  border: 1px;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+  margin-bottom: 0px;
+  margin-top: 120px;
+  position: relative;
+}
+
+
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.datosformulario {
+  color: gray;
+  width: 100%;
+  height: 200px;
+  background-color: rgb(221, 221, 221);
+  /* Cambia el color de fondo del input */
+  text-decoration: none;
+  border: 0px;
+}
+
+button {
+  width: 100px;
+  height: 100px;
+  text-decoration: none;
+  border: 0px;
+  margin-right: 850px;
+  background-color: #00CED1;
+  color: white;
+}
+
+.TituloCon {
+
+  margin-left: 100px;
+  margin-right: 1300px;
+
+}
+
+.infocontacto {
+  flex: 1;
+}
+
+.placeholder input {
+  color: white;
+
+
+}
+
+.form input {
+  background-color: gray;
+  width: 50%;
+}
+
+.formulario {
+  margin-top: -100px;
+  margin-left: 600px;
+  text-align: right;
+  margin-right: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: -100px;
+  padding: 10px;
+  border-radius: 10px;
+  width: 50%;
+}
+
+
+
+.FotoPrincipal {
+  margin-top: 190px;
+  width: 100%;
+  height: 300px;
+}
+
+.blanco {
+  width: 100%;
+  background-color: white;
+
+}
+
+.Menus {
+  width: 100%;
+  text-decoration: none;
+  position: fixed;
+  display: inline-block;
+  margin-bottom: 100px;
+  text-align: right;
+  margin-top: 0px;
+  background-color: #00CED1;
+}
+
+.Mapa {
+  margin-top: 500px;
+  width: 100%;
+}
+
+.abajo {
+  margin-top: -20px;
+
+}
+
+.MenusC {
+  background-color: #00CED1;
+}
+
+.iconosprincipal {
+  margin-left: 1500px;
+}
+
+
+.MenuInic {
+  margin-right: 80px;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.MenuIndex {
+  margin-right: 80px;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  margin-top: 0px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.MenuInf {
+  margin-right: 80px;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+}
+
+.MenuCon {
+  margin-right: 80px;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+
+}
+
+.AquiEstoyMMH {
+  color: #ececec;
+}
+
+.Menus a {
+  text-decoration: none;
+}
+
+.Viaje1 {
+  margin-left: 200px;
+  margin-right: 800px;
+
+}
+
+
+.Viaje1:hover {
+  background-color: orange;
+
+}
+
+.Viaje1 img {
+  height: 300px;
+  width: 400px;
+  transition: width 2s, height 2s, transform 2s;
+}
+
+.Viaje1 img:hover {
+
+  transform: rotate(360deg);
+  transition-duration: 5s;
+}
+
+.Viaje2 {
+
+  margin-right: 500px;
+
+}
+
+.Viaje2 img {
+
+  width: 400px;
+  height: 300px;
+  transition: width 2s, height 2s, transform 2s;
+}
+
+.Viaje2 img:hover {
+
+  transform: rotate(-360deg);
+  transition-duration: 5s;
+}
+
+.Viaje2:hover {
+  background-color: rgb(243, 94, 94);
+
+}
+
+.MenusC img {
+  margin-top: 0px;
+  margin-right: 1900px;
+  height: 60px;
+  width: 60px;
+}

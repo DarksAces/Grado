@@ -1,0 +1,358 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(255, 255, 255);
+
+}
+
+header {
+  background-color: gray;
+  padding: 1em 0;
+  text-align: center;
+  position: fixed;
+  margin-top: -22px;
+  width: 100%;
+  z-index: 5;
+  margin-left: -23px;
+}
+
+header a {
+  text-decoration: none;
+  color: black;
+}
+
+header img {
+  width: 5%;
+  margin-right: -500px;
+  margin-top: -88px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0px;
+}
+
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+.li1:hover {
+  color: red;
+}
+
+section {
+  padding: 20px;
+  text-decoration: none;
+  text-align: center;
+  background-color: rgb(195, 236, 236);
+  margin-left: -21px;
+  margin-right: 0px;
+  width: 100%;
+}
+
+.apartados {
+  text-align: center;
+
+}
+
+
+.Aficiones {
+
+  margin-left: -380px;
+}
+
+.patinar {
+  text-align: center;
+  margin-left: 60px;
+  margin-top: 39px;
+}
+
+.AficionPatin {
+  width: 20%;
+  text-align: center;
+
+}
+
+.AficionPatin p {
+  text-align: center;
+  margin-left: 60px;
+}
+
+.AficionP {
+  width: 545px;
+  margin-right: 1106px;
+  z-index: 0;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.AficionP:hover {
+  transform: scale(1.1);
+}
+
+.AficionJ {
+  width: 450px;
+  ;
+  margin-left: -200px;
+  margin-top: -382px;
+  z-index: 0;
+  display: inline-block;
+  position: absolute;
+  height: 310px;
+  border-radius: 10px;
+}
+
+.AficionJ:hover {
+  transform: scale(1.1);
+}
+
+.AficionVideoj {
+  width: 20%;
+  text-align: center;
+  margin-left: 700px;
+  margin-top: -140px;
+  height: 169px;
+}
+
+.AficionM {
+  width: 459px;
+  margin-left: -62px;
+  margin-top: -387px;
+  z-index: 0;
+  display: inline-block;
+  position: absolute;
+  height: 310px;
+  border-radius: 10px;
+}
+
+.AficionM:hover {
+  transform: scale(1.1);
+}
+
+.AficionMonitor {
+  width: 20%;
+  text-align: center;
+  margin-left: 1208px;
+  margin-top: -169px;
+}
+
+.videojuegos {
+  margin-top: -44px;
+  margin-left: 80px;
+}
+
+.monitor {
+  margin-top: 0px;
+  margin-left: 185px;
+  margin-right: -151px;
+}
+
+.GrupoA {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.relleno {
+  color: rgb(195, 236, 236);
+  margin-bottom: 126px;
+  margin-right: 258px;
+  background-color: rgb(195, 236, 236);
+  ;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: rgb(195, 236, 236);
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+}
+
+
+
+
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.mensajess {
+  height: 100px;
+  align-content: top;
+
+}
+
+input:hover {
+
+  border-color: hsl(0, 0%, 0%);
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit:hover {
+  background-color: rgb(95, 94, 94);
+}
+
+button:hover {
+  background-color: #45a049;
+  transform: scale(1.1);
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1em 0;
+  margin-bottom: 0px;
+  width: 100%;
+  position: absolute;
+  margin-left: -20px;
+}
+
+footer a {
+  text-decoration: none;
+  color: white;
+}
+
+@media screen and (max-width: 400px) {
+  header {
+    background-color: gray;
+    padding: 1em 0;
+    text-align: center;
+    position: fixed;
+    margin-top: -22px;
+    margin-right: 0px;
+    width: 100%;
+    z-index: 5;
+  }
+
+  header h1 {
+    font-size: 20px;
+    text-align: left;
+    margin-left: 100px;
+
+  }
+
+  .apartados {
+    text-align: center;
+    margin-top: -96px;
+  }
+
+  nav ul {
+    display: inline-block;
+    margin-right: 1064px;
+    font-size: 10px;
+    text-align: left;
+  }
+
+  .AficionP {
+    width: 276px;
+    margin-left: 46px;
+    z-index: 0;
+    display: inline-block;
+  }
+
+  .patinar {
+    margin-top: 7px;
+    margin-right: 254px;
+    font-size: 13px;
+    width: 365%;
+  }
+
+  .patinar p {
+    width: 30%;
+  }
+
+  .AficionJ {
+    width: 278px;
+    margin-left: 14px;
+    margin-top: -164px;
+    z-index: 0;
+    display: inline-block;
+    position: absolute;
+    height: 155px;
+    border-radius: 10px;
+  }
+
+  .videojuegos {
+    margin-top: 194px;
+    margin-left: 207px;
+    font-size: 13px;
+    width: 60%;
+  }
+
+  .AficionM {
+    width: 278px;
+    margin-left: 14px;
+    margin-top: -184px;
+    z-index: 0;
+    display: inline-block;
+    position: absolute;
+    height: 156px;
+    border-radius: 10px;
+  }
+
+  .AficionVideoj {
+    width: 100%;
+    text-align: center;
+    margin-left: -133px;
+    margin-top: 92px;
+    height: 10px;
+  }
+
+  .AficionMonitor {
+    width: 100%;
+    text-align: center;
+    margin-left: -133px;
+    margin-top: 92px;
+    height: 10px;
+  }
+
+  .monitor {
+    margin-top: 326px;
+    margin-left: 207px;
+    font-size: 13px;
+    width: 60%;
+  }
+
+  footer {
+    margin-top: 0px;
+    width: 100%;
+  }
+}

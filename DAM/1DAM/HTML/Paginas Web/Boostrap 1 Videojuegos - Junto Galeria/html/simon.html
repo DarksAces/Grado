@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería de Videojuegos</title>
+  <link rel="stylesheet" href="../css/StyleSimon.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="all">
+    <header>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Galería de Videojuegos</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="../Index.html">Inicio</a></li>
+              <li class="nav-item"><a class="nav-link" href="Galeria.html">Galería</a></li>
+              <li class="nav-item"><a class="nav-link active" href="#">Simon</a></li>
+              <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Contenido del juego Simon -->
+    <div class="container text-center mt-5">
+      <h1 id="heading">Simon Game</h1>
+      <div id="info" class="hidden mt-3 d-flex justify-content-center align-items-center" style="height: 50px;">
+        <!-- Este contenedor ahora está centrado vertical y horizontalmente -->
+      </div>
+      <!-- Contenedor de las fichas -->
+      <div id="tileContainer" class="d-flex justify-content-center flex-wrap gap-3 my-4 unclickable">
+        <div data-tile="red" data-sound="red-sound" class="tile" style="background: red; width: 100px; height: 100px;">
+        </div>
+        <div data-tile="green" data-sound="green-sound" class="tile"
+          style="background: green; width: 100px; height: 100px;"></div>
+        <div data-tile="blue" data-sound="blue-sound" class="tile"
+          style="background: blue; width: 100px; height: 100px;"></div>
+        <div data-tile="yellow" data-sound="yellow-sound" class="tile"
+          style="background: yellow; width: 100px; height: 100px;"></div>
+      </div>
+      <!-- Botón de inicio -->
+      <button id="startButton" class="btn btn-primary">Start Game</button>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-dark text-white text-center py-4 footer">
+      <p>&copy; 2024 Galería de Videojuegos. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="../js/siomon.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </div>
+</body>
+
+</html>

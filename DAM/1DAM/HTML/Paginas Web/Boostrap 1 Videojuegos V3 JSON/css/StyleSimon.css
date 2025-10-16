@@ -1,0 +1,40 @@
+[data-tile="red"] {
+  background-color: red;
+}
+
+[data-tile="green"] {
+  background-color: green;
+}
+
+[data-tile="blue"] {
+  background-color: blue;
+}
+
+[data-tile="yellow"] {
+  background-color: yellow;
+}
+
+/* Estilo activado */
+.activated {
+  transform: scale(1.2);
+  opacity: 0.7;
+  box-shadow: 0 0 20px white;
+}
+
+/* Estilo de las fichas */
+#tileContainer div {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.all {
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: auto lfr auto;
+}

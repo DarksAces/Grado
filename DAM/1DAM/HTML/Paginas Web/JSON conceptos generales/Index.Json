@@ -1,0 +1,19 @@
+{
+    "personas": {
+        "persona1": {
+            "nombre": "Dalinar",
+            "edad": "54 Años",
+            "ciudad": "Kholinar"
+        },
+        "persona2": {
+            "nombre": "Kaladin",
+            "edad": "21 Años",
+            "ciudad": "Piedralar"
+        },
+        "persona3": {
+            "nombre": "Szeth",
+            "edad": "36 Años",
+            "ciudad": "Shinovar"
+        }
+    }
+}

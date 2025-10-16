@@ -1,0 +1,206 @@
+End point
+http://172.17.22.132:8081/lafamiglia/servicios
+
+Formato post members
+{
+  "firstName": "",
+  "lastName": "",
+  "apodo": "",
+  "fechaNacimiento": "AAAA-MM-DD",
+  "anyoIngreso": 0,
+  "numero": "",
+  "rango": {
+    "idRango": 0
+  },
+  "arma": {
+    "idArma": 0
+  },
+  "jefe": {
+    "idMiembro": 0
+  }
+}
+
+Formato put members:
+{
+  "firstName": "",
+  "lastName": "",
+  "rango": {
+    "idRango": 0
+  },
+  "arma": {
+    "idArma": 0
+  },
+  "jefe": {
+    "idMiembro": 0
+  },
+  "fechaNacimiento": "AAAA-MM-DD",
+  "apodo": "",
+  "anyoIngreso": 0,
+  "numero": ""
+}
+
+-- CREACIÓN DE TABLAS
+CREATE TABLE rangos (
+    id_rango INT AUTO_INCREMENT PRIMARY KEY,
+    rango VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE armas (
+    id_arma INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_arma VARCHAR(50) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+    calibre DECIMAL(5,2),
+    municion VARCHAR(30),
+    precio DECIMAL(12,2)
+);
+
+CREATE TABLE contactos (
+    id_contacto INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    apodo VARCHAR(50),
+    numero VARCHAR(50) UNIQUE NOT NULL,
+    campo_interes VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE members (
+    id_miembro INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    id_rango INT NOT NULL,
+    id_jefe INT,
+    id_arma INT NOT NULL,
+    fecha_nacimiento DATE,
+    apodo VARCHAR(50),
+    anyo_ingreso DATE NOT NULL,
+    numero VARCHAR(50) UNIQUE NOT NULL,
+    FOREIGN KEY (id_arma) REFERENCES armas (id_arma),
+    FOREIGN KEY (id_jefe) REFERENCES members (id_miembro),
+    FOREIGN KEY (id_rango) REFERENCES rangos (id_rango)
+);
+
+CREATE TABLE servicios (
+    id_servicio INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_servicio VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    precio_base DECIMAL(10,2)
+);
+
+CREATE TABLE usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    numero VARCHAR(50) UNIQUE NOT NULL,
+    correo VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL 
+);
+
+CREATE TABLE pedidos (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_servicio INT NOT NULL,
+    id_usuario INT NOT NULL,
+    fecha_pedido DATE NOT NULL,
+    descripcion TEXT,
+    FOREIGN KEY (id_servicio) REFERENCES servicios(id_servicio),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+);
+
+CREATE TABLE encargados_pedidos (
+    id_encargado INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    tipo_encargado ENUM('miembro', 'contacto') NOT NULL,
+    id_referencia INT NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido)
+);
+
+
+
+INSERT INTO servicios (nombre_servicio, descripcion, precio_base) VALUES
+('Venta de armas', 'Soluciones contundentes para problemas delicados.', 2500.00),
+('Abogado', 'Defensa implacable para situaciones comprometidas.', 1200.00),
+('Detectives', 'Los secretos no sobreviven mucho tiempo.', 950.00),
+('Protección', 'Porque la lealtad también se viste de traje y lleva auricular.', 1800.00),
+('Recuperación de deudas', 'Convencemos incluso a los más olvidadizos.', 1600.00),
+('Consultoría en identidad', 'Creamos nuevas oportunidades, adaptadas a cada historia.', 1400.00),
+('Optimización financiera', 'Convertimos activos complicados en oportunidades limpias.', 3000.00),
+('Intermediación política', 'Abrimos puertas que parecen cerradas... y algunas que no deberían abrirse.', 2000.00);
+
+
+INSERT INTO rangos (rango) VALUES 
+('Padrio'),
+('Capo'),
+('Picciotto'),
+('Bullio'),
+('Sicario'),
+('Resolutore'),
+('Contabile'),
+('Avvocato');
+
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Viper', 'Pistola', 9.00, 'Frangible', 850.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Falcon', 'Subfusil', 9.00, 'Expansiva', 1700.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Juggernaut', 'Fusil Antimaterial', 20.00, 'Explosiva', 12000.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Lynx', 'Pistola', 4.50, 'No letal', 600.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Hammer', 'Automatico', 7.62, 'Perforante', 2500.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Raider', 'Rifle de asalto', 5.56, 'Expansiva', 1800.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Shadow', 'Carabina', 7.62, 'Trazadora', 2200.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Cobra', 'Fusil de francotirador', 12.70, 'Incendiaria', 7500.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Pixie', 'Pistola compacta', 6.35, 'No letal', 500.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Banshee', 'Fusil pesado', 14.50, 'Antipersonal multiple', 9500.00);
+INSERT INTO armas (nombre_arma, tipo, calibre, municion, precio) VALUES ('Nerv Phantom', 'Pistola de juguete', 2.00, 'Balines', 35.00);
+
+
+INSERT INTO contactos (first_name, last_name, apodo, numero, campo_interes) VALUES
+('Javier', 'Salvador', 'Script King', '1315186952', 'Proveedor de armas'),
+('Jorge', 'Pastor', 'Perejil', '9067952037', 'Alquimista'),
+('Marco', 'Ricci', 'El Zorro', '3841720274', 'Informante'),
+('Gianni', 'Mancini', 'El Topo', '3345722299', 'Informante'),
+('Franco', 'De Luca', 'El Silencio', '5017496257', 'Informante'),
+('Alessandro', 'Barone', 'El Fantasma', '9796948974', 'Informante'),
+('Luciano', 'Moretti', 'La Sombra', '9739404094', 'Poli'),
+('Tommaso', 'Giannini', 'El Demonio', '6239484956', 'Poli'),
+('Giovanni', 'Mancini', 'El Polaco', '8123745739', 'Poli'),
+('Vincenzo', 'Grassi', 'El Búho', '9830241407', 'Poli'),
+('Carlo', 'Ferri', 'El Barracuda', '6012487421', 'Poli'),
+('Giovanni', 'Della Torre', 'El Drácula', '4483726751', 'Juez'),
+('Nicola', 'Greco', 'La Ley', '4644197447', 'Juez'),
+('Matteo', 'De Santis', 'El Martillo', '4457906473', 'Juez'),
+('Massimo', 'Palmieri', 'Corta Nabos', '8581389446', 'Cirujano'),
+('Salvatore', 'Ferretti', 'Manos Finas', '5039363700', 'Cirujano'),
+('Fabio', 'Costa', 'El Bisturí', '9823186958', 'Cirujano');
+
+
+INSERT INTO members (first_name, last_name, id_rango, id_jefe, id_arma, fecha_nacimiento, apodo, anyo_ingreso, numero) VALUES
+
+('Paco', 'Martínez', 1, NULL, 1, '1970-12-02', 'Il Titiritero', '1989-12-02', '802-527-0518'),
+('Miriam', 'Fernandi', 2, 1, 5, '1988-08-04', 'La Diva Dei Dati', '2007-09-06', '550-435-2873'),
+('Xavi', 'Ortelli', 2, 1, 5, '1995-08-29', 'Vito Corleone', '2010-01-19', '893-920-0383'),
+('Javi', 'Villani', 2, 1, 11, '1997-08-29', 'Quattrocchi', '2012-01-19', '893-920-0384'),
+('Dani', 'Graziani', 2, 1, 9, '1991-11-05', 'Il Sovrano', '2008-05-09', '137-239-2283'),
+
+('David', 'Casanellas', 5, 2, 3, '1985-06-15', 'Oxford Killer', '2008-06-13', '891-567-0587'),
+('Roberto', 'Manca', 6, 3, 8, '2001-05-19', 'Json', '2023-11-13', '536-777-0125'),
+('Ramón', 'Aguilar', 7, 2, 1, '1987-04-14', 'Don Rollback', '2016-10-16', '804-527-0518'),
+('Peter', 'Hone', 3, 4, 11, '1998-07-17', 'La Anguila', '2019-10-22', '844-547-7779'),
+('Txema', 'Herrera', 4, 2, 7, '1998-07-22', 'Osito', '2020-04-23', '301-783-4724'),
+('Elena', 'De la Mota', 8, 5, 3, '1984-10-13', 'La Sentenza', '2011-10-06', '346-852-9056'),
+('Carmen', 'Quintás', 5, 5, 1, '1990-04-14', 'La debugger', '2016-10-16', '802-427-0518'),
+('Sholom', 'Giacovelli', 3, 4, 4, '1992-07-20', 'Sjoli', '2015-09-13', '888-841-5255'),
+('Alessandro', 'Vitale', 4, 3, 6, '1986-02-18', 'xenders', '2012-11-08', '787-774-1305'),
+('Suzanne', 'Concetta', 3, 3, 10, '1977-01-11', 'Flipadini', '1999-06-15', '438-508-1974'),
+('Elene', 'Pellegrini', 4, 5, 1, '1997-12-16', 'enilesa', '2020-06-04', '738-784-6305'),
+('Elden', 'Spirito', 3, 5, 2, '1985-12-27', 'Rito', '2002-02-10', '641-168-7429'),
+('Enzo', 'Polamontayne', 5, 4, 3, '2000-09-05', 'Ferrari', '2021-06-09', '685-545-4278'),
+('Rosalia', 'Daintith', 4, 3, 4, '1970-11-25', 'Rossi', '2015-05-12', '711-444-4463'),
+('Stephanus', 'Rossi', 3, 4, 5, '2003-06-22', 'sphlippsene', '2024-07-16', '374-412-7579');
+
+INSERT INTO usuarios (first_name, last_name, numero, correo, password) VALUES
+('Miriam', 'Fernandi', '658-324-9021', 'michi@gmail.com', '123'),
+('Admin', 'Admin', '671-982-7456', 'admin@admin.com', '123');
+
+INSERT INTO pedidos (id_servicio, id_usuario, fecha_pedido, descripcion)
+VALUES (3, 1, '2025-05-28', 'Protección para reunión familiar');
+
+
+INSERT INTO encargados_pedidos (id_pedido, tipo_encargado, id_referencia)
+VALUES 
+(1, 'miembro', 10),

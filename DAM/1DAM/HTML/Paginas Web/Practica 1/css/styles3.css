@@ -1,0 +1,166 @@
+body {
+  margin: 0px;
+
+}
+
+header h1 {
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+header {
+  background-color: rgb(208, 248, 235);
+  margin-top: -25px;
+}
+
+.Personal h1 {
+
+  background-color: rgb(155, 224, 44);
+  border-radius: 10px;
+  margin-right: 41%;
+  margin-left: 43%;
+}
+
+.Personal p {
+  margin-right: 20%;
+  margin-left: 20%;
+}
+
+.Hobbies h1 {
+  background-color: rgb(155, 224, 44);
+  border-radius: 10px;
+  margin-right: 44%;
+  margin-left: 49%;
+}
+
+.Hobbies p {
+  margin-right: 20%;
+  margin-left: 20%;
+}
+
+.Thefiutur h1 {
+  background-color: rgb(155, 224, 44);
+  border-radius: 10px;
+  margin-right: 44%;
+  margin-left: 47%;
+}
+
+.Thefiutur p {
+  margin-right: 20%;
+  margin-left: 20%;
+}
+
+.pagina2 {
+  position: absolute;
+  text-decoration: none;
+  background-color: #FFC0CB;
+  margin-left: 5%;
+  margin-top: 4px;
+  color: black;
+  border-radius: 10px;
+
+
+}
+
+.pagina2:hover {
+  filter: saturate(180%);
+  transition: width 3s;
+}
+
+footer {
+  background-color: rgb(208, 248, 235);
+  margin-top: 21%;
+  height: 48px;
+
+
+}
+
+.autor {
+
+  text-align: center;
+}
+
+
+/* From Uiverse.io by aadium */
+.social-buttons {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  background-color: rgb(208, 248, 235);
+  margin-top: -57px;
+  padding: 15px 10px;
+
+}
+
+.social-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 0 10px;
+  background-color: #fff;
+  box-shadow: 0px 0px 4px #00000027;
+  transition: 0.3s;
+}
+
+.social-button:hover {
+  background-color: #f2f2f2;
+  box-shadow: 0px 0px 6px 3px #00000027;
+}
+
+.social-buttons svg {
+  transition: 0.3s;
+  height: 20px;
+}
+
+.facebook {
+  background-color: #3b5998;
+}
+
+.facebook svg {
+  fill: #f2f2f2;
+}
+
+.facebook:hover svg {
+  fill: #3b5998;
+}
+
+.github {
+  background-color: #333;
+}
+
+.github svg {
+  width: 25px;
+  height: 25px;
+  fill: #f2f2f2;
+}
+
+.github:hover svg {
+  fill: #333;
+}
+
+.linkedin {
+  background-color: #0077b5;
+}
+
+.linkedin svg {
+  fill: #f2f2f2;
+}
+
+.linkedin:hover svg {
+  fill: #0077b5;
+}
+
+.instagram {
+  background-color: #c13584;
+}
+
+.instagram svg {
+  fill: #f2f2f2;
+}
+
+.instagram:hover svg {
+  fill: #c13584;
+}

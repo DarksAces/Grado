@@ -1,0 +1,88 @@
+body {
+    margin: 0px;
+
+}
+
+header h1 {
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+header {
+    background-color: rgb(208, 248, 235);
+    margin-top: -25px;
+}
+
+
+
+table {
+    border-collapse: collapse;
+    height: 100%;
+    text-align: left;
+    align-items: center;
+    margin-left: 0%;
+
+
+}
+
+th,
+td {
+    border: 2px solid #000000;
+    padding: 8px;
+}
+
+th {
+    background-color: #464646;
+    color: white;
+}
+
+.Versiones {
+    background-color: #464646;
+    color: white;
+}
+
+footer {
+    background-color: rgb(208, 248, 235);
+    margin-top: 29%;
+    height: 48px;
+
+
+}
+
+.autor {
+
+    text-align: center;
+}
+
+.pagina3 {
+    position: absolute;
+    text-decoration: none;
+    background-color: #FFC0CB;
+    margin-left: 83%;
+    margin-right: 0px;
+    margin-top: 4px;
+    color: black;
+    border-radius: 10px;
+
+}
+
+.pagina3:hover {
+    filter: saturate(180%);
+    transition: width 3s;
+}
+
+.pagina1 {
+    position: absolute;
+    text-decoration: none;
+    background-color: #FFC0CB;
+    margin-left: 5%;
+    margin-top: 4px;
+    color: black;
+    border-radius: 10px;
+
+}
+
+.pagina1:hover {
+    filter: saturate(180%);
+    transition: width 3s;
+}

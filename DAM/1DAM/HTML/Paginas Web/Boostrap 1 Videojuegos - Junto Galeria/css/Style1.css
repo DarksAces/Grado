@@ -1,0 +1,56 @@
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.card {
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.all {
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: auto lfr auto;
+}
+
+/* Contenedor principal con flexbox */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  /* Esto asegura que el contenido mínimo ocupe toda la pantalla */
+}
+
+/* Centra el contenido y permite que se ajuste a la pantalla */
+.main-content {
+  flex: 1;
+  /* Esto permite que el contenido se expanda para llenar el espacio disponible */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Los elementos dentro del contenedor de los tiles */
+#tileContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+
+
+/* Footer al final de la página */
+.footer {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}

@@ -1,0 +1,610 @@
+.aqui {
+    color: rgb(180, 47, 180);
+}
+
+body {
+    margin: 0px;
+}
+
+.titulo {
+    margin-left: 100px;
+    padding-top: 10px;
+}
+
+.menus {
+    display: flex;
+    margin-left: 1350px;
+    text-align: right;
+    margin-top: -80px;
+    padding-right: 10px;
+
+}
+
+.Portafolios:hover {
+    color: rgb(185, 161, 216);
+}
+
+header {
+    background: linear-gradient(to left, white, rgb(111, 111, 231));
+    margin-top: -20px;
+}
+
+.menu_mobil {
+    display: none;
+}
+
+.menus h2 {
+    padding-left: 20px;
+    ;
+}
+
+.imagentit {
+    width: 60px;
+    height: 60px;
+    margin-bottom: -60px;
+    margin-left: 30px;
+    z-index: 5;
+    position: absolute;
+}
+
+.LuffyPortada {
+    width: 100%;
+    z-index: 1;
+}
+
+.sobrefoto {
+    z-index: 9;
+    position: absolute;
+    background: linear-gradient(to left, rgb(171, 135, 218), rgb(111, 111, 231));
+    margin-top: -620px;
+    margin-left: 1200px;
+    width: 18%;
+    height: 62%;
+    text-align: center;
+}
+
+.sobrefoto h2 {
+    margin-top: 50px
+}
+
+.sobrefoto h1 {
+    margin-top: 50px
+}
+
+.sobrefoto h3 {
+    margin-top: 100px
+}
+
+.sobrefoto h4 {
+    margin-top: 100px
+}
+
+.sobrefoto button {
+    margin-top: -20px
+}
+
+.sobrefoto button:hover {
+    transform: scale(1.5);
+    background: linear-gradient(to left, rgb(171, 135, 218), rgb(111, 111, 231));
+}
+
+.sobremi {
+    text-align: center;
+    margin-top: -80px;
+    width: 60%;
+    margin-left: 380px;
+
+}
+
+.imagensbm {
+    width: 55px;
+    height: 55px;
+    margin-left: 810px;
+    margin-top: 80px;
+}
+
+.Novedades {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.fotos5 {
+    background: linear-gradient(to left, rgb(111, 111, 231), rgb(204, 68, 68));
+    margin-left: 446px;
+    margin-top: 50px;
+    margin-right: 406px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    border-radius: 10px;
+
+}
+
+.LG5 {
+    width: 300px;
+    height: 300px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+
+.LG5:hover {
+    transform: scale(1.05)
+}
+
+.LAS {
+    width: 300px;
+    height: 300px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.LAS:hover {
+    transform: scale(1.05)
+}
+
+.LS {
+    width: 615px;
+    height: 295px;
+    position: relative;
+    margin-top: 0px;
+    margin-right: 200px;
+    margin-left: 10px;
+    border-radius: 10px;
+
+}
+
+.LS:hover {
+    transform: scale(1.02)
+}
+
+.LA {
+    width: 400px;
+    height: 610px;
+    position: absolute;
+    margin-top: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.LA:hover {
+    transform: scale(1.02)
+}
+
+footer {
+    background: linear-gradient(to left, rgb(111, 111, 231), rgb(204, 68, 68));
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 0px;
+    margin-top: 120px;
+    position: relative;
+}
+
+.Autor {
+    text-align: right;
+    margin-top: -60px;
+    margin-right: 50px;
+}
+
+.Derechos {
+    text-align: center;
+    margin-left: 0px;
+    margin-top: -59px;
+}
+
+.titulo2 {
+    text-align: left;
+    margin-left: 50px;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url(../EstilosLetras/copyduck/Copyduck.ttf);
+}
+
+header h1 {
+    font-family: 'Open Sans';
+}
+
+.sobrefoto {
+    z-index: 10;
+    position: absolute;
+
+}
+
+@font-face {
+    font-family: 'TituloSobrefoto';
+    src: url(../EstilosLetras/manga_temple/mangati.ttf);
+}
+
+.sobrefoto h2 {
+    font-family: TituloSobrefoto;
+}
+
+@font-face {
+    font-family: 'Manolete';
+    src: url(../EstilosLetras/manolete/MANOLETE.ttf);
+}
+
+.sobrefoto h2 {
+    font-family: Manolete;
+}
+
+@font-face {
+    font-family: 'Blackspiral';
+    src: url(../EstilosLetras/black_spiral/black\ spiral.ttf);
+}
+
+.sobrefoto h1 {
+    font-family: Blackspiral;
+}
+
+@font-face {
+    font-family: 'PirateOne';
+    src: url(../EstilosLetras/stampink/StampInk.ttf);
+}
+
+.sobrefoto h3 {
+    font-family: PirateOne;
+}
+
+@font-face {
+    font-family: 'Aquawave';
+    src: url(../EstilosLetras/aquawave/Aquawave.ttf);
+}
+
+.sobrefoto h4 {
+    font-family: Aquawave;
+    font-size: 50px;
+}
+
+.GifS {
+    display: none;
+}
+
+@media screen and (max-width: 400px) {
+
+    body {
+        margin-right: 0px;
+        margin: 0px;
+        margin-bottom: 0px;
+    }
+
+    .titulo h1 {
+        display: inline-block;
+        font-size: 50px;
+        width: 10px;
+        height: 10px;
+    }
+
+    .menus {
+        display: none;
+        display: flex;
+        margin-left: 1350px;
+        text-align: right;
+        margin-top: -80px;
+        padding-right: 10px;
+
+    }
+
+
+    header {
+        background: linear-gradient(to left, white, rgb(111, 111, 231));
+        margin-top: -20px;
+    }
+
+    .menus h2 {
+        padding-left: 20px;
+        ;
+    }
+
+    .imagentit {
+        width: 60px;
+        height: 60px;
+        margin-bottom: -60px;
+        margin-left: 30px;
+        z-index: 5;
+        position: absolute;
+    }
+
+    .LuffyPortada {
+        width: 100%;
+        z-index: 0;
+        height: 250px
+    }
+
+    .sobrefoto {
+        z-index: 9;
+        position: absolute;
+        background: linear-gradient(to left, white, rgb(111, 111, 231));
+        margin-top: -254px;
+        margin-left: 103px;
+        width: 193px;
+        height: 250px;
+        text-align: center;
+    }
+
+    .sobrefoto h2 {
+        font-size: 20px;
+        margin-top: 10px
+    }
+
+    .sobrefoto h1 {
+        margin-top: 15px;
+        font-size: 30px;
+
+    }
+
+    .sobrefoto h3 {
+        margin-top: -18px;
+        font-size: 13px;
+    }
+
+    .sobrefoto h4 {
+        margin-top: 11px;
+        font-size: 28px;
+        margin-bottom: 0px;
+    }
+
+    .sobrefoto button {
+        margin-top: 4px;
+        width: 113px;
+        height: 20px;
+
+    }
+
+    .sobremi {
+        text-align: center;
+        margin-top: -48px;
+        width: 60%;
+        margin-left: 80px;
+        font-size: 10px;
+    }
+
+    .sobremi p {
+        font-size: 16px;
+    }
+
+    .imagensbm {
+        width: 55px;
+        height: 55px;
+        margin-left: 254px;
+        margin-top: 0px;
+    }
+
+    .Novedades {
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    .fotos5 {
+        background: linear-gradient(to left, rgb(111, 111, 231), rgb(204, 68, 68));
+        margin-left: 35px;
+        margin-top: 50px;
+        margin-right: 22px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        border-radius: 10px;
+    }
+
+    .LG5 {
+        width: 300px;
+        height: 300px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        margin-left: 10px;
+        border-radius: 10px;
+    }
+
+    .LAS {
+        width: 300px;
+        height: 300px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+
+    .LS {
+        width: 615px;
+        height: 295px;
+        position: relative;
+        margin-top: 0px;
+        margin-right: 200px;
+        margin-left: 10px;
+        border-radius: 10px;
+        display: none;
+
+    }
+
+    .LA {
+        width: 400px;
+        height: 610px;
+        position: absolute;
+        margin-top: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        display: none;
+    }
+
+    footer {
+        background: linear-gradient(to left, rgb(111, 111, 231), rgb(204, 68, 68));
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        bottom: 0;
+        margin-bottom: 0px;
+        margin-top: 120px;
+        position: relative;
+    }
+
+    .Autor {
+        text-align: center;
+        font-size: 11px;
+        margin-top: -53px;
+        margin-left: 164px;
+        margin-right: -42px;
+
+    }
+
+    .Derechos {
+        display: none;
+    }
+
+    .GifS {
+        display: contents;
+        margin-top: 1px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .titulo2 {
+        text-align: left;
+        margin-left: 0px;
+        font-size: 25px;
+        margin-top: 20px;
+        margin-bottom: 26px;
+    }
+
+    @font-face {
+        font-family: 'Open Sans';
+        src: url(../EstilosLetras/copyduck/Copyduck.ttf);
+    }
+
+    header h1 {
+        font-family: 'Open Sans';
+    }
+
+    @font-face {
+        font-family: 'TituloSobrefoto';
+        src: url(../EstilosLetras/manga_temple/mangati.ttf);
+    }
+
+    .sobrefoto h2 {
+        font-family: TituloSobrefoto;
+    }
+
+    @font-face {
+        font-family: 'Manolete';
+        src: url(../EstilosLetras/manolete/MANOLETE.ttf);
+    }
+
+    .sobrefoto h2 {
+        font-family: Manolete;
+    }
+
+    @font-face {
+        font-family: 'Blackspiral';
+        src: url(../EstilosLetras/black_spiral/black\ spiral.ttf);
+    }
+
+    .sobrefoto h1 {
+        font-family: Blackspiral;
+    }
+
+    @font-face {
+        font-family: 'PirateOne';
+        src: url(../EstilosLetras/stampink/StampInk.ttf);
+    }
+
+    .sobrefoto h3 {
+        font-family: PirateOne;
+    }
+
+    @font-face {
+        font-family: 'Aquawave';
+        src: url(../EstilosLetras/aquawave/Aquawave.ttf);
+    }
+
+    .menu_mobil {
+        margin-top: -37px;
+        display: block;
+        width: 100%;
+        position: static;
+        z-index: 10;
+    }
+
+    .menu_mobil nav {
+        display: block;
+        width: 100%;
+        z-index: 10;
+    }
+
+    .menu_mobil ul {
+        display: none;
+        z-index: 10;
+    }
+
+    .menu_mobil input:checked~ul {
+        display: block;
+        position: absolute;
+        margin-bottom: 1000px;
+        z-index: 10;
+    }
+
+    .menu_mobil input {
+        display: none;
+        z-index: 10;
+    }
+
+    .menu_mobil label {
+        box-sizing: border-box;
+        display: inline-block;
+        border-radius: 5px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-weight: bold;
+        text-align: center;
+        user-select: none;
+        margin-left: 90%;
+        z-index: 10;
+
+    }
+
+    /* Estilo del boton cuando se pasa el mouse por encima*/
+    .menu_mobil label:hover {
+        background-color: greenyellow;
+    }
+
+    /* Estilo del boton cuando el menú está expandido*/
+    .menu_mobil input:checked~label {
+        filter: brightness(80%);
+    }
+
+    .menu_mobil ul {
+        margin-top: 0px;
+        padding: 0;
+        width: 102.4%;
+        text-align: center;
+    }
+
+    .menu_mobil li {
+        display: block;
+        background: linear-gradient(to left, white, rgb(111, 111, 231));
+        margin: 0;
+        padding: 10px;
+        list-style: none;
+        border-bottom: 1px solid grey;
+    }
+
+    #menu_mobil input:checked~.Encabezado {
+        top: 1000000px;
+    }
+
+    /*Estilo cuando el mouse pasa encima de cada link del menu*/
+    .menu_mobil li:hover {
+        filter: brightness(70%);
+    }
+
+    .sobrefoto button:hover {
+        transform: scale(1.09);
+        background: linear-gradient(to left, rgb(171, 135, 218), rgb(111, 111, 231));
+    }
+}

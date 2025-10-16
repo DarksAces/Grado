@@ -1,0 +1,104 @@
+<objetivos_sostenibilidad>
+    <objetivo>
+        <numero>1</numero>
+        <nombre>Fin de la pobreza</nombre>
+        <descripcion>Erradicar la pobreza en todas sus formas en todo el mundo.</descripcion>
+        <imagen>../Imagenes/ODS/ODS1.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>2</numero>
+        <nombre>Hambre cero</nombre>
+        <descripcion>Poner fin al hambre, lograr la seguridad alimentaria y la mejora de la nutrición y promover la agricultura sostenible.</descripcion>
+        <imagen>../Imagenes/ODS/ODS2.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>3</numero>
+        <nombre>Salud y bienestar</nombre>
+        <descripcion>Garantizar una vida sana y promover el bienestar para todos en todas las edades.</descripcion>
+        <imagen>../Imagenes/ODS/ODS3.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>4</numero>
+        <nombre>Educación de calidad</nombre>
+        <descripcion>Asegurar una educación inclusiva, equitativa y de calidad.</descripcion>
+        <imagen>../Imagenes/ODS/ODS4.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>5</numero>
+        <nombre>Igualdad de género</nombre>
+        <descripcion>Lograr la igualdad entre los géneros y empoderar a todas las mujeres y niñas</descripcion>
+        <imagen>../Imagenes/ODS/ODS5.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>6</numero>
+        <nombre>Agua limpia y saneamiento</nombre>
+        <descripcion> Garantizar la disponibilidad de agua y su gestión sostenible.</descripcion>
+        <imagen>../Imagenes/ODS/ODS6.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>7</numero>
+        <nombre>Energía asequible y no contaminante</nombre>
+        <descripcion>Asegurar el acceso a una energía asequible, segura, sostenible y moderna.</descripcion>
+        <imagen>../Imagenes/ODS/ODS7.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>8</numero>
+        <nombre>Trabajo decente y crecimiento económico</nombre>
+        <descripcion>Promover el crecimiento económico sostenido, inclusivo y sostenible</descripcion>
+        <imagen>../Imagenes/ODS/ODS8.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>9</numero>
+        <nombre>Industria, innovación e infraestructura</nombre>
+        <descripcion>Construir infraestructuras resilientes, promover la industrialización inclusiva y sostenible.</descripcion>
+        <imagen>../Imagenes/ODS/ODS9.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>10</numero>
+        <nombre>Reducción de las desigualdades</nombre>
+        <descripcion> Reducir la desigualdad en y entre los países.</descripcion>
+        <imagen>../Imagenes/ODS/ODS10.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>11</numero>
+        <nombre>Ciudades y comunidades sostenibles</nombre>
+        <descripcion>Lograr que las ciudades y los asentamientos humanos sean inclusivos, seguros, resilientes y sostenibles.</descripcion>
+        <imagen>../Imagenes/ODS/ODS11.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>12</numero>
+        <nombre>Producción y consumo responsables</nombre>
+        <descripcion>Garantizar modalidades de consumo y producción sostenibles.</descripcion>
+        <imagen>../Imagenes/ODS/ODS12.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>13</numero>
+        <nombre>Acción por el clima</nombre>
+        <descripcion>Adoptar medidas urgentes para combatir el cambio climático y sus efectos.</descripcion>
+        <imagen>../Imagenes/ODS/ODS13.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>14</numero>
+        <nombre>Vida submarina</nombre>
+        <descripcion>Conservar y utilizar de manera sostenible los océanos, los mares y los recursos marinos para el desarrollo sostenible.</descripcion>
+        <imagen>../Imagenes/ODS/ODS14.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>15</numero>
+        <nombre>Vida de ecosistemas terrestres</nombre>
+        <descripcion> Gestionar sosteniblemente los bosques, luchar contra la desertificación, detener e invertir la degradación de las tierras y detener la pérdida de biodiversidad.</descripcion>
+        <imagen>../Imagenes/ODS/ODS15.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>16</numero>
+        <nombre>Paz, justicia e instituciones sólidas</nombre>
+        <descripcion>Promover sociedades pacíficas e inclusivas para el desarrollo sostenible, proporcionar acceso a la justicia para todos y construir instituciones eficaces, responsables e inclusivas a todos los niveles.</descripcion>
+        <imagen>../Imagenes/ODS/ODS16.png</imagen>
+    </objetivo>
+    <objetivo>
+        <numero>17</numero>
+        <nombre>Alianzas para lograr los objetivos</nombre>
+        <descripcion>Fortalecer los medios de implementación y revitalizar la alianza mundial para el desarrollo sostenible.</descripcion>
+        <imagen>../Imagenes/ODS/ODS17.png</imagen>
+    </objetivo>
+</objetivos_sostenibilidad>

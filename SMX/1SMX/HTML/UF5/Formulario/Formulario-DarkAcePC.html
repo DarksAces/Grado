@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="content-type" content="text/html; utf-8"> 
+</head>
+
+<form action="action_page.php">
+    <div class="container">
+        <h1> Registrate </h1>
+      <p>Ingresa los siguientes datos para registrate.</p>
+      <hr>
+      <label for="Nombre"><b>Nombre</b></label>
+      <input type="text" placeholder="Nombre" name="Nombre" id="Nombre" required>
+      <br>
+      <br>
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder=" Tu email" name="email" id="email" required>
+      <br>
+      <br>
+      <label for="homepage"><b>Introduce la url de tu pagina</b></label>
+      <input type="url" id="homepage" name="homepage">
+      <br>
+      <br>
+      <label for="date"><b>Añade la fecha actual</b> :</label>
+      <input type="date" id="start" name="start"
+      min="1900-01-01" max="2022-12-02">
+      <br>
+      <br>
+      <label for="appt"><b>Selecciona la hora actua</b> :</label>
+      <input type="time" id="appt" name="appt"
+      min="00:00" max="23:59" required>
+      <br>
+      <br>
+      <label for="Mes"><b>Mes</b> :</label>
+      <input type="month" id="start" name="start">
+      <br>
+      <br>
+      <label for="Semana"><b>Semana</b> :</label>
+      <input type="week" id="start" name="start">
+      <br>
+      <br>
+      <label for="Numero"><b> Numero </b> :</label>
+      <input type="number" id="start" name="start" min="-10" max="10" required>
+      <br>
+      <br>
+      <label for="Numero"><b> Numero </b> :</label>
+      <input type="number" id="start" name="start" min="-10" max="10" required>
+      <br>
+      <br>
+      <label for="Terminos busqueda"><b>Terminos de busqueda</b></label>
+      <input type="text" placeholder=" Terminos de busqueda" name=" Terminos de busqueda" id=" Terminos de busqueda" required>
+      <br>
+      <br>
+      <label for="favcolor">Select your favorite color:</label>
+      <input type="color" id="favcolor" name="favcolor" value="#ff0000">
+      <p> Si cras una cuenta estaras aceptando nuestros<a href="#">Terminos de privacidad</a>.</p>
+      <button type="submit" class="registerbtn">Registrate</button>
+    </div>
+  
+    <div class="container signin">
+      <p>¿Tienes cuenta? <a href="#">Iniciar sesion</a>.</p>
+    </div>
+  </form>

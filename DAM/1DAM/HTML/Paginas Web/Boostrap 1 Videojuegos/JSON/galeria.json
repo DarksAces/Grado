@@ -1,0 +1,22 @@
+{
+    "conceptos_sostenibilidad": [
+        {
+            "nombre": "10 principios del Pacto Mundial de la ONU ",
+            "descripcion": "Los ideales y principios que constituyen la sostenibilidad abarcan una amplia gama de conceptos fundamentales que buscan garantizar un desarrollo equilibrado y justo para todos. Entre estos conceptos se incluyen la equidad entre las generaciones, que asegura que las acciones de hoy no comprometan las necesidades de las futuras generaciones, y la equidad de género, que promueve la igualdad de oportunidades y derechos entre hombres y mujeres en todos los ámbitos de la vida. Además, la paz y la tolerancia son esenciales para fomentar la convivencia pacífica y el respeto mutuo entre diferentes culturas y comunidades. La reducción de la pobreza es otro pilar clave, implementando políticas y programas que mejoren la calidad de vida de las personas más vulnerables. La preservación y restauración del medio ambiente es crucial para mantener la biodiversidad y los servicios ecosistémicos vitales, mientras que la conservación de los recursos naturales asegura su uso sostenible para evitar su agotamiento. Finalmente, la justicia social busca promover la equidad y la justicia en todas las áreas de la sociedad, garantizando que todos tengan acceso a los recursos y oportunidades necesarios para una vida digna."
+        },
+        {
+            "nombre": "Economía Circular",
+            "descripcion": "Un sistema económico diseñado para ser    regenerativo, minimizando el uso de recursos y los desechos."
+        },
+        {
+            "nombre": "Inteligencia Artificial Ecológica",
+            "descripcion": "Un sistema económico diseñado para ser regenerativo se centra en crear un ciclo continuo de uso y reutilización de recursos, minimizando tanto el consumo de materiales nuevos como la generación de desechos. Este enfoque promueve la sostenibilidad al asegurar que los productos y materiales se mantengan en uso el mayor tiempo posible, a través de prácticas como el reciclaje, la reutilización y la reparación. Además, busca restaurar y regenerar los sistemas naturales, devolviendo al medio ambiente más de lo que se toma de él. Al reducir la dependencia de recursos finitos y disminuir la cantidad de residuos que terminan en vertederos, este sistema económico no solo protege el entorno natural, sino que también fomenta la innovación y la eficiencia en la producción y el consumo.",
+            "imagen": "../Imagenes/Sostenibilidad/IAeco.jpg"
+        },
+        {
+            "nombre": "Sectores Empresariales",
+            "descripcion": "Las industrias que adoptan prácticas sostenibles están liderando el camino hacia un futuro más verde y responsable. Estas prácticas incluyen el uso de energías renovables, como la solar, eólica y geotérmica, que ayudan a reducir la dependencia de combustibles fósiles y disminuyen las emisiones de gases de efecto invernadero. Además, el reciclaje es una práctica clave, permitiendo que los materiales sean reutilizados en lugar de ser desechados, lo que reduce la cantidad de residuos y conserva los recursos naturales. Otra área importante es la tecnología limpia, que abarca innovaciones diseñadas para minimizar el impacto ambiental. Esto incluye desde vehículos eléctricos y sistemas de energía eficiente hasta procesos industriales que reducen la contaminación y el consumo de recursos. Empresas en sectores como la manufactura, la tecnología y los servicios financieros están implementando estas estrategias para no solo cumplir con las regulaciones ambientales, sino también para establecer nuevos estándares de sostenibilidad en sus respectivas industrias",
+            "imagen": "../Imagenes/Sostenibilidad/SEMP.jpg"
+        }
+    ]
+}

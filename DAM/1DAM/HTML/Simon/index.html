@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon Game</title>
+  <link rel="stylesheet" href="./Css/style.css">
+</head>
+
+<body>
+  <h1 id="heading">Simon Game</h1>
+  <div id="info" class="hidden"></div>
+  <div id="tileContainer" class="unclickable">
+    <!-- Añadido estilo inline para visibilidad de las fichas -->
+    <div data-tile="red" data-sound="red-sound"
+      style="background: red; width: 100px; height: 100px; display: inline-block;"></div>
+    <div data-tile="green" data-sound="green-sound"
+      style="background: green; width: 100px; height: 100px; display: inline-block;"></div>
+    <div data-tile="blue" data-sound="blue-sound"
+      style="background: blue; width: 100px; height: 100px; display: inline-block;"></div>
+    <div data-tile="yellow" data-sound="yellow-sound"
+      style="background: yellow; width: 100px; height: 100px; display: inline-block;"></div>
+  </div>
+  <button id="startButton">Start Game</button>
+
+
+  <script src="./JavaScript/simon.js"></script>
+</body>
+
+</html>

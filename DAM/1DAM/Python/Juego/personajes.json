@@ -1,0 +1,15 @@
+{
+    "guerrero": {"vida": 900, "ataque": 50, "defensa": 40},
+    "paladin": {"vida": 950, "ataque": 55, "defensa": 35},
+    "cazador": {"vida": 850, "ataque": 60, "defensa": 30},
+    "picaro": {"vida": 800, "ataque": 70, "defensa": 20},
+    "sacerdote": {"vida": 880, "ataque": 40, "defensa": 50},
+    "chaman": {"vida": 920, "ataque": 50, "defensa": 45},
+    "mago": {"vida": 860, "ataque": 80, "defensa": 25},
+    "brujo": {"vida": 870, "ataque": 85, "defensa": 20},
+    "monje": {"vida": 830, "ataque": 90, "defensa": 15},
+    "druida": {"vida": 900, "ataque": 75, "defensa": 30},
+    "cazador de demonios": {"vida": 820, "ataque": 95, "defensa": 10},
+    "caballero de la muerte": {"vida": 950, "ataque": 85, "defensa": 40},
+    "evocador": {"vida": 880, "ataque": 1000, "defensa": 20}
+}

@@ -1,0 +1,21 @@
+# Archivos temporales de Visual Studio
+.vs/
+*.user
+*.suo
+*.ipch
+*.VC.db
+*.VC.opendb
+
+# Carpetas de compilación y binarios
+bin/
+obj/
+Debug/
+Release/
+
+# Archivos de backup
+*.bak
+*.tmp
+*.log
+
+# Otros
+*.pdb

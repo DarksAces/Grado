@@ -1,0 +1,6 @@
+canciones = int(input("Escribe el numero promedio que escuchas de canciones "))
+tiempo = int(input("Escribe la duracion promedio en minutos de las canciones "))
+horas = ((tiempo * canciones)/60)
+minutos = (tiempo * canciones)
+print ("Has pasado un promedio total de ", horas, "horas escuchando musica")
+print ("Has pasado un promedio total de ", minutos, "minutos escuchando musica")

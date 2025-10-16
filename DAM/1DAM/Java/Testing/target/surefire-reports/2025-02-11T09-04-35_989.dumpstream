@@ -1,0 +1,5 @@
+# Created at 2025-02-11T09:04:36.150
+Boot Manifest-JAR contains absolute paths in classpath 'D:\OneDrive - Centre d'Estudis Monlau\1. Monlau\FP\Cursos\DAM\1-DAM\0485 Programació\Testing\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

@@ -1,0 +1,87 @@
+.Verde1{
+    background-color: rgb(9, 255, 9); 
+    height: 50px;
+    border: black 2px solid;
+}
+.Verde1 h2{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    text-align: center;
+}
+
+
+
+
+#nume1{
+    text-align: center;
+    background-color: #84ACDC;
+    height: 100px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    
+}
+
+#nume1 img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+
+#gris{
+    text-align: center;
+    background-color:#BCBCBC;
+    height: 100px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+
+}
+#gris img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+#bannerAzul{
+    background-color: aqua;
+    margin-top: 10px;
+    text-align: center;
+    border: 2px solid black;
+}
+
+#caras{
+    text-align: center;
+    background-color: #FC9C54;
+    height: 100px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid black;
+}
+
+
+.Verde2{
+    background-color: rgb(9, 255, 9);
+    height: 50px; 
+    width: 100%;
+    margin-top: 10px;
+    border: black 2px solid;
+}
+.Verde2 h2 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    text-align: center;
+}

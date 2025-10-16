@@ -1,0 +1,17 @@
+[
+    {
+        "nombre": "Pocion de Energía",
+        "costo": 30,
+        "efecto": {"energia": 50}
+    },
+    {
+        "nombre": "Pocion de Vida",
+        "costo": 50,
+        "efecto": {"vida": 100}
+    },
+    {
+        "nombre": "Boost de XP",
+        "costo": 100,
+        "efecto": {"xp": 50}
+    }
+]

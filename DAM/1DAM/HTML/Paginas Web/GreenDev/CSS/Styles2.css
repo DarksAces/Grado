@@ -1,0 +1,132 @@
+body {
+    margin: 0px;
+}
+
+header {
+    background-color: rgb(135, 199, 71);
+    width: 100%;
+    height: 100%;
+}
+
+header img {
+    width: 30%;
+    margin-left: 35%;
+
+
+}
+
+header nav {
+    align-items: center;
+}
+
+header ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+    text-align: center;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header li {
+    text-decoration: none;
+    display: inline;
+    margin-right: 10px;
+    color: #000000;
+
+}
+
+#DAW {
+    margin-top: 100px;
+    background-color: rgb(135, 199, 71);
+    border-radius: 10px;
+    padding: 20px;
+    height: 400px;
+    transition-duration: 2s;
+
+}
+
+#DAW img {
+    display: flex;
+    margin-top: -150px;
+}
+
+#DAW:hover {
+    transition-duration: 2s;
+    background-color: rgb(36, 201, 124);
+}
+
+#DAM {
+    margin-top: 100px;
+    background-color: rgb(135, 199, 71);
+    border-radius: 10px;
+    padding: 20px;
+    height: 400px;
+    transition-duration: 2s;
+
+}
+
+#DAM img {
+    display: flex;
+    margin-top: -150px;
+    width: 30%;
+}
+
+#DAM:hover {
+    transition-duration: 2s;
+    background-color: rgb(36, 201, 124);
+}
+
+#ASIX {
+    margin-top: 100px;
+    background-color: rgb(135, 199, 71);
+    border-radius: 10px;
+    padding: 20px;
+    height: 400px;
+    transition-duration: 2s;
+}
+
+#ASIX img {
+    display: flex;
+    margin-top: -150px;
+    width: 40%;
+
+}
+
+#ASIX:hover {
+    transition-duration: 2s;
+    background-color: rgb(36, 201, 124);
+
+}
+
+#Servicios {
+    color: #d30000;
+}
+
+li a {
+    color: #000000;
+}
+
+footer {
+    background-color: rgb(135, 199, 71);
+    color: rgb(0, 0, 0);
+    margin-top: 3rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+footer h1 {
+
+    text-align: center;
+}
+
+.all {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows:
+        auto lfr auto;
+}

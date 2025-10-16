@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<libros xmlns:cf="cienciaficcion" xmlns:f="fantasia" xmlns:so="Space Opera">
+    <cf:libro>
+        <cf:titulo>El ritmo de la guerra</cf:titulo>
+        <cf:autor>Brandon Sanderson</cf:autor>
+        <cf:año_publicacion>17 de noviembre de 2020</cf:año_publicacion>
+    </cf:libro>
+    <cf:libro>
+        <cf:titulo>Rekoners calamity</cf:titulo>
+        <cf:autor>Brandon Sanderson</cf:autor>
+        <cf:año_publicacion>16 de febrero de 2016</cf:año_publicacion>
+    </cf:libro>
+    <cf:libro>
+        <cf:titulo>Yumi y el pintor de pesadillas</cf:titulo>
+        <cf:autor>Brandon Sanderson</cf:autor>
+        <cf:año_publicacion>1 de julio de 2023</cf:año_publicacion>
+    </cf:libro>
+</libros>
