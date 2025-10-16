@@ -1,4 +1,4 @@
-# Archivos temporales de Visual Studio
+# Visual Studio
 .vs/
 *.user
 *.suo
@@ -6,16 +6,25 @@
 *.VC.db
 *.VC.opendb
 
-# Carpetas de compilación y binarios
+# Build outputs
 bin/
 obj/
 Debug/
 Release/
 
-# Archivos de backup
+# Backup/temporales
 *.bak
 *.tmp
 *.log
-
-# Otros
 *.pdb
+*.exe
+*.dll
+*.lib
+
+# IDE extras
+.vscode/
+*.userprefs
+
+# Packages
+packages/
+node_modules/
