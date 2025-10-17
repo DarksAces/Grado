@@ -27,13 +27,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Crear rama temporal
-        id: crear_rama
-        run: |
-          BRANCH="cleanup-$(date +%Y%m%d-%H%M%S)"
-          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
-          git checkout -b $BRANCH
-
       - name: Buscar y eliminar archivos/carpetas prohibidas
         id: eliminar
         run: |
@@ -98,25 +91,28 @@ jobs:
 
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
-      - name: Commit y push
-        if: steps.eliminar.outputs.changed == 'true'
-        run: |
-          git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
-          git push origin ${{ steps.crear_rama.outputs.branch }}
-
       - name: Crear Pull Request automático
         if: steps.eliminar.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.crear_rama.outputs.branch }}
+          commit-message: "🗑️ Eliminar archivos o carpetas no permitidos detectados automáticamente"
+          branch: cleanup-${{ github.run_id }}
+          delete-branch: true
           base: main
           title: "🚨 Eliminar archivos o carpetas no permitidos"
           body: |
-            🚨 Se detectaron archivos o carpetas no permitidos en el repositorio y se eliminaron automáticamente.
+            🚨 Se detectaron y eliminaron archivos o carpetas no permitidos en el repositorio.
             
-            **Archivos/carpetas eliminados:**
-            - PDFs, ZIPs, EXEs, RARs, 7z, TAR, MP4, MOV
-            - Carpetas: .vs, .idea, node_modules, venv, __pycache__
+            **Tipos de archivos eliminados:**
+            - 📄 PDFs, ZIPs, EXEs, RARs, 7z, TAR
+            - 🎥 MP4, MOV
+            - 📁 Carpetas: .vs, .idea, node_modules, venv, __pycache__
             
-            Por favor, revisa los cambios antes de hacer merge.
+            ⚠️ **Por favor, revisa los cambios antes de hacer merge.**
+            
+            ---
+            _Este PR fue creado automáticamente por GitHub Actions._
+          labels: |
+            automated
+            cleanup
