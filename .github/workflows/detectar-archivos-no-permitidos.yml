@@ -57,7 +57,7 @@ jobs:
 
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
-      - name: Commit y Push si hay cambios
+      - name: Commit y Push si hay cambios, borrar rama si no
         run: |
           if [ "${{ steps.eliminar.outputs.changed }}" == "true" ]; then
             git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
@@ -66,6 +66,7 @@ jobs:
             echo "No hay cambios, eliminando rama temporal."
             git checkout main
             git branch -D ${{ steps.crear_rama.outputs.branch }}
+          fi
         shell: bash
 
       - name: Crear Pull Request automático
