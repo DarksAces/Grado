@@ -58,19 +58,20 @@ jobs:
           echo "Carpetas detectadas:"
           echo "${{ steps.buscar.outputs.dirs }}"
 
-          # Eliminar archivos y carpetas detectadas
+          # Eliminar archivos y carpetas detectadas de forma segura
           if [ -n "${{ steps.buscar.outputs.files }}" ]; then
-            git rm -f ${{ steps.buscar.outputs.files }}
+            echo "${{ steps.buscar.outputs.files }}" | tr -d '\r' | xargs -d '\n' git rm -f --
           fi
 
           if [ -n "${{ steps.buscar.outputs.dirs }}" ]; then
-            git rm -rf ${{ steps.buscar.outputs.dirs }}
+            echo "${{ steps.buscar.outputs.dirs }}" | tr -d '\r' | xargs -d '\n' git rm -rf --
           fi
 
           git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
           git push origin $BRANCH
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
       - name: Crear Pull Request automático
         if: steps.buscar.outputs.found == 'true'
