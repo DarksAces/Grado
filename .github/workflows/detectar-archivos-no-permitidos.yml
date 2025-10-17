@@ -33,19 +33,23 @@ jobs:
           set -e
           CHANGED=false
 
-          # Buscar archivos prohibidos en el índice de Git (case insensitive)
-          FILES=$(git ls-files | grep -iE "\.(pdf|zip|exe|rar|7z|tar|mp4|mov)$" || true)
+          # Buscar SOLO archivos con extensiones prohibidas (case insensitive, word boundary)
+          FILES=$(git ls-files | grep -iE '\.(pdf|zip|exe|rar|7z|tar|mp4|mov)$' || true)
           
           if [ -n "$FILES" ]; then
-            echo "Encontrados archivos prohibidos:"
+            echo "=== Encontrados archivos prohibidos ==="
             echo "$FILES"
+            echo "======================================"
             
             # Eliminar archivos uno por uno para manejar espacios correctamente
             while IFS= read -r file; do
               if [ -n "$file" ]; then
-                echo "Eliminando: $file"
-                git rm -f "$file"
-                CHANGED=true
+                # Verificar que realmente tenga una extensión prohibida
+                if [[ "$file" =~ \.(pdf|zip|exe|rar|7z|tar|mp4|mov|PDF|ZIP|EXE|RAR|7Z|TAR|MP4|MOV)$ ]]; then
+                  echo "✗ Eliminando: $file"
+                  git rm -f "$file"
+                  CHANGED=true
+                fi
               fi
             done <<< "$FILES"
           fi
@@ -53,41 +57,50 @@ jobs:
           # Eliminar carpetas prohibidas
           CARPETAS=(".vs" ".idea" "node_modules" "venv" "__pycache__")
           for carpeta in "${CARPETAS[@]}"; do
-            DIRS=$(git ls-files | grep -iE "(^|/)${carpeta}/" | cut -d'/' -f1-2 | sort -u || true)
+            # Buscar archivos dentro de estas carpetas
+            DIRS=$(git ls-files | grep -iE "(^|/)${carpeta}/" || true)
             if [ -n "$DIRS" ]; then
-              echo "Encontradas carpetas prohibidas con patrón '${carpeta}':"
-              echo "$DIRS"
+              echo "=== Encontrada carpeta prohibida: ${carpeta} ==="
+              
+              # Obtener solo las carpetas únicas
+              UNIQUE_DIRS=$(echo "$DIRS" | sed 's|/.*||' | sort -u)
               
               while IFS= read -r dir; do
-                if [ -n "$dir" ]; then
-                  echo "Eliminando carpeta: $dir"
+                if [ -n "$dir" ] && [ -d "$dir" ]; then
+                  echo "✗ Eliminando carpeta: $dir"
                   git rm -rf "$dir" || true
                   CHANGED=true
                 fi
-              done <<< "$DIRS"
+              done <<< "$UNIQUE_DIRS"
             fi
           done
 
           # Buscar en el directorio de trabajo (archivos no trackeados)
-          for ext in pdf zip exe rar 7z tar mp4 mov; do
+          for ext in pdf zip exe rar 7z tar mp4 mov PDF ZIP EXE RAR 7Z TAR MP4 MOV; do
             while IFS= read -r -d '' file; do
               if [ -f "$file" ]; then
-                echo "Eliminando archivo no trackeado: $file"
+                echo "✗ Eliminando archivo no trackeado: $file"
                 rm -f "$file"
                 CHANGED=true
               fi
-            done < <(find . -type f -iname "*.${ext}" -not -path "./.git/*" -print0 2>/dev/null || true)
+            done < <(find . -type f -name "*.${ext}" -not -path "./.git/*" -print0 2>/dev/null || true)
           done
 
           for carpeta in "${CARPETAS[@]}"; do
             while IFS= read -r -d '' dir; do
               if [ -d "$dir" ]; then
-                echo "Eliminando carpeta no trackeada: $dir"
+                echo "✗ Eliminando carpeta no trackeada: $dir"
                 rm -rf "$dir"
                 CHANGED=true
               fi
-            done < <(find . -type d -iname "${carpeta}" -not -path "./.git/*" -print0 2>/dev/null || true)
+            done < <(find . -type d -name "${carpeta}" -not -path "./.git/*" -print0 2>/dev/null || true)
           done
+
+          if [ "$CHANGED" = true ]; then
+            echo "✓ Se detectaron y eliminaron archivos/carpetas prohibidos"
+          else
+            echo "✓ No se encontraron archivos/carpetas prohibidos"
+          fi
 
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
@@ -108,6 +121,8 @@ jobs:
             - 📄 PDFs, ZIPs, EXEs, RARs, 7z, TAR
             - 🎥 MP4, MOV
             - 📁 Carpetas: .vs, .idea, node_modules, venv, __pycache__
+            
+            ⚠️ **IMPORTANTE:** Archivos `.java`, `.md`, y otros archivos de código NO fueron eliminados.
             
             ⚠️ **Por favor, revisa los cambios antes de hacer merge.**
             
