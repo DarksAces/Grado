@@ -31,11 +31,18 @@ jobs:
 
           if [ -n "$FILES" ] || [ -n "$DIRS" ]; then
             echo "found=true" >> $GITHUB_OUTPUT
-            echo "files=$FILES" >> $GITHUB_OUTPUT
-            echo "dirs=$DIRS" >> $GITHUB_OUTPUT
+
+            echo "files<<EOF" >> $GITHUB_OUTPUT
+            echo "$FILES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+
+            echo "dirs<<EOF" >> $GITHUB_OUTPUT
+            echo "$DIRS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
           else
             echo "found=false" >> $GITHUB_OUTPUT
           fi
+
 
       - name: Crear rama temporal y eliminar elementos
         if: steps.buscar.outputs.found == 'true'
