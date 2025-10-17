@@ -26,23 +26,27 @@ jobs:
       - name: Buscar archivos y carpetas no deseadas
         id: buscar
         run: |
-          FILES=$(git ls-files | grep -E '\.(pdf|zip|exe|rar|7z|tar|mp4|mov)$' || true)
-          DIRS=$(git ls-files | grep -E '^(\.vs/|\.idea/|node_modules/|venv/|__pycache__/)' || true)
+          # Buscar archivos prohibidos
+          FILES=$(find . -type f \( -iname "*.pdf" -o -iname "*.zip" -o -iname "*.exe" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.tar" -o -iname "*.mp4" -o -iname "*.mov" \) -print0 | xargs -0)
+
+          # Buscar carpetas prohibidas
+          DIRS=$(find . -type d \( -iname ".vs" -o -iname ".idea" -o -iname "node_modules" -o -iname "venv" -o -iname "__pycache__" \) -print0 | xargs -0)
 
           if [ -n "$FILES" ] || [ -n "$DIRS" ]; then
             echo "found=true" >> $GITHUB_OUTPUT
 
+            # Escribir archivos en GITHUB_OUTPUT de forma segura
             echo "files<<EOF" >> $GITHUB_OUTPUT
-            echo "$FILES" >> $GITHUB_OUTPUT
+            echo "$FILES" | tr ' ' '\n' >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
 
+            # Escribir carpetas en GITHUB_OUTPUT de forma segura
             echo "dirs<<EOF" >> $GITHUB_OUTPUT
-            echo "$DIRS" >> $GITHUB_OUTPUT
+            echo "$DIRS" | tr ' ' '\n' >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           else
             echo "found=false" >> $GITHUB_OUTPUT
           fi
-
 
       - name: Crear rama temporal y eliminar elementos
         if: steps.buscar.outputs.found == 'true'
@@ -58,11 +62,12 @@ jobs:
           echo "Carpetas detectadas:"
           echo "${{ steps.buscar.outputs.dirs }}"
 
-          # Eliminar archivos y carpetas detectadas de forma segura
+          # Eliminar archivos detectados
           if [ -n "${{ steps.buscar.outputs.files }}" ]; then
             echo "${{ steps.buscar.outputs.files }}" | tr -d '\r' | xargs -d '\n' git rm -f --
           fi
 
+          # Eliminar carpetas detectadas
           if [ -n "${{ steps.buscar.outputs.dirs }}" ]; then
             echo "${{ steps.buscar.outputs.dirs }}" | tr -d '\r' | xargs -d '\n' git rm -rf --
           fi
@@ -71,7 +76,6 @@ jobs:
           git push origin $BRANCH
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
       - name: Crear Pull Request automático
         if: steps.buscar.outputs.found == 'true'
