@@ -30,7 +30,7 @@ jobs:
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
           git checkout -b $BRANCH
 
-      - name: Eliminar archivos y carpetas prohibidas
+      - name: Buscar y eliminar archivos prohibidos
         id: eliminar
         run: |
           set -e
@@ -57,13 +57,14 @@ jobs:
 
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
-      - name: Commit y Push si hay cambios, borrar rama si no
+      - name: Commit y push o borrar rama temporal
         run: |
           if [ "${{ steps.eliminar.outputs.changed }}" == "true" ]; then
+            echo "Se detectaron archivos/carpetas prohibidas. Haciendo commit y push..."
             git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
             git push origin ${{ steps.crear_rama.outputs.branch }}
           else
-            echo "No hay cambios, eliminando rama temporal."
+            echo "No se detectaron archivos/carpetas prohibidas. Borrando rama temporal..."
             git checkout main
             git branch -D ${{ steps.crear_rama.outputs.branch }}
           fi
@@ -79,4 +80,3 @@ jobs:
           title: "Eliminar archivos o carpetas no permitidos"
           body: |
             🚨 Se detectaron archivos o carpetas no permitidos en el repositorio y se eliminan automáticamente.
-
