@@ -33,7 +33,7 @@ jobs:
           set -e
           CHANGED=false
 
-          # Buscar SOLO archivos con extensiones prohibidas (case insensitive, word boundary)
+          # Buscar SOLO archivos con extensiones prohibidas
           FILES=$(git ls-files | grep -iE '\.(pdf|zip|exe|rar|7z|tar|mp4|mov)$' || true)
           
           if [ -n "$FILES" ]; then
@@ -41,12 +41,10 @@ jobs:
             echo "$FILES"
             echo "======================================"
             
-            # Eliminar archivos uno por uno para manejar espacios correctamente
             while IFS= read -r file; do
               if [ -n "$file" ]; then
-                # Verificar que realmente tenga una extensión prohibida
                 if [[ "$file" =~ \.(pdf|zip|exe|rar|7z|tar|mp4|mov|PDF|ZIP|EXE|RAR|7Z|TAR|MP4|MOV)$ ]]; then
-                  echo "✗ Eliminando: $file"
+                  echo "✗ Eliminando archivo: $file"
                   git rm -f "$file"
                   CHANGED=true
                 fi
@@ -54,51 +52,38 @@ jobs:
             done <<< "$FILES"
           fi
 
-          # Eliminar carpetas prohibidas
+          # Eliminar SOLO carpetas prohibidas específicas usando find
           CARPETAS=(".vs" ".idea" "node_modules" "venv" "__pycache__")
           for carpeta in "${CARPETAS[@]}"; do
-            # Buscar archivos dentro de estas carpetas
-            DIRS=$(git ls-files | grep -iE "(^|/)${carpeta}/" || true)
-            if [ -n "$DIRS" ]; then
-              echo "=== Encontrada carpeta prohibida: ${carpeta} ==="
-              
-              # Obtener solo las carpetas únicas
-              UNIQUE_DIRS=$(echo "$DIRS" | sed 's|/.*||' | sort -u)
-              
-              while IFS= read -r dir; do
-                if [ -n "$dir" ] && [ -d "$dir" ]; then
-                  echo "✗ Eliminando carpeta: $dir"
-                  git rm -rf "$dir" || true
-                  CHANGED=true
-                fi
-              done <<< "$UNIQUE_DIRS"
-            fi
+            echo "=== Buscando carpetas: ${carpeta} ==="
+            
+            # Usar find para localizar carpetas con nombre exacto
+            while IFS= read -r -d '' dir; do
+              if [ -d "$dir" ]; then
+                echo "✗ Eliminando carpeta: $dir"
+                git rm -rf "$dir" 2>/dev/null || rm -rf "$dir"
+                CHANGED=true
+              fi
+            done < <(find . -type d -name "${carpeta}" -not -path "./.git/*" -print0 2>/dev/null || true)
           done
 
-          # Buscar en el directorio de trabajo (archivos no trackeados)
-          for ext in pdf zip exe rar 7z tar mp4 mov PDF ZIP EXE RAR 7Z TAR MP4 MOV; do
+          # Buscar archivos no trackeados con extensiones prohibidas
+          echo "=== Buscando archivos no trackeados ==="
+          for ext in pdf zip exe rar 7z tar mp4 mov; do
             while IFS= read -r -d '' file; do
               if [ -f "$file" ]; then
                 echo "✗ Eliminando archivo no trackeado: $file"
                 rm -f "$file"
                 CHANGED=true
               fi
-            done < <(find . -type f -name "*.${ext}" -not -path "./.git/*" -print0 2>/dev/null || true)
-          done
-
-          for carpeta in "${CARPETAS[@]}"; do
-            while IFS= read -r -d '' dir; do
-              if [ -d "$dir" ]; then
-                echo "✗ Eliminando carpeta no trackeada: $dir"
-                rm -rf "$dir"
-                CHANGED=true
-              fi
-            done < <(find . -type d -name "${carpeta}" -not -path "./.git/*" -print0 2>/dev/null || true)
+            done < <(find . -type f -iname "*.${ext}" -not -path "./.git/*" -print0 2>/dev/null || true)
           done
 
           if [ "$CHANGED" = true ]; then
+            echo ""
             echo "✓ Se detectaron y eliminaron archivos/carpetas prohibidos"
           else
+            echo ""
             echo "✓ No se encontraron archivos/carpetas prohibidos"
           fi
 
@@ -109,22 +94,25 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "🗑️ Eliminar archivos o carpetas no permitidos detectados automáticamente"
+          commit-message: "🗑️ Eliminar archivos o carpetas no permitidos"
           branch: cleanup-${{ github.run_id }}
           delete-branch: true
           base: main
           title: "🚨 Eliminar archivos o carpetas no permitidos"
           body: |
-            🚨 Se detectaron y eliminaron archivos o carpetas no permitidos en el repositorio.
+            🚨 Se detectaron y eliminaron archivos o carpetas no permitidos.
             
-            **Tipos de archivos eliminados:**
-            - 📄 PDFs, ZIPs, EXEs, RARs, 7z, TAR
-            - 🎥 MP4, MOV
-            - 📁 Carpetas: .vs, .idea, node_modules, venv, __pycache__
+            **Archivos eliminados:**
+            - 📄 Documentos: PDF, ZIP, RAR, 7z, TAR
+            - 💿 Ejecutables: EXE
+            - 🎥 Videos: MP4, MOV
             
-            ⚠️ **IMPORTANTE:** Archivos `.java`, `.md`, y otros archivos de código NO fueron eliminados.
+            **Carpetas eliminadas:**
+            - 📁 `.vs`, `.idea`, `node_modules`, `venv`, `__pycache__`
             
-            ⚠️ **Por favor, revisa los cambios antes de hacer merge.**
+            ✅ **Tu código fuente está SEGURO:** Archivos `.java`, `.cs`, `.py`, `.js`, `.md`, `.xml`, `.sql` NO fueron tocados.
+            
+            ⚠️ **Revisa los cambios antes de hacer merge.**
             
             ---
             _Este PR fue creado automáticamente por GitHub Actions._
