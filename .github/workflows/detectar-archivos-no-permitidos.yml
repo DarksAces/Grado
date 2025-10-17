@@ -34,35 +34,63 @@ jobs:
         id: eliminar
         run: |
           set -e
-
           CHANGED=false
 
-          # Eliminar archivos prohibidos
-          while IFS= read -r -d '' file; do
-            git rm -f "$file"
-            CHANGED=true
-          done < <(find . -type f \( -iname "*.pdf" -o -iname "*.zip" -o -iname "*.exe" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.tar" -o -iname "*.mp4" -o -iname "*.mov" \) -print0)
+          # Lista de extensiones prohibidas
+          EXTENSIONES=("*.pdf" "*.zip" "*.exe" "*.rar" "*.7z" "*.tar" "*.mp4" "*.mov")
+          
+          # Buscar archivos prohibidos en el índice de Git
+          for ext in "${EXTENSIONES[@]}"; do
+            # Buscar archivos con esta extensión (case insensitive)
+            FILES=$(git ls-files | grep -iE "\.(pdf|zip|exe|rar|7z|tar|mp4|mov)$" || true)
+            if [ -n "$FILES" ]; then
+              echo "Encontrados archivos prohibidos:"
+              echo "$FILES"
+              echo "$FILES" | xargs -r git rm -f
+              CHANGED=true
+            fi
+          done
 
           # Eliminar carpetas prohibidas
-          while IFS= read -r -d '' dir; do
-            git rm -rf "$dir"
-            CHANGED=true
-          done < <(find . -type d \( -iname ".vs" -o -iname ".idea" -o -iname "node_modules" -o -iname "venv" -o -iname "__pycache__" \) -print0)
+          CARPETAS=(".vs" ".idea" "node_modules" "venv" "__pycache__")
+          for carpeta in "${CARPETAS[@]}"; do
+            DIRS=$(git ls-files | grep -iE "(^|/)${carpeta}/" | cut -d'/' -f1-2 | sort -u || true)
+            if [ -n "$DIRS" ]; then
+              echo "Encontradas carpetas prohibidas:"
+              echo "$DIRS"
+              echo "$DIRS" | xargs -r git rm -rf
+              CHANGED=true
+            fi
+          done
+
+          # También buscar en el directorio de trabajo (archivos no trackeados)
+          for ext in pdf zip exe rar 7z tar mp4 mov; do
+            while IFS= read -r -d '' file; do
+              if [ -f "$file" ]; then
+                echo "Eliminando archivo no trackeado: $file"
+                rm -f "$file"
+                CHANGED=true
+              fi
+            done < <(find . -type f -iname "*.${ext}" -print0 2>/dev/null || true)
+          done
+
+          for carpeta in "${CARPETAS[@]}"; do
+            while IFS= read -r -d '' dir; do
+              if [ -d "$dir" ]; then
+                echo "Eliminando carpeta no trackeada: $dir"
+                rm -rf "$dir"
+                CHANGED=true
+              fi
+            done < <(find . -type d -iname "${carpeta}" -print0 2>/dev/null || true)
+          done
 
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
-      - name: Commit y push o borrar rama temporal
+      - name: Commit y push
+        if: steps.eliminar.outputs.changed == 'true'
         run: |
-          if [ "${{ steps.eliminar.outputs.changed }}" == "true" ]; then
-            echo "Se detectaron archivos/carpetas prohibidas. Haciendo commit y push..."
-            git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
-            git push origin ${{ steps.crear_rama.outputs.branch }}
-          else
-            echo "No se detectaron archivos/carpetas prohibidas. Borrando rama temporal..."
-            git checkout main
-            git branch -D ${{ steps.crear_rama.outputs.branch }}
-          fi
-        shell: bash
+          git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
+          git push origin ${{ steps.crear_rama.outputs.branch }}
 
       - name: Crear Pull Request automático
         if: steps.eliminar.outputs.changed == 'true'
@@ -71,6 +99,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ steps.crear_rama.outputs.branch }}
           base: main
-          title: "Eliminar archivos o carpetas no permitidos"
+          title: "🚨 Eliminar archivos o carpetas no permitidos"
           body: |
-            🚨 Se detectaron archivos o carpetas no permitidos en el repositorio y se eliminan automáticamente.
+            🚨 Se detectaron archivos o carpetas no permitidos en el repositorio y se eliminaron automáticamente.
+            
+            Por favor, revisa los cambios antes de hacer merge.
