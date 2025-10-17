@@ -36,34 +36,42 @@ jobs:
           set -e
           CHANGED=false
 
-          # Lista de extensiones prohibidas
-          EXTENSIONES=("*.pdf" "*.zip" "*.exe" "*.rar" "*.7z" "*.tar" "*.mp4" "*.mov")
+          # Buscar archivos prohibidos en el índice de Git (case insensitive)
+          FILES=$(git ls-files | grep -iE "\.(pdf|zip|exe|rar|7z|tar|mp4|mov)$" || true)
           
-          # Buscar archivos prohibidos en el índice de Git
-          for ext in "${EXTENSIONES[@]}"; do
-            # Buscar archivos con esta extensión (case insensitive)
-            FILES=$(git ls-files | grep -iE "\.(pdf|zip|exe|rar|7z|tar|mp4|mov)$" || true)
-            if [ -n "$FILES" ]; then
-              echo "Encontrados archivos prohibidos:"
-              echo "$FILES"
-              echo "$FILES" | xargs -r git rm -f
-              CHANGED=true
-            fi
-          done
+          if [ -n "$FILES" ]; then
+            echo "Encontrados archivos prohibidos:"
+            echo "$FILES"
+            
+            # Eliminar archivos uno por uno para manejar espacios correctamente
+            while IFS= read -r file; do
+              if [ -n "$file" ]; then
+                echo "Eliminando: $file"
+                git rm -f "$file"
+                CHANGED=true
+              fi
+            done <<< "$FILES"
+          fi
 
           # Eliminar carpetas prohibidas
           CARPETAS=(".vs" ".idea" "node_modules" "venv" "__pycache__")
           for carpeta in "${CARPETAS[@]}"; do
             DIRS=$(git ls-files | grep -iE "(^|/)${carpeta}/" | cut -d'/' -f1-2 | sort -u || true)
             if [ -n "$DIRS" ]; then
-              echo "Encontradas carpetas prohibidas:"
+              echo "Encontradas carpetas prohibidas con patrón '${carpeta}':"
               echo "$DIRS"
-              echo "$DIRS" | xargs -r git rm -rf
-              CHANGED=true
+              
+              while IFS= read -r dir; do
+                if [ -n "$dir" ]; then
+                  echo "Eliminando carpeta: $dir"
+                  git rm -rf "$dir" || true
+                  CHANGED=true
+                fi
+              done <<< "$DIRS"
             fi
           done
 
-          # También buscar en el directorio de trabajo (archivos no trackeados)
+          # Buscar en el directorio de trabajo (archivos no trackeados)
           for ext in pdf zip exe rar 7z tar mp4 mov; do
             while IFS= read -r -d '' file; do
               if [ -f "$file" ]; then
@@ -71,7 +79,7 @@ jobs:
                 rm -f "$file"
                 CHANGED=true
               fi
-            done < <(find . -type f -iname "*.${ext}" -print0 2>/dev/null || true)
+            done < <(find . -type f -iname "*.${ext}" -not -path "./.git/*" -print0 2>/dev/null || true)
           done
 
           for carpeta in "${CARPETAS[@]}"; do
@@ -81,7 +89,7 @@ jobs:
                 rm -rf "$dir"
                 CHANGED=true
               fi
-            done < <(find . -type d -iname "${carpeta}" -print0 2>/dev/null || true)
+            done < <(find . -type d -iname "${carpeta}" -not -path "./.git/*" -print0 2>/dev/null || true)
           done
 
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
