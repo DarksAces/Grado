@@ -16,7 +16,7 @@ jobs:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # necesario para crear ramas y commits
+          fetch-depth: 0
 
       - name: Configurar Git
         run: |
@@ -34,12 +34,13 @@ jobs:
         id: eliminar
         run: |
           set -e
+
           # Archivos prohibidos
           FILES=$(find . -type f \( -iname "*.pdf" -o -iname "*.zip" -o -iname "*.exe" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.tar" -o -iname "*.mp4" -o -iname "*.mov" \) -print0)
+
           # Carpetas prohibidas
           DIRS=$(find . -type d \( -iname ".vs" -o -iname ".idea" -o -iname "node_modules" -o -iname "venv" -o -iname "__pycache__" \) -print0)
 
-          # Inicializamos indicador de cambios
           CHANGED=false
 
           # Eliminar archivos
@@ -57,10 +58,15 @@ jobs:
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
       - name: Commit y Push si hay cambios
-        if: steps.eliminar.outputs.changed == 'true'
         run: |
-          git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
-          git push origin ${{ steps.crear_rama.outputs.branch }}
+          if [ "${{ steps.eliminar.outputs.changed }}" == "true" ]; then
+            git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
+            git push origin ${{ steps.crear_rama.outputs.branch }}
+          else
+            echo "No hay cambios, eliminando rama temporal."
+            git checkout main
+            git branch -D ${{ steps.crear_rama.outputs.branch }}
+        shell: bash
 
       - name: Crear Pull Request automático
         if: steps.eliminar.outputs.changed == 'true'
@@ -73,8 +79,3 @@ jobs:
           body: |
             🚨 Se detectaron archivos o carpetas no permitidos en el repositorio y se eliminan automáticamente.
 
-      - name: Borrar rama si no hay cambios
-        if: steps.eliminar.outputs.changed != 'true'
-        run: |
-          git checkout main
-          git branch -D ${{ steps.crear_rama.outputs.branch }}
