@@ -1,1 +1,0 @@
-print("Daniel\nGarcia\nBrun\n630037686")
