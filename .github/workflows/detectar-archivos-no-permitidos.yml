@@ -8,6 +8,10 @@ on:
     - cron: "0 3 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   detectar-y-limpiar:
     runs-on: ubuntu-latest
@@ -110,5 +114,9 @@ jobs:
           title: "🚨 Eliminar archivos o carpetas no permitidos"
           body: |
             🚨 Se detectaron archivos o carpetas no permitidos en el repositorio y se eliminaron automáticamente.
+            
+            **Archivos/carpetas eliminados:**
+            - PDFs, ZIPs, EXEs, RARs, 7z, TAR, MP4, MOV
+            - Carpetas: .vs, .idea, node_modules, venv, __pycache__
             
             Por favor, revisa los cambios antes de hacer merge.
