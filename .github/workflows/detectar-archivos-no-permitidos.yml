@@ -1,16 +1,11 @@
 name: Detectar archivos o carpetas no permitidos
 
 on:
-  # 🔹 Se ejecuta automáticamente cuando alguien hace push a main
   push:
     branches:
       - main
-
-  # 🔹 Se ejecuta automáticamente cada día a las 03:00 AM UTC
   schedule:
     - cron: "0 3 * * *"
-
-  # 🔹 Permite ejecutarlo manualmente desde la pestaña "Actions"
   workflow_dispatch:
 
 jobs:
@@ -23,79 +18,63 @@ jobs:
         with:
           fetch-depth: 0  # necesario para crear ramas y commits
 
-      - name: Buscar archivos y carpetas no deseadas
-        id: buscar
-        run: |
-          # Buscar archivos prohibidos
-          FILES=$(find . -type f \( -iname "*.pdf" -o -iname "*.zip" -o -iname "*.exe" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.tar" -o -iname "*.mp4" -o -iname "*.mov" \) -print0 | xargs -0)
-
-          # Buscar carpetas prohibidas
-          DIRS=$(find . -type d \( -iname ".vs" -o -iname ".idea" -o -iname "node_modules" -o -iname "venv" -o -iname "__pycache__" \) -print0 | xargs -0)
-
-          if [ -n "$FILES" ] || [ -n "$DIRS" ]; then
-            echo "found=true" >> $GITHUB_OUTPUT
-
-            # Escribir archivos en GITHUB_OUTPUT de forma segura
-            echo "files<<EOF" >> $GITHUB_OUTPUT
-            echo "$FILES" | tr ' ' '\n' >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-
-            # Escribir carpetas en GITHUB_OUTPUT de forma segura
-            echo "dirs<<EOF" >> $GITHUB_OUTPUT
-            echo "$DIRS" | tr ' ' '\n' >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          else
-            echo "found=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Crear rama temporal y eliminar elementos
-        if: steps.buscar.outputs.found == 'true'
+      - name: Configurar Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Crear rama temporal
+        id: crear_rama
+        run: |
           BRANCH="cleanup-$(date +%Y%m%d-%H%M%S)"
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
           git checkout -b $BRANCH
 
-          echo "Archivos detectados:"
-          echo "${{ steps.buscar.outputs.files }}"
-          echo "Carpetas detectadas:"
-          echo "${{ steps.buscar.outputs.dirs }}"
+      - name: Eliminar archivos y carpetas prohibidas
+        id: eliminar
+        run: |
+          set -e
+          # Archivos prohibidos
+          FILES=$(find . -type f \( -iname "*.pdf" -o -iname "*.zip" -o -iname "*.exe" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.tar" -o -iname "*.mp4" -o -iname "*.mov" \) -print0)
+          # Carpetas prohibidas
+          DIRS=$(find . -type d \( -iname ".vs" -o -iname ".idea" -o -iname "node_modules" -o -iname "venv" -o -iname "__pycache__" \) -print0)
 
-          # Eliminar archivos detectados
-          if [ -n "${{ steps.buscar.outputs.files }}" ]; then
-            echo "${{ steps.buscar.outputs.files }}" | tr -d '\r' | xargs -d '\n' git rm -f --
+          # Inicializamos indicador de cambios
+          CHANGED=false
+
+          # Eliminar archivos
+          if [ -n "$FILES" ]; then
+            echo "$FILES" | xargs -0 git rm -f -- || true
+            CHANGED=true
           fi
 
-          # Eliminar carpetas detectadas
-          if [ -n "${{ steps.buscar.outputs.dirs }}" ]; then
-            echo "${{ steps.buscar.outputs.dirs }}" | tr -d '\r' | xargs -d '\n' git rm -rf --
+          # Eliminar carpetas
+          if [ -n "$DIRS" ]; then
+            echo "$DIRS" | xargs -0 git rm -rf -- || true
+            CHANGED=true
           fi
 
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+
+      - name: Commit y Push si hay cambios
+        if: steps.eliminar.outputs.changed == 'true'
+        run: |
           git commit -m "Eliminar archivos o carpetas no permitidos detectados automáticamente"
-          git push origin $BRANCH
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push origin ${{ steps.crear_rama.outputs.branch }}
 
       - name: Crear Pull Request automático
-        if: steps.buscar.outputs.found == 'true'
+        if: steps.eliminar.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.run_id }}
+          branch: ${{ steps.crear_rama.outputs.branch }}
           base: main
           title: "Eliminar archivos o carpetas no permitidos"
           body: |
-            🚨 Se detectaron archivos o carpetas no permitidos en el repositorio.
+            🚨 Se detectaron archivos o carpetas no permitidos en el repositorio y se eliminan automáticamente.
 
-            **Archivos detectados:**
-            ```
-            ${{ steps.buscar.outputs.files }}
-            ```
-
-            **Carpetas detectadas:**
-            ```
-            ${{ steps.buscar.outputs.dirs }}
-            ```
-
-            Este Pull Request los elimina automáticamente para mantener el repositorio limpio.
+      - name: Borrar rama si no hay cambios
+        if: steps.eliminar.outputs.changed != 'true'
+        run: |
+          git checkout main
+          git branch -D ${{ steps.crear_rama.outputs.branch }}
