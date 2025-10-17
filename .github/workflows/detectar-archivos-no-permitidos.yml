@@ -30,30 +30,24 @@ jobs:
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
           git checkout -b $BRANCH
 
-      - name: Buscar y eliminar archivos prohibidos
+      - name: Buscar y eliminar archivos/carpetas prohibidas
         id: eliminar
         run: |
           set -e
 
-          # Archivos prohibidos
-          FILES=$(find . -type f \( -iname "*.pdf" -o -iname "*.zip" -o -iname "*.exe" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.tar" -o -iname "*.mp4" -o -iname "*.mov" \) -print0)
-
-          # Carpetas prohibidas
-          DIRS=$(find . -type d \( -iname ".vs" -o -iname ".idea" -o -iname "node_modules" -o -iname "venv" -o -iname "__pycache__" \) -print0)
-
           CHANGED=false
 
-          # Eliminar archivos
-          if [ -n "$FILES" ]; then
-            echo "$FILES" | xargs -0 git rm -f -- || true
+          # Eliminar archivos prohibidos
+          while IFS= read -r -d '' file; do
+            git rm -f "$file"
             CHANGED=true
-          fi
+          done < <(find . -type f \( -iname "*.pdf" -o -iname "*.zip" -o -iname "*.exe" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.tar" -o -iname "*.mp4" -o -iname "*.mov" \) -print0)
 
-          # Eliminar carpetas
-          if [ -n "$DIRS" ]; then
-            echo "$DIRS" | xargs -0 git rm -rf -- || true
+          # Eliminar carpetas prohibidas
+          while IFS= read -r -d '' dir; do
+            git rm -rf "$dir"
             CHANGED=true
-          fi
+          done < <(find . -type d \( -iname ".vs" -o -iname ".idea" -o -iname "node_modules" -o -iname "venv" -o -iname "__pycache__" \) -print0)
 
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
