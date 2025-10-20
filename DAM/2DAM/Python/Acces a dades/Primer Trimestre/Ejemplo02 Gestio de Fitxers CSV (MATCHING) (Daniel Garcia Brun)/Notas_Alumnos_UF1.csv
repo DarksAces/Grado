@@ -1,29 +1,31 @@
-Id;Apellidos;Nombre;UF1
-1;Bretones López;David;6
-2;Calonge Sendra;Ferran Josep;10
-3;Castillejo García;Raül;4
-4;Crespo Cambón;Marc;7
-5;Farré Ruiz;Pau;8
-6;Farreny Zaragoza;Roger;5
-7;García de los Santos;Hugo;2
-8;Jodar Ramos;Martí;7
-9;Lin;Feihong;6
-10;Martínez Zahiño;Aleix;3
-11;Mas De Xaxars;Martí Antoni;1
-12;Masó Boltà;Victor;5
-13;Molina Pomeyrol;Jordi;0
-14;Monroy Fernandez;Victor;3
-15;Morera Navarro;Oscar;0
-16;Ortiz Auge;Marti;9
-17;Ortiz Roque;Marc;7
-18;Palacios Fabregas;Jonathan;9
-19;Parralejo Capellera;Joel;2
-20;Pleguezuelos Cabrera;Axel;0
-21;Ramos Guixà;Gerard;0
-22;Rubel Diaz;Paola;9
-23;Salgado Blanco;Victor;4
-24;Sanchez Espona;Ivan;2
-25;Soria Alvarez;Adan;4
-26;Tierno Fernandez;Hernan;8
-27;Vilanova Paredes;Marc;1
-28;Viñals Morales;Oriol;6
+Id;Apellidos;Nombre;UF2
+1;Lopez Garcia;Carlos;8
+2;Martinez Ruiz;Ana;10
+3;Sanchez Torres;Luis;6
+4;Gomez Diaz;Lucia;7
+5;Perez Ramos;Javier;9
+6;Morales Vega;Elena;5
+7;Herrera Cruz;David;9
+8;Romero Soto;Paula;4
+9;Navarro Ortega;Manuel;7
+10;Gil Morales;Sara;6
+11;Castro Marin;Mario;7
+12;Jimenez Cruz;Clara;6
+13;Ruiz Santos;Miguel;5
+14;Fernandez Cano;Andrea;10
+15;Vazquez Leon;Sergio;9
+16;Ortega Paredes;Laura;8
+17;Molina Vidal;Nuria;5
+18;Iglesias Rojas;Pedro;5
+19;Delgado Soto;Eva;6
+20;Carrillo Pena;Alberto;7
+21;Serrano Lozano;Lucia;9
+22;Reyes Molina;Victor;10
+23;Campos Guerra;Alejandro;6
+24;Silva Rivas;Cristina;7
+25;Ramos Navarro;Oscar;8
+26;Alonso Sanz;Julia;5
+27;Pascual Bravo;Daniel;9
+28;Nieto Duran;Adrian;7
+29;Ferrer Lozano;Marta;8
+30;Benitez Arias;Raul;6
