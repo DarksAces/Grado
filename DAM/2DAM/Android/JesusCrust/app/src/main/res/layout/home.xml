@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
     <!-- Top Banner -->
@@ -14,10 +15,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/BannerDailyHome"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#A0522D"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
             android:id="@+id/Icon1"
@@ -27,7 +28,6 @@
             android:contentDescription="User icon"
             app:srcCompat="@drawable/user" />
 
-
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -36,7 +36,8 @@
             android:paddingStart="8dp"
             android:text="Jesus Crust"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
 
         <!-- Spacer -->
         <View
@@ -52,19 +53,16 @@
             app:srcCompat="@drawable/user" />
     </LinearLayout>
 
-
     <!-- Banner Diario -->
-
-    <!-- Bottom Navigation -->
     <LinearLayout
         android:id="@+id/BannerDailyHome"
-        android:layout_width="410dp"
-        android:layout_height="119dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
+        android:background="#FF9F66"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/TopBannerContainer">
 
@@ -75,67 +73,351 @@
             android:text="Fresh Baked Daily"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/textDaily2"
-            android:layout_width="366dp"
-            android:layout_height="39dp"
-            android:text="Artisan breads and pastries made with love" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Artisan breads and pastries made with love"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="4dp" />
 
         <LinearLayout
-            android:layout_width="360dp"
-            android:layout_height="39dp"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/textDaily3"
-                android:layout_width="306dp"
-                android:layout_height="39dp"
-                android:text="Free delivery on order $25+" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Free delivery on order $25+"
+                android:textColor="#FFFFFF" />
 
             <ImageView
                 android:id="@+id/icon3"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:contentDescription="@string/app_name"
                 app:srcCompat="@drawable/user" />
         </LinearLayout>
-
     </LinearLayout>
 
+    <!-- Searcher Layout -->
     <LinearLayout
         android:id="@+id/SercherLayout"
-        android:layout_width="404dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginBottom="405dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/BottomNav"
+        android:gravity="center_vertical"
+        android:background="#F5F5F5"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BannerDailyHome">
 
         <ImageView
             android:id="@+id/icon4"
-            android:layout_width="45dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="Search icon"
             app:srcCompat="@drawable/user" />
 
         <EditText
             android:id="@+id/editTextText2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
+            android:layout_marginStart="8dp"
+            android:hint="Search for breads..."
+            android:background="@android:color/transparent"
             android:inputType="text" />
-
     </LinearLayout>
 
+    <!-- Categories Label -->
+    <TextView
+        android:id="@+id/CategoriesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categories"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/SercherLayout" />
+
+    <!-- Categories Grid -->
+    <LinearLayout
+        android:id="@+id/CategoriesContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CategoriesLabel">
+
+        <!-- Category 1 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FF9F66"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Home"
+                app:srcCompat="@drawable/user" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Bread"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Category 2 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#D4A574"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageButton
+                android:id="@+id/imageButton6"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:backgroundTint="#D4A574"
+                android:contentDescription="Home"
+                app:srcCompat="@drawable/user" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Pastries"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Category 3 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#8B4513"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageButton
+                android:id="@+id/imageButton7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:backgroundTint="#D4A574"
+                android:contentDescription="Home"
+                app:srcCompat="@drawable/user" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:text="Cakes"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Category 4 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#4CAF50"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageButton
+                android:id="@+id/imageButton8"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:backgroundTint="#D4A574"
+                android:contentDescription="Home"
+                app:srcCompat="@drawable/user" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Organic"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Featured Today Label -->
+    <TextView
+        android:id="@+id/FeaturedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Featured Today"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CategoriesContainer" />
+
+    <!-- Featured Items ScrollView -->
+    <ScrollView
+        android:id="@+id/FeaturedScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/FeaturedLabel"
+        app:layout_constraintBottom_toTopOf="@id/BottomNav">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Featured Item 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#F5F5F5"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="Product"
+                    app:srcCompat="@drawable/user" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Classic Loaf"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$5.99"
+                        android:textSize="14sp"
+                        android:textColor="#FF9F66"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:backgroundTint="#FF9F66"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <!-- Featured Item 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#F5F5F5"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="Product"
+                    app:srcCompat="@drawable/user" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bacon Original"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$4.50"
+                        android:textSize="14sp"
+                        android:textColor="#FF9F66"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:backgroundTint="#FF9F66"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
     <LinearLayout
         android:id="@+id/BottomNav"
         android:layout_width="0dp"
@@ -143,6 +425,8 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="8dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -150,41 +434,46 @@
         <ImageButton
             android:id="@+id/imageButton1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Home"
             app:srcCompat="@drawable/user" />
 
         <ImageButton
             android:id="@+id/imageButton2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Menu"
             app:srcCompat="@drawable/user" />
 
         <ImageButton
             android:id="@+id/imageButton3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Orders"
             app:srcCompat="@drawable/user" />
 
         <ImageButton
             android:id="@+id/imageButton4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Cart"
             app:srcCompat="@drawable/user" />
 
         <ImageButton
             android:id="@+id/imageButton5"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Profile"
             app:srcCompat="@drawable/user" />
     </LinearLayout>
 
