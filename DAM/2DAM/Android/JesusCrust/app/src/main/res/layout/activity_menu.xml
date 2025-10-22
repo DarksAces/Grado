@@ -11,6 +11,45 @@
 
     <!-- Top Banner -->
     <LinearLayout
+        android:id="@+id/BannerDailyHome"
+        android:layout_width="408dp"
+        android:layout_height="154dp"
+        android:background="#FF9F66"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TopBannerContainer">
+
+        <TextView
+            android:id="@+id/textDaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fresh Baked Daily"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textDaily2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Artisan breads and pastries made with love"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="179dp"
+            android:layout_height="59dp"
+            android:text="Button" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/TopBannerContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,29 +91,40 @@
     </LinearLayout>
 
     <!-- Title -->
+
+    <!-- Scrollable List of Products -->
+
+    <!-- Bottom Navigation -->
+
     <TextView
         android:id="@+id/MenuTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="245dp"
+        android:layout_marginBottom="39dp"
         android:text="Today's Specials"
+        android:textColor="#8B4513"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#8B4513"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/TopBannerContainer"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/MenuScroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TopBannerContainer" />
 
-    <!-- Scrollable List of Products -->
     <ScrollView
         android:id="@+id/MenuScroll"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="422dp"
+        android:layout_height="301dp"
         android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@id/MenuTitle"
+        android:layout_marginTop="38dp"
         app:layout_constraintBottom_toTopOf="@id/BottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/MenuTitle">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,59 +134,115 @@
             <!-- Product 1 -->
 
             <!-- Product 2 -->
+
             <LinearLayout
+                android:layout_width="412dp"
+                android:layout_height="106dp"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Product"
+                    app:srcCompat="@drawable/user" />
+
+                <LinearLayout
+                    android:layout_width="182dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Lucifer Luz del Alba"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:text="Buttery  flaky"
+                        android:textColor="#666666"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:text="$4.25"
+                        android:textColor="#FF9F66"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FF9F66"
+                    android:text="Add"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginBottom="12dp"
                 android:background="#F5F5F5"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp">
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    app:srcCompat="@drawable/user"
-                    android:contentDescription="Product" />
+                    android:contentDescription="Product"
+                    app:srcCompat="@drawable/user" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:text="Lucifer Luz del Alba"
+                        android:textColor="#000000"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#000000" />
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:layout_marginTop="4dp"
                         android:text="Buttery  flaky"
-                        android:textSize="14sp"
                         android:textColor="#666666"
-                        android:layout_marginTop="4dp" />
+                        android:textSize="14sp" />
 
                     <TextView
+                        android:layout_marginTop="4dp"
                         android:text="$4.25"
-                        android:textSize="14sp"
                         android:textColor="#FF9F66"
-                        android:layout_marginTop="4dp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add"
+                    android:layout_gravity="center_vertical"
                     android:backgroundTint="#FF9F66"
-                    android:textColor="#FFFFFF"
-                    android:layout_gravity="center_vertical" />
+                    android:text="Add"
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation -->
     <LinearLayout
         android:id="@+id/BottomNav"
         android:layout_width="0dp"
@@ -194,56 +300,6 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             app:srcCompat="@drawable/user"
             android:contentDescription="Profile" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F5F5F5"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="313dp">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:contentDescription="Product"
-            app:srcCompat="@drawable/user" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="La tentación de Satán"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_marginTop="4dp"
-                android:text="Classic artisan bread"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_marginTop="4dp"
-                android:text="$8.50"
-                android:textColor="#FF9F66"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:backgroundTint="#FF9F66"
-            android:text="Add"
-            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
