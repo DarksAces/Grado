@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlin.jvm.java
 
 class CartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +31,6 @@ class CartActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.nav_cart).setOnClickListener {
             startActivity(Intent(this, CartActivity::class.java))
         }
-        findViewById<ImageButton>(R.id.nav_orders).setOnClickListener {
-            startActivity(Intent(this, OrdersActivity::class.java))
-        }
-        findViewById<ImageButton>(R.id.nav_profile).setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
+
     }
 }

@@ -175,7 +175,7 @@
 
                     <TextView
                         android:layout_marginTop="4dp"
-                        android:text="Buttery & flaky"
+                        android:text="Buttery  flaky"
                         android:textColor="#555555"
                         android:textSize="14sp" />
 
