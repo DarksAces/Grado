@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JesusCrust">
 
-        <activity android:name=".HomeActivity" />
-
+        <!-- LoginActivity es la pantalla de inicio -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -22,7 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <!-- Las demás actividades -->
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".MenuActivity" />
+
+
+    </application>
 
 </manifest>
