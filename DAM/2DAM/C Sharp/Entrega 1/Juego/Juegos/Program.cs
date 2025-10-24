@@ -1,5 +1,5 @@
 ﻿using System;
-using Juegos; // Tu namespace con las clases de juegos
+using Juegos;
 
 class Program
 {
@@ -16,24 +16,20 @@ class Program
             Console.WriteLine("Z: Salir");
             Console.Write("Escribe la opción que quieres: ");
 
-            string opcion = Console.ReadLine();
-            string opcionMayuscula = opcion.ToUpper();
+            string opcion = Console.ReadLine().ToUpper();
 
-            switch (opcionMayuscula)
+            switch (opcion)
             {
                 case "1":
-                    TicTacToe.Jugar(); // Ejemplo, reemplaza con tu clase/función
+                    TicTacToe.Jugar();
                     break;
-
                 case "2":
-                    PiedraPapelTijeras.Jugar(); // Ejemplo, reemplaza con tu clase/función
+                    PiedraPapelTijeras.Jugar();
                     break;
-
                 case "Z":
                     salir = true;
                     Console.WriteLine("Saliendo del programa...");
                     break;
-
                 default:
                     Console.WriteLine("Opción inválida. Presiona Enter para continuar...");
                     Console.ReadLine();
@@ -42,4 +38,3 @@ class Program
         }
     }
 }
-
