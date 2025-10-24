@@ -120,14 +120,14 @@
             android:layout_marginTop="8dp">
 
             <Button
-                android:id="@+id/SignInButton"
+                android:id="@+id/SignUpButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Sign In"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 android:backgroundTint="#D2691E"
-                android:textColor="#FFFFFF"/>
+                android:text="Sign Up"
+                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/ForgotPasswordButton"
