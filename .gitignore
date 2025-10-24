@@ -17,7 +17,6 @@ Release/
 *.tmp
 *.log
 *.pdb
-*.exe
 *.dll
 *.lib
 
