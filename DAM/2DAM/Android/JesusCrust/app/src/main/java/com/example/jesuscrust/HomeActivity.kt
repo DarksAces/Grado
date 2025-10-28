@@ -15,5 +15,10 @@ class HomeActivity : AppCompatActivity() {
         menuHomeButton.setOnClickListener {
             startActivity(Intent(this, MenuActivity::class.java))
         }
+        // Botón Cart -> abre CartActivity
+        val cartButton: ImageButton = findViewById(R.id.Cart)
+        cartButton.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java))
+        }
     }
 }

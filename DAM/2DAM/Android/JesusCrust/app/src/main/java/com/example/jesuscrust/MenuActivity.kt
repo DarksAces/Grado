@@ -33,7 +33,10 @@ class MenuActivity : AppCompatActivity() {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
-
+        val cartButton: ImageButton = findViewById(R.id.Cart)
+        cartButton.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java))
+        }
         // Poblar productos y activar scroll
         populateProducts()
         startAutoScroll()
