@@ -22,13 +22,13 @@ class CartActivity : AppCompatActivity() {
         }
 
         // Bottom navigation
-        findViewById<ImageButton>(R.id.nav_home).setOnClickListener {
+        findViewById<ImageButton>(R.id.home).setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }
-        findViewById<ImageButton>(R.id.nav_menu).setOnClickListener {
+        findViewById<ImageButton>(R.id.menu).setOnClickListener {
             startActivity(Intent(this, MenuActivity::class.java))
         }
-        findViewById<ImageButton>(R.id.nav_cart).setOnClickListener {
+        findViewById<ImageButton>(R.id.cart).setOnClickListener {
             startActivity(Intent(this, CartActivity::class.java))
         }
 

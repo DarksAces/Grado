@@ -263,7 +263,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
-            android:id="@+id/nav_home"
+            android:id="@+id/home"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
@@ -272,7 +272,7 @@
             app:srcCompat="@drawable/user" />
 
         <ImageButton
-            android:id="@+id/nav_menu"
+            android:id="@+id/menu"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
@@ -281,7 +281,7 @@
             app:srcCompat="@drawable/user" />
 
         <ImageButton
-            android:id="@+id/nav_cart"
+            android:id="@+id/cart"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
@@ -290,7 +290,7 @@
             app:srcCompat="@drawable/user" />
 
         <ImageButton
-            android:id="@+id/nav_orders"
+            android:id="@+id/orders"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
@@ -299,7 +299,7 @@
             app:srcCompat="@drawable/user" />
 
         <ImageButton
-            android:id="@+id/nav_profile"
+            android:id="@+id/profile"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
