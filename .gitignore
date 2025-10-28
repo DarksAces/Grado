@@ -33,18 +33,7 @@ _ReSharper.*/
 
 # Multimedia y Archivos de Contenido Pesado (¡Adiós a los Gifs y Videos!)
 # Contenido visual/audio que no debe ir al repo (Mejor usar un CDN o LFS)
-*.gif
-*.jpg
-*.jpeg
-*.png
-*.svg
-*.webp
-*.mp4
-*.mov
-*.avi
-*.webm
-*.mp3
-*.wav
+
 
 ---
 
