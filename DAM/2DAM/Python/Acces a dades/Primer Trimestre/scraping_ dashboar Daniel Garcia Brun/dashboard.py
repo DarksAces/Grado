@@ -22,22 +22,22 @@ if df.empty:
     st.warning("⚠️ El archivo está vacío o no tiene datos.")
     st.stop()
 
-# --- Filtros generales ---
+
 valoracion = st.slider("⭐ Filtrar por valoración mínima", 1, 5, 3)
 df_filtrado = df[df["Valoración_num"] >= valoracion]
 
-# --- Filtro por genero ---
+
 generos = df_filtrado["Genero"].unique()
 genero_seleccionado = st.selectbox(" Filtrar por Genero", ["Todos"] + list(generos))
 
 if genero_seleccionado != "Todos":
     df_filtrado = df_filtrado[df_filtrado["Genero"] == genero_seleccionado]
 
-# --- Filtro de "más vendidos" (simulado por valoración) ---
+
 if st.checkbox("🔥 Mostrar solo los más vendidos (mayor valoración)"):
     df_filtrado = df_filtrado[df_filtrado["Valoración_num"] == df_filtrado["Valoración_num"].max()]
 
-# --- Mostrar tabla filtrada ---
+
 st.subheader("📋 Libros filtrados")
 st.dataframe(df_filtrado)
 
