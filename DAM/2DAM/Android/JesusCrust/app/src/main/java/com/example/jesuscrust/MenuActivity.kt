@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,12 +29,12 @@ class MenuActivity : AppCompatActivity() {
         container = findViewById(R.id.productsContainer)
 
         // 👉 Botón que lleva a HomeActivity
-        val imageButton1: ImageButton = findViewById(R.id.imageButton1)
+        val imageButton1: ImageView = findViewById(R.id.home4)
         imageButton1.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
-        val cartButton: ImageButton = findViewById(R.id.Cart)
+        val cartButton: ImageView = findViewById(R.id.cart)
         cartButton.setOnClickListener {
             startActivity(Intent(this, CartActivity::class.java))
         }

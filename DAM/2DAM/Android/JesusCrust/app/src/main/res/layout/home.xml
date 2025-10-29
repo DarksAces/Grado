@@ -8,6 +8,17 @@
     android:background="#FFFFFF"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="712dp"
+        android:text="srcCompat	@drawable/home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/top_banner_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/top_banner_container"
         android:layout_width="match_parent"
@@ -424,50 +435,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/home"
+        <ImageView
+            android:id="@+id/home4"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Navegación a Inicio"
-            app:srcCompat="@drawable/user" />
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/home" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/menu"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Navegación a Menú"
-            app:srcCompat="@drawable/user" />
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/menu" />
 
-        <ImageButton
-            android:id="@+id/orders"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Navegación a Órdenes"
-            app:srcCompat="@drawable/user" />
-
-        <ImageButton
+        <ImageView
             android:id="@+id/cart"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Navegación a Carrito"
-            app:srcCompat="@drawable/user" />
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/cart" />
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/delivery"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/delivery" />
+
+        <ImageView
             android:id="@+id/profile"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Navegación a Perfil"
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/user" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

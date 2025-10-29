@@ -1,5 +1,5 @@
 package com.example.jesuscrust
-
+import android.widget.ImageView
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -28,11 +28,11 @@ class HomeActivity : AppCompatActivity() {
     private fun setupBottomNavigation() {
         // Los IDs 'menu' y 'cart' ya están corregidos y en minúsculas.
 
-        findViewById<ImageButton>(R.id.menu).setOnClickListener {
+        findViewById<ImageView>(R.id.menu).setOnClickListener {
             startActivity(Intent(this, MenuActivity::class.java))
         }
 
-        findViewById<ImageButton>(R.id.cart).setOnClickListener {
+        findViewById<ImageView>(R.id.cart).setOnClickListener {
             startActivity(Intent(this, CartActivity::class.java))
         }
 

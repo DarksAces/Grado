@@ -11,42 +11,45 @@
 
     <!-- Top Banner -->
     <LinearLayout
-        android:id="@+id/BannerDailyHome"
-        android:layout_width="408dp"
-        android:layout_height="154dp"
-        android:background="#FF9F66"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/top_banner_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="#A0522D"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TopBannerContainer">
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/icon_chef"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="Icono de Chef"
+            android:scaleType="fitCenter" app:srcCompat="@drawable/alimento" />
 
         <TextView
-            android:id="@+id/textDaily"
+            android:id="@+id/app_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fresh Baked Daily"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textDaily2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Artisan breads and pastries made with love"
-            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:text="Jesus Crust"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="179dp"
-            android:layout_height="59dp"
-            android:text="Button" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
+        <ImageView
+            android:id="@+id/icon_profile"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="Icono de Perfil"
+            app:srcCompat="@drawable/user" />
     </LinearLayout>
 
     <LinearLayout
@@ -157,110 +160,7 @@
 
     <!-- Categories Grid -->
     <LinearLayout
-        android:id="@+id/CategoriesContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="137dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/BottomNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Categories">>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#8B4513"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <ImageButton
-                android:id="@+id/imageButton7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:backgroundTint="#D4A574"
-                android:contentDescription="Home"
-                app:srcCompat="@drawable/user" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_weight="1"
-                android:text="Cakes"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#D4A574"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <ImageButton
-                android:id="@+id/imageButton6"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:backgroundTint="#D4A574"
-                android:contentDescription="Home"
-                app:srcCompat="@drawable/user" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Pastries"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FF9F66"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Home"
-                app:srcCompat="@drawable/user" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Bread"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Bottom Navigation -->
-    <LinearLayout
-        android:id="@+id/BottomNav"
+        android:id="@+id/bottom_nav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -272,52 +172,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/imageButton1"
+        <ImageView
+            android:id="@+id/home4"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Home"
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/home" />
+
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/menu" />
+
+        <ImageView
+            android:id="@+id/cart"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/cart" />
+
+        <ImageView
+            android:id="@+id/delivery"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/delivery" />
+
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:contentDescription="home"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/user" />
 
-        <ImageButton
-            android:id="@+id/MenuHome"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Menu"
-            app:srcCompat="@drawable/user" />
-
-        <ImageButton
-            android:id="@+id/Cart"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Orders"
-            app:srcCompat="@drawable/user" />
-
-        <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Cart"
-            app:srcCompat="@drawable/user" />
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Profile"
-            app:srcCompat="@drawable/user" />
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
