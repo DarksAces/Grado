@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5e847250-6295-4b2b-8469-c5188e86f5e1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/HomeActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/HomeActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/MenuActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/MenuActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/res/layout/activity_cart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/res/layout/activity_cart.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/res/layout/home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/res/layout/home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/res/layout/menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/res/layout/menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/gradle/libs.versions.toml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="34QjxuObm8J68GsCBCvpUL9w13b" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/GitHub/Grado/DAM/2DAM/Python/Acces a dades/Primer Trimestre/Ejemplo02 Gestio de Fitxers CSV (MATCHING) (Daniel Garcia Brun)&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-ce6832f46686-7b97d883f26b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.25557.178" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5e847250-6295-4b2b-8469-c5188e86f5e1" name="Changes" comment="" />
+      <created>1761152939654</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761152939654</updated>
+    </task>
+    <servers />
+  </component>
+</project>
