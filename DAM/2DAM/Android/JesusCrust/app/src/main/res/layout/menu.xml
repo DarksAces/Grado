@@ -147,10 +147,10 @@
         android:layout_marginStart="27dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="326dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="291dp"
         android:text="Categories"
         android:textColor="#8B4513"
-        app:layout_constraintBottom_toTopOf="@+id/CategoriesContainer"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -163,14 +163,16 @@
         android:id="@+id/bottom_nav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="8dp"
+        android:layout_marginTop="287dp"
         android:background="#FFFFFF"
         android:elevation="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/Categories">
 
         <ImageView
             android:id="@+id/home4"
@@ -182,7 +184,7 @@
             app:srcCompat="@drawable/home" />
 
         <ImageView
-            android:id="@+id/menu"
+            android:id="@+id/menu2"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"

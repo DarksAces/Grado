@@ -15,22 +15,14 @@ class CartActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_cart)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cart)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cart_icon)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Bottom navigation
-        findViewById<ImageButton>(R.id.cart).setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-        }
-        findViewById<ImageButton>(R.id.menu).setOnClickListener {
-            startActivity(Intent(this, MenuActivity::class.java))
-        }
-        findViewById<ImageButton>(R.id.cart).setOnClickListener {
-            startActivity(Intent(this, CartActivity::class.java))
-        }
+
+
 
     }
 }
