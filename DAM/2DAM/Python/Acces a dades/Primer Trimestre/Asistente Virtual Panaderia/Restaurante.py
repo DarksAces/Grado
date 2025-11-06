@@ -79,6 +79,7 @@ def mostrar_respuesta(respuesta, salida_widget):
     salida_widget.config(state='disabled')
 
 
+
 def ejecutar_api_en_hilo(pregunta, salida_widget):
     respuesta = obtener_respuesta_bar(pregunta)
     mostrar_respuesta(respuesta, salida_widget)
