@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                         // Login correcto
                         Toast.makeText(this, "¡Bienvenido!", Toast.LENGTH_SHORT).show()
                         // NOTA: Asegúrate de tener una HomeActivity o cámbialo a otra Activity
-                        // startActivity(Intent(this, HomeActivity::class.java))
+                       startActivity(Intent(this, HomeActivity::class.java))
                         finish()
 
                     } else {

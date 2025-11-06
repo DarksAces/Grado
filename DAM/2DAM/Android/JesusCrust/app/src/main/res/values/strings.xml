@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">JesusCrust</string>
-    <string name="textview">JesusCrust</string>
+    <string-array name="spinner_profile_options">
+        <item>Perfil</item>
+        <item>Notificación</item>
+    </string-array>
 </resources>

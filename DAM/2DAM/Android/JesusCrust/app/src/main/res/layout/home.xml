@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="712dp"
-        android:text="srcCompat	@drawable/home"
+        android:text="srcCompat @drawable/home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/top_banner_container"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,12 +53,14 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
+        <!-- 🟢 RESTAURADO: ImageView original para el perfil 🟢 -->
         <ImageView
             android:id="@+id/icon_profile"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:contentDescription="Icono de Perfil"
             app:srcCompat="@drawable/user" />
+        <!-- ❌ Nota: El Spinner y su ID han sido eliminados. -->
     </LinearLayout>
 
     <LinearLayout
@@ -272,7 +274,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:contentDescription="Icono Categoría Orgánico"
-                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/hoja" />
 
             <TextView
@@ -412,6 +413,113 @@
 
                 <Button
                     android:id="@+id/button_add_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:backgroundTint="#FF9F66"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/featured_item_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#F5F5F5"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:id="@+id/product_image_3"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="Imagen del Producto 3"
+                    app:srcCompat="@drawable/alimento" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/product_name_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pan Orgánico Fresco"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/product_price_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$7.99"
+                        android:textSize="14sp"
+                        android:textColor="#FF9F66"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button_add_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:backgroundTint="#FF9F66"
+                    android:textColor="#FFFFFF"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <!-- Producto Destacado 4 (manteniendo el que se añadió antes) -->
+            <LinearLayout
+                android:id="@+id/featured_item_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#F5F5F5"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:id="@+id/product_image_4"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="Imagen del Producto 4"
+                    app:srcCompat="@drawable/pastel" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/product_name_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tarta del Día"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/product_price_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$12.00"
+                        android:textSize="14sp"
+                        android:textColor="#FF9F66"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button_add_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add"
