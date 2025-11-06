@@ -28,7 +28,8 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".CartActivity" />
+        <activity android:name=".RegisterActivity" />
 
     </application>
-
+s
 </manifest>
