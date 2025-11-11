@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a44a01e-9dd2-4ee6-bc1f-2745e89699f0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/RegisterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/java/com/example/jesuscrust/RegisterActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/res/layout/menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Android/JesusCrust/app/src/main/res/layout/menu.xml" afterDir="false" />
-    </list>
+    <list default="true" id="2a44a01e-9dd2-4ee6-bc1f-2745e89699f0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
