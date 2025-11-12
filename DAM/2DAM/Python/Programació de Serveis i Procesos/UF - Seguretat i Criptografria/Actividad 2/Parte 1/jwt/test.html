@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT con FastAPI</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        #output { background-color: #f4f4f4; padding: 15px; border: 1px solid #ddd; white-space: pre-wrap; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Autenticación con JWT (FastAPI)</h2>
+    <button onclick="login()">1. Obtener Token</button>
+    <button onclick="accessProtected()">2. Acceder a Ruta Protegida</button>
+
+    <h3>Salida:</h3>
+    <pre id="output">Esperando acciones...</pre>
+
+    <script>
+        const API_URL = "http://localhost:8001";
+        let token = "";
+
+        async function login() {
+            try {
+                document.getElementById("output").innerText = "Solicitando token...";
+                const response = await fetch(`${API_URL}/token`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({})
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.access_token) {
+                    throw new Error("Respuesta no exitosa o token faltante. Estado: " + response.status);
+                }
+
+                token = data.access_token;
+                document.getElementById("output").innerText = "✅ Token recibido con éxito (expira en 10 min):\n" + token.substring(0, 40) + "...";
+            } catch (err) {
+                console.error("Error al obtener token:", err);
+                document.getElementById("output").innerText = "❌ Error al obtener token: " + err;
+            }
+        }
+
+        async function accessProtected() {
+            if (!token) {
+                alert("Primero haz clic en 'Obtener Token'.");
+                return;
+            }
+            document.getElementById("output").innerText = "Solicitando acceso a /protected...";
+
+            try {
+                const response = await fetch(`${API_URL}/protected`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.detail || `Error del servidor (Estado: ${response.status})`);
+                }
+
+                document.getElementById("output").innerText = "✅ Acceso Exitoso:\n" + JSON.stringify(data, null, 2);
+            } catch (err) {
+                console.error("Error al acceder:", err);
+                document.getElementById("output").innerText = "❌ Error al acceder a ruta protegida: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
