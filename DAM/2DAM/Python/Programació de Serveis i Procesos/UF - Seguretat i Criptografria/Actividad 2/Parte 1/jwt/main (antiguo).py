@@ -4,12 +4,9 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from fastapi.middleware.cors import CORSMiddleware
 import os
-import requests
 
 # --- Configuración JWT ---
-SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
-
-# **VALIDACIÓN DE SEGURIDAD:** Asegura que la aplicación no se ejecute sin una 
+SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "mi_secreto_para_la_actividad_2_muy_seguro")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 10
 
@@ -71,31 +68,3 @@ async def login():
 @app.get("/protected")
 async def protected(user: dict = Depends(get_current_user)):
     return {"message": "Acceso permitido", "user": user["sub"], "info": "Esta es una ruta protegida"}
-# --- Endpoint SEGURO contra CWE-78 ---
-@app.get("/ping_seguro")
-async def ping_host_seguro(host: str):
-    # Utilizamos subprocess.run con el comando y los argumentos en una lista.
-    # shell=False (por defecto) es CRUCIAL.
-    try:
-        # El input del usuario ('host') es tratado como dato, no como código.
-        result = subprocess.run(
-            ['ping', '-c', '1', host], 
-            capture_output=True, 
-            text=True,
-            check=True,
-            timeout=5
-        )
-        return {"result": result.stdout}
-    except subprocess.CalledProcessError:
-        return {"error": "El host no respondió o el comando falló."}
-    except subprocess.TimeoutExpired:
-        return {"error": "El comando excedió el tiempo límite."}
-
-@app.get("/fetch_data")
-async def fetch_data(url: str):
-    # ESTA LÍNEA ES VULNERABLE: Acepta cualquier URL para la solicitud
-    response = requests.get(url, timeout=5)
-    return {"content": response.text}
-
-
-
