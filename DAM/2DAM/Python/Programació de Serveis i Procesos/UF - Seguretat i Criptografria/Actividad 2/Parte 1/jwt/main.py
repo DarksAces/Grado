@@ -96,6 +96,3 @@ async def fetch_data(url: str):
     # ESTA LÍNEA ES VULNERABLE: Acepta cualquier URL para la solicitud
     response = requests.get(url, timeout=5)
     return {"content": response.text}
-
-
-
