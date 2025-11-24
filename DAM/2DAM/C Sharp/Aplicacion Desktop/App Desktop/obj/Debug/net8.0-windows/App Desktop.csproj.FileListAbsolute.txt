@@ -1,0 +1,17 @@
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\bin\Debug\net8.0-windows\App Desktop.exe
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\bin\Debug\net8.0-windows\App Desktop.deps.json
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\bin\Debug\net8.0-windows\App Desktop.runtimeconfig.json
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\bin\Debug\net8.0-windows\App Desktop.dll
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\bin\Debug\net8.0-windows\App Desktop.pdb
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App_Desktop.Form1.resources
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.csproj.GenerateResource.cache
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.AssemblyInfoInputs.cache
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.AssemblyInfo.cs
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.csproj.CoreCompileInputs.cache
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.sourcelink.json
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.dll
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\refint\App Desktop.dll
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.pdb
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\App Desktop.genruntimeconfig.cache
+D:\GitHub\Grado\DAM\2DAM\C Sharp\Aplicacion Desktop\App Desktop\obj\Debug\net8.0-windows\ref\App Desktop.dll
