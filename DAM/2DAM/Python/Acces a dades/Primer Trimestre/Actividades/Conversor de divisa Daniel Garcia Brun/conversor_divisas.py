@@ -1,180 +1,181 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import requests
 import xml.etree.ElementTree as ET
+import os
 
-
-# ==========================================
-# 1. LÓGICA DE NEGOCIO (BACKEND)
-# ==========================================
-
-class GestorDivisas:
-    def __init__(self):
-        self.url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
-        self.tasas = {}
-        self.fecha_actualizacion = "Desconocida"
-
-    def obtener_datos(self):
-        """Descarga el XML y extrae las tasas de cambio."""
-        print(f"Conectando a {self.url}...")
-        try:
-            response = requests.get(self.url)
-            if response.status_code == 200:
-                print("Conexión exitosa.")
-                self._parsear_xml(response.content)
-                return True
-            else:
-                print("Error en el servidor.")
-                return False
-        except Exception as e:
-            print(f"Error de conexión: {e}")
-            return False
-
-    def _parsear_xml(self, contenido_xml):
-        """Procesa el árbol XML para llenar el diccionario de tasas."""
-        # Parseamos el XML
-        root = ET.fromstring(contenido_xml)
-
-        # Espacios de nombres (Namespace) del XML del BCE
-        namespaces = {'gesmes': 'http://www.gesmes.org/xml/2002-08-01',
-                      'bce': 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref'}
-
-        # 1. Extraer la fecha (está dentro de Cube > Cube)
-        # Buscamos todos los elementos 'Cube' que tengan el atributo 'time'
-        cubes = root.findall(".//bce:Cube[@time]", namespaces)
-        if cubes:
-            self.fecha_actualizacion = cubes[0].attrib['time']
-
-        # 2. Extraer monedas y tasas
-        # Iteramos sobre los hijos para encontrar currency y rate
-        items = root.findall(".//bce:Cube[@currency]", namespaces)
-
-        # IMPORTANTE: Añadir el Euro base manualmente (1 EUR = 1.0 EUR)
-        # Requisito del enunciado
-        self.tasas['EUR'] = 1.0
-
-        for item in items:
-            moneda = item.attrib['currency']
-            tasa = float(item.attrib['rate'])
-            self.tasas[moneda] = tasa
-
-    def convertir(self, cantidad, origen, destino):
-        """
-        Realiza la conversión cruzada usando el Euro como puente.
-        Fórmula: (Cantidad / TasaOrigen) * TasaDestino
-        """
-        if origen not in self.tasas or destino not in self.tasas:
-            return None
-
-        tasa_origen = self.tasas[origen]
-        tasa_destino = self.tasas[destino]
-
-        # Conversión a Euros (puente)
-        cantidad_en_euros = cantidad / tasa_origen
-
-        # Conversión a moneda final
-        resultado_final = cantidad_en_euros * tasa_destino
-        return resultado_final
-
+# --- VARIABLES GLOBALES y CONFIGURACIÓN ---
+NOMBRE_ARCHIVO_XML = "conversor.xml"
+TASAS = {}
+FECHA_ACTUALIZACION = "Desconocida"
 
 # ==========================================
-# 2. INTERFAZ GRÁFICA (GUI - TKINTER)
+# 1. LÓGICA DE NEGOCIO (Funciones)
 # ==========================================
 
-class AplicacionGUI:
-    def __init__(self, root):
-        self.gestor = GestorDivisas()
-        self.root = root
-        self.root.title("Conversor Divisas BCE")
-        self.root.geometry("400x350")
+def _parsear_xml(contenido_xml):
+    """Procesa el árbol XML del BCE para llenar las tasas globales."""
+    global TASAS, FECHA_ACTUALIZACION
+    
+    root = ET.fromstring(contenido_xml)
+    namespaces = {'bce': 'http://www.ecb.int/vocabulary/2002-08-01/eurofxref'}
+    
+    # Extraer la fecha
+    cubes = root.findall(".//bce:Cube[@time]", namespaces)
+    if cubes:
+        FECHA_ACTUALIZACION = cubes[0].attrib['time']
 
-        # Variables de control
-        self.var_cantidad = tk.StringVar(value="100")
-        self.var_resultado = tk.StringVar(value="---")
-        self.var_fecha = tk.StringVar(value="Cargando datos...")
+    # Añadir el Euro base
+    TASAS['EUR'] = 1.0
 
-        # Construir la interfaz
-        self.crear_widgets()
+    # Extraer monedas y tasas
+    items = root.findall(".//bce:Cube[@currency]", namespaces)
+    for item in items:
+        moneda = item.attrib['currency']
+        tasa = float(item.attrib['rate'])
+        TASAS[moneda] = tasa
 
-        # Carga automática al iniciar [cite: 48]
-        self.cargar_datos_iniciales()
+def cargar_datos_locales():
+    """Carga y parsea las tasas desde un archivo XML local."""
+    archivo_path = os.path.join(os.path.dirname(__file__), NOMBRE_ARCHIVO_XML)
+    print(f"Buscando archivo: {archivo_path}...")
+    
+    if not os.path.exists(archivo_path):
+        print(f"Error: No se encontró el archivo '{NOMBRE_ARCHIVO_XML}'.")
+        return False
 
-    def crear_widgets(self):
-        # Marco principal con padding
-        main_frame = ttk.Frame(self.root, padding="20")
-        main_frame.pack(fill=tk.BOTH, expand=True)
+    try:
+        with open(archivo_path, 'rb') as f:
+            contenido_xml = f.read()
+        _parsear_xml(contenido_xml)
+        print("Datos cargados exitosamente.")
+        return True
+    except Exception as e:
+        print(f"Error al leer o parsear el XML: {e}")
+        return False
 
-        # Título y Fecha
-        ttk.Label(main_frame, text="Conversor Oficial BCE", font=("Arial", 16, "bold")).grid(row=0, column=0,
-                                                                                             columnspan=2, pady=10)
-        ttk.Label(main_frame, textvariable=self.var_fecha, foreground="gray").grid(row=1, column=0, columnspan=2,
-                                                                                   pady=(0, 20))
+def convertir(cantidad, origen, destino):
+    """Realiza la conversión usando las TASAS globales."""
+    if origen not in TASAS or destino not in TASAS:
+        return None
 
-        # Entrada de Cantidad
-        ttk.Label(main_frame, text="Cantidad:").grid(row=2, column=0, sticky=tk.W)
-        entry_cantidad = ttk.Entry(main_frame, textvariable=self.var_cantidad)
-        entry_cantidad.grid(row=2, column=1, sticky=tk.EW, pady=5)
+    tasa_origen = TASAS[origen]
+    tasa_destino = TASAS[destino]
 
-        # Selección Moneda Origen
-        ttk.Label(main_frame, text="De:").grid(row=3, column=0, sticky=tk.W)
-        self.combo_origen = ttk.Combobox(main_frame, state="readonly")
-        self.combo_origen.grid(row=3, column=1, sticky=tk.EW, pady=5)
+    cantidad_en_euros = cantidad / tasa_origen
+    resultado_final = cantidad_en_euros * tasa_destino
+    return resultado_final
 
-        # Selección Moneda Destino
-        ttk.Label(main_frame, text="A:").grid(row=4, column=0, sticky=tk.W)
-        self.combo_destino = ttk.Combobox(main_frame, state="readonly")
-        self.combo_destino.grid(row=4, column=1, sticky=tk.EW, pady=5)
+# ==========================================
+# 2. INTERFAZ GRÁFICA (Funciones)
+# ==========================================
 
-        # Botón Calcular
-        btn_calcular = ttk.Button(main_frame, text="Calcular Conversión", command=self.accion_calcular)
-        btn_calcular.grid(row=5, column=0, columnspan=2, pady=20, sticky=tk.EW)
+def crear_widgets(root, var_cantidad, var_resultado, var_fecha):
+    """
+    Define y coloca todos los elementos de la interfaz.
+    IMPORTANTE: Todos los widgets que usan grid() son hijos del main_frame.
+    """
+    
+    # 1. MAIN FRAME (Gestionado por PACK() en la ventana root)
+    main_frame = ttk.Frame(root, padding="20")
+    main_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Resultado
-        lbl_res = ttk.Label(main_frame, textvariable=self.var_resultado, font=("Arial", 14, "bold"),
-                            background="#e1e1e1", anchor="center")
-        lbl_res.grid(row=6, column=0, columnspan=2, sticky=tk.EW, ipady=10)
+    # Título y Fecha (Hijos de main_frame, usan grid)
+    ttk.Label(main_frame, text="Conversor XML Local", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=2, pady=10)
+    ttk.Label(main_frame, textvariable=var_fecha, foreground="gray", font=("Arial", 9)).grid(row=1, column=0, columnspan=2, pady=(0, 15))
 
-    def cargar_datos_iniciales(self):
-        exito = self.gestor.obtener_datos()
-        if exito:
-            monedas = sorted(list(self.gestor.tasas.keys()))
-            self.combo_origen['values'] = monedas
-            self.combo_destino['values'] = monedas
+    # Entrada de Cantidad (Hijo de main_frame, usa grid)
+    ttk.Label(main_frame, text="Cantidad:").grid(row=2, column=0, sticky=tk.W, pady=5)
+    ttk.Entry(main_frame, textvariable=var_cantidad).grid(row=2, column=1, sticky=tk.EW, pady=5)
 
-            # Valores por defecto
-            self.combo_origen.set('EUR')
-            self.combo_destino.set('USD')
-            self.var_fecha.set(f"Datos del: {self.gestor.fecha_actualizacion}")
-        else:
-            messagebox.showerror("Error", "No se pudo conectar con el BCE.")
-            self.var_fecha.set("Error de conexión")
+    # Selección Moneda Origen (Hijo de main_frame, usa grid)
+    ttk.Label(main_frame, text="De:").grid(row=3, column=0, sticky=tk.W, pady=5)
+    # <<-- EL CAMBIO CLAVE: combobox es hijo de main_frame -->>
+    combo_origen = ttk.Combobox(main_frame, state="readonly") 
+    combo_origen.grid(row=3, column=1, sticky=tk.EW, pady=5)
 
-    def accion_calcular(self):
-        # Validación de entrada numérica [cite: 73]
-        try:
-            cantidad = float(self.var_cantidad.get())
-        except ValueError:
-            messagebox.showerror("Error", "Por favor, introduce un número válido.")
-            return
+    # Selección Moneda Destino (Hijo de main_frame, usa grid)
+    ttk.Label(main_frame, text="A:").grid(row=4, column=0, sticky=tk.W, pady=5)
+    # <<-- EL CAMBIO CLAVE: combobox es hijo de main_frame -->>
+    combo_destino = ttk.Combobox(main_frame, state="readonly")
+    combo_destino.grid(row=4, column=1, sticky=tk.EW, pady=5)
 
-        origen = self.combo_origen.get()
-        destino = self.combo_destino.get()
+    # Botón Calcular
+    btn_calcular = ttk.Button(main_frame, text="Calcular Conversión", 
+                              command=lambda: accion_calcular(var_cantidad, var_resultado, combo_origen, combo_destino))
+    btn_calcular.grid(row=5, column=0, columnspan=2, pady=15, sticky=tk.EW)
 
-        if not origen or not destino:
-            messagebox.showwarning("Atención", "Selecciona ambas monedas.")
-            return
+    # Resultado
+    ttk.Label(main_frame, text="Resultado:", font=("Arial", 10)).grid(row=6, column=0, sticky=tk.W, pady=(5, 0))
+    ttk.Label(main_frame, textvariable=var_resultado, font=("Arial", 18, "bold"), 
+              background="#ffffff", foreground="#007bff", anchor="center", relief="solid").grid(row=7, column=0, columnspan=2, sticky=tk.EW, ipady=10, pady=(0, 0))
+    
+    return combo_origen, combo_destino
 
-        # Lógica matemática de conversión
-        resultado = self.gestor.convertir(cantidad, origen, destino)
 
-        # Mostrar resultado formateado
-        self.var_resultado.set(f"{resultado:.2f} {destino}")
+def accion_calcular(var_cantidad, var_resultado, combo_origen, combo_destino):
+    """Función que se llama al pulsar el botón de calcular."""
+    global TASAS
+    
+    try:
+        cantidad = float(var_cantidad.get())
+    except ValueError:
+        messagebox.showerror("Error", "Introduce un número válido en la cantidad.")
+        return
 
+    origen = combo_origen.get()
+    destino = combo_destino.get()
+
+    if not origen or not destino or not TASAS:
+        var_resultado.set("---")
+        return
+
+    resultado = convertir(cantidad, origen, destino)
+
+    if resultado is not None:
+        var_resultado.set(f"{resultado:,.4f} {destino}")
+    else:
+        var_resultado.set("Error de datos")
+
+
+def iniciar_aplicacion():
+    """Punto de entrada principal para ejecutar la GUI."""
+    global TASAS, FECHA_ACTUALIZACION
+    
+    root = tk.Tk()
+    root.title("💰 Conversor XML Local")
+    root.geometry("400x320")
+
+    # Variables de control de Tkinter
+    var_cantidad = tk.StringVar(value="100")
+    var_resultado = tk.StringVar(value="---")
+    var_fecha = tk.StringVar(value="Cargando datos...")
+    
+    # 1. Construir la interfaz (creando los comboboxes como hijos del frame)
+    combo_origen, combo_destino = crear_widgets(root, var_cantidad, var_resultado, var_fecha)
+
+    # 2. Cargar datos
+    exito = cargar_datos_locales()
+    
+    if exito:
+        monedas = sorted(list(TASAS.keys()))
+        combo_origen['values'] = monedas
+        combo_destino['values'] = monedas
+
+        # Valores por defecto
+        combo_origen.set('EUR')
+        combo_destino.set('USD')
+        var_fecha.set(f"Datos del BCE | Actualización: {FECHA_ACTUALIZACION}")
+        
+        # Cálculo inicial
+        accion_calcular(var_cantidad, var_resultado, combo_origen, combo_destino)
+    else:
+        messagebox.showerror("Error de Carga", f"No se pudo cargar el archivo '{NOMBRE_ARCHIVO_XML}'.")
+        var_fecha.set("❌ Error: Archivo no encontrado")
+        
+    root.mainloop()
 
 # ==========================================
 # 3. PUNTO DE ENTRADA
 # ==========================================
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = AplicacionGUI(root)
-    root.mainloop()
+    iniciar_aplicacion()
