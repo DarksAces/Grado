@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_cart"
-        android:title="Carrito"
-        android:icon="@android:drawable/ic_menu_shop"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/action_reset"
+        android:title="Reiniciar BD"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_exit"
+        android:title="Salir"
+        app:showAsAction="never" />
 </menu>
