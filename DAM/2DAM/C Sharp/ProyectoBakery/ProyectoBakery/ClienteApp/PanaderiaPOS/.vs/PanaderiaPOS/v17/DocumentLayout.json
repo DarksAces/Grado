@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|c:\\users\\danielzorfon\\desktop\\proyectobakery\\clienteapp\\panaderiapos\\panaderiapos\\formventas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|solutionrelative:panaderiapos\\formventas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|c:\\users\\danielzorfon\\desktop\\proyectobakery\\clienteapp\\panaderiapos\\panaderiapos\\forminformes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|solutionrelative:panaderiapos\\forminformes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|c:\\users\\danielzorfon\\desktop\\proyectobakery\\clienteapp\\panaderiapos\\panaderiapos\\ayudantes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|solutionrelative:panaderiapos\\ayudantes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|c:\\users\\danielzorfon\\desktop\\proyectobakery\\clienteapp\\panaderiapos\\panaderiapos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|solutionrelative:panaderiapos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|c:\\users\\danielzorfon\\desktop\\proyectobakery\\clienteapp\\panaderiapos\\panaderiapos\\formmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC7B0187-98CA-49BF-A88C-B94571DBE99D}|PanaderiaPOS\\PanaderiaPOS.csproj|solutionrelative:panaderiapos\\formmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormInformes.cs",
+              "DocumentMoniker": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\FormInformes.cs",
+              "RelativeDocumentMoniker": "PanaderiaPOS\\FormInformes.cs",
+              "ToolTip": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\FormInformes.cs",
+              "RelativeToolTip": "PanaderiaPOS\\FormInformes.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAmwCoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T15:26:54.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FormVentas.cs",
+              "DocumentMoniker": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\FormVentas.cs",
+              "RelativeDocumentMoniker": "PanaderiaPOS\\FormVentas.cs",
+              "ToolTip": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\FormVentas.cs",
+              "RelativeToolTip": "PanaderiaPOS\\FormVentas.cs",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAcwKsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T15:25:31.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Ayudantes.cs",
+              "DocumentMoniker": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\Ayudantes.cs",
+              "RelativeDocumentMoniker": "PanaderiaPOS\\Ayudantes.cs",
+              "ToolTip": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\Ayudantes.cs",
+              "RelativeToolTip": "PanaderiaPOS\\Ayudantes.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAuwFEAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T15:25:00.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FormMenu.cs",
+              "DocumentMoniker": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\FormMenu.cs",
+              "RelativeDocumentMoniker": "PanaderiaPOS\\FormMenu.cs",
+              "ToolTip": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\FormMenu.cs",
+              "RelativeToolTip": "PanaderiaPOS\\FormMenu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T15:22:10.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\Program.cs",
+              "RelativeDocumentMoniker": "PanaderiaPOS\\Program.cs",
+              "ToolTip": "C:\\Users\\danielzorfon\\Desktop\\ProyectoBakery\\ClienteApp\\PanaderiaPOS\\PanaderiaPOS\\Program.cs",
+              "RelativeToolTip": "PanaderiaPOS\\Program.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAcwBgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T15:10:32.347Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

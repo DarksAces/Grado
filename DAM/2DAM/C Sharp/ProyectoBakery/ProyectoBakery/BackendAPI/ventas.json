@@ -1,0 +1,38 @@
+[
+    {
+        "items": [
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            }
+        ],
+        "total": 2.4,
+        "fecha": "2025-11-24"
+    },
+    {
+        "items": [
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            }
+        ],
+        "total": 4.8,
+        "fecha": "2025-11-24"
+    }
+]
