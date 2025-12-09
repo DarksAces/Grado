@@ -21,6 +21,6 @@ public class DaemonBasico {
         // El hilo main sigue con su vida
         System.out.println("[MAIN] voy a dormir 2 segundos");
         Thread.sleep(2000);
-        System.out.println("[MAIN] termino ahora. La JVM se apagará y matará al daemon.");
+        System.out.println("[MAIN] termino ahora. La JVM se apagara y matara al daemon.");
     }
 }
