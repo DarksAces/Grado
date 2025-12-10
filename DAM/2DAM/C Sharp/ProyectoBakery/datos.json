@@ -4,20 +4,20 @@
         "nombre": "Baguette",
         "categoria": "Pan",
         "precio": 1.2,
-        "stock": 31
+        "stock": 50
     },
     {
         "id": 2,
         "nombre": "Croissant",
         "categoria": "Boller\u00eda",
         "precio": 1.5,
-        "stock": 19
+        "stock": 20
     },
     {
         "id": 3,
         "nombre": "Tarta Manzana",
         "categoria": "Pasteles",
         "precio": 12.0,
-        "stock": 4
+        "stock": 5
     }
 ]

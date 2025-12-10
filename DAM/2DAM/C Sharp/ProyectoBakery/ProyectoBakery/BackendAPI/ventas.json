@@ -8,10 +8,50 @@
             {
                 "producto_id": 1,
                 "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
             }
         ],
-        "total": 2.4,
-        "fecha": "2025-11-24"
+        "total": 3.5999999999999996,
+        "fecha": "2025-12-05"
+    },
+    {
+        "items": [
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 2,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 3,
+                "cantidad": 1
+            }
+        ],
+        "total": 14.7,
+        "fecha": "2025-12-05"
+    },
+    {
+        "items": [
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            }
+        ],
+        "total": 3.5999999999999996,
+        "fecha": "2025-12-05"
     },
     {
         "items": [
@@ -30,9 +70,41 @@
             {
                 "producto_id": 1,
                 "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
+            },
+            {
+                "producto_id": 1,
+                "cantidad": 1
             }
         ],
-        "total": 4.8,
-        "fecha": "2025-11-24"
+        "total": 14.399999999999997,
+        "fecha": "2025-12-05"
     }
 ]
