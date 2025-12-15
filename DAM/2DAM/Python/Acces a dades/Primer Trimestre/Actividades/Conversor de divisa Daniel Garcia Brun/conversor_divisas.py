@@ -174,8 +174,6 @@ def iniciar_aplicacion():
         
     root.mainloop()
 
-# ==========================================
-# 3. PUNTO DE ENTRADA
-# ==========================================
+
 if __name__ == "__main__":
     iniciar_aplicacion()
