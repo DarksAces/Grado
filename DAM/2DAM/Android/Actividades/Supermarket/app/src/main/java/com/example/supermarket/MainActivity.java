@@ -1,6 +1,8 @@
 package com.example.supermarket;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         Button btnPagar = findViewById(R.id.btnPagar);
 
         // --- LÓGICA DE CONEXIÓN Y SINCRONIZACIÓN ---
-        // Aquí cumplimos el requisito de usar SQLite como caché del backend [cite: 20, 21]
+        // Aquí cumplimos el requisito de usar SQLite como caché del backend [cite: 20,
+        // 21]
 
         if (hayConexionInternet()) {
             // 1. Si hay internet, "descargamos" los datos y actualizamos la BD local
@@ -51,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
             boolean carritoVacio = true;
 
             // Verificamos si hay algún ítem con cantidad > 0
-            for(Fruta f : misFrutas) {
-                if(f.cantidad > 0) {
+            for (Fruta f : misFrutas) {
+                if (f.cantidad > 0) {
                     carritoVacio = false;
                     break;
                 }
@@ -79,11 +82,61 @@ public class MainActivity extends AppCompatActivity {
         // Pedimos al admin de BD que nos de la lista actual
         misFrutas = admin.obtenerFrutas();
 
-        // Validamos si la lista está vacía (Requisito: indicar si está vacía [cite: 19])
+        // Validamos si la lista está vacía (Requisito: indicar si está vacía [cite:
+        // 19])
         if (misFrutas.isEmpty()) {
             Toast.makeText(this, "No hay productos disponibles.", Toast.LENGTH_LONG).show();
-        }
+        } else {
+            // REASIGNAR BITMAPS (ya que SQLite no los guarda)
+            // Esto asegura que los iconos se vean
+            Bitmap bitmapCompleto = BitmapFactory.decodeResource(getResources(), R.drawable.imagen);
+            int anchoTotal = bitmapCompleto.getWidth();
+            int altoTotal = bitmapCompleto.getHeight();
+            int anchoSprite = anchoTotal / 6;
+            int altoSprite = altoTotal / 6;
 
+            // AJUSTES: Cambia estos números si el icono se ve cortado
+            int correccionX = 0; // Mueve el corte a la derecha
+            int correccionY = 0; // Mueve el corte abajo
+
+            for (Fruta f : misFrutas) {
+                // Mapeamos ID -> Posición en grilla
+                int col = -1, row = 0;
+                switch (f.id) {
+                    case 1:
+                        col = 1;
+                        row = 5;
+                        break; // Manzana (según tu ajuste manual)
+                    case 2:
+                        col = 1;
+                        break; // Banana
+                    case 3:
+                        col = 2;
+                        break; // Naranja
+                    case 4:
+                        col = 3;
+                        break; // Uva
+                    case 5:
+                        col = 4;
+                        break; // Pera
+                    case 6:
+                        col = 5;
+                        break; // Sandía
+                }
+
+                if (col != -1) {
+                    // Aplicamos corrección con seguridad de no salirnos
+                    int x = (col * anchoSprite) + correccionX;
+                    int y = (row * altoSprite) + correccionY;
+                    if (x < 0)
+                        x = 0;
+                    if (y < 0)
+                        y = 0;
+
+                    f.imagenBitmap = cortarBitmap(bitmapCompleto, x, y, anchoSprite, altoSprite);
+                }
+            }
+        }
         // Configuramos el adaptador
         adapter = new FrutaAdapter(this, misFrutas);
         recyclerView.setAdapter(adapter);
@@ -92,22 +145,77 @@ public class MainActivity extends AppCompatActivity {
     // --- MÉTODOS SIMULADOS (BACKEND) ---
 
     private boolean hayConexionInternet() {
-        // Retornamos true para simular que SIEMPRE hay conexión y actualiza los datos al abrir.
+        // Retornamos true para simular que SIEMPRE hay conexión y actualiza los datos
+        // al abrir.
         // Si pones false, probarás el modo offline (los datos persisten).
         return true;
     }
 
     private ArrayList<Fruta> simularDescargaBackend() {
-        // Estos datos vendrían de un JSON o API real.
+        // Obtenemos el bitmap completo de la hoja de sprites
+        Bitmap bitmapCompleto = BitmapFactory.decodeResource(getResources(), R.drawable.imagen);
+
+        // AJUSTE DE GRILLA: Define cuántas frutas hay por fila y columna en la imagen
+        // original
+        int NUM_COLUMNAS = 7; // <-- CUENTA LAS COLUMNAS DE TU FOTO Y PON EL NÚMERO AQUÍ
+        int NUM_FILAS = 6; // <-- CUENTA LAS FILAS DE TU FOTO Y PON EL NÚMERO AQUÍ
+
+        int anchoTotal = bitmapCompleto.getWidth();
+        int altoTotal = bitmapCompleto.getHeight();
+        int anchoSprite = anchoTotal / NUM_COLUMNAS;
+        int altoSprite = altoTotal / NUM_FILAS;
+
+        // AJUSTES FINOS: Si se sigue viendo mal, mueve esto pixel a pixel
+        int correccionX = 0;
+        int correccionY = 0;
+
         ArrayList<Fruta> lista = new ArrayList<>();
-        // NOTA: Usa tus propios R.drawable.manzana si los tienes, aquí uso launcher por defecto.
-        lista.add(new Fruta(1, "Manzana", R.mipmap.ic_launcher, 1.50, 0));
-        lista.add(new Fruta(2, "Banana", R.mipmap.ic_launcher, 0.50, 0));
-        lista.add(new Fruta(3, "Naranja", R.mipmap.ic_launcher, 0.80, 0));
-        lista.add(new Fruta(4, "Uva", R.mipmap.ic_launcher, 2.00, 0));
-        lista.add(new Fruta(5, "Pera", R.mipmap.ic_launcher, 1.20, 0));
-        lista.add(new Fruta(6, "Sandía", R.mipmap.ic_launcher, 3.50, 0));
+
+        // Asignamos los primeros 6 iconos de la fila 0 (o variados)
+        // Fruta 1: Manzana
+        Fruta manzana = new Fruta(1, "Manzana", 0, 1.50, 0);
+        // NOTA: Si cambias el número de columnas, tendrás que ajustar 'col' y 'row'
+        // abajo
+        // para encontrar tu fruta.
+        // Ejemplo: Si Manzana está en la 3º columna, pon col=2.
+        lista.add(manzana);
+
+        // Fruta 2: Banana
+        Fruta banana = new Fruta(2, "Banana", 0, 0.50, 0);
+        banana.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite, 0, anchoSprite, altoSprite);
+        lista.add(banana);
+
+        // Fruta 3: Naranja
+        Fruta naranja = new Fruta(3, "Naranja", 0, 0.80, 0);
+        naranja.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite * 2, 0, anchoSprite, altoSprite);
+        lista.add(naranja);
+
+        // Fruta 4: Uva
+        Fruta uva = new Fruta(4, "Uva", 0, 2.00, 0);
+        uva.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite * 3, 0, anchoSprite, altoSprite);
+        lista.add(uva);
+
+        // Fruta 5: Pera
+        Fruta pera = new Fruta(5, "Pera", 0, 1.20, 0);
+        pera.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite * 4, 0, anchoSprite, altoSprite);
+        lista.add(pera);
+
+        // Fruta 6: Sandía
+        Fruta sandia = new Fruta(6, "Sandía", 0, 3.50, 0);
+        sandia.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite * 5, 0, anchoSprite, altoSprite);
+        lista.add(sandia);
+
         return lista;
+    }
+
+    private Bitmap cortarBitmap(Bitmap original, int x, int y, int width, int height) {
+        // Asegurar que no nos salimos de los límites
+        if (x + width > original.getWidth())
+            width = original.getWidth() - x;
+        if (y + height > original.getHeight())
+            height = original.getHeight() - y;
+
+        return Bitmap.createBitmap(original, x, y, width, height);
     }
 
     // --- MENÚ SUPERIOR ---
@@ -123,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_reset) {
             admin.resetearCantidades(); // Método limpio en la clase Admin
-            cargarListaDesdeSQLite();   // Refrescar UI
+            cargarListaDesdeSQLite(); // Refrescar UI
             Toast.makeText(this, "Carrito vaciado", Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.action_exit) {

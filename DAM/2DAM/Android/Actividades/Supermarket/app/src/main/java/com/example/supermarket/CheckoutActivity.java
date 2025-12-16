@@ -38,14 +38,65 @@ public class CheckoutActivity extends AppCompatActivity {
                         cursor.getString(1),
                         cursor.getInt(2),
                         cursor.getDouble(3),
-                        cursor.getInt(4)
-                );
+                        cursor.getInt(4));
                 listaCompra.add(fruta);
                 totalPrecio += (fruta.precio * fruta.cantidad);
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
+
+        // REASIGNAR BITMAPS PARA CHECKOUT (Igual que en MainActivity)
+        android.graphics.Bitmap bitmapCompleto = android.graphics.BitmapFactory.decodeResource(getResources(),
+                R.drawable.imagen);
+
+        // AJUSTE DE GRILLA
+        int NUM_COLUMNAS = 6;
+        int NUM_FILAS = 6;
+
+        int anchoTotal = bitmapCompleto.getWidth();
+        int altoTotal = bitmapCompleto.getHeight();
+        int anchoSprite = anchoTotal / NUM_COLUMNAS;
+        int altoSprite = altoTotal / NUM_FILAS;
+
+        // Mismos ajustes que en MainActivity
+        int correccionX = 0;
+        int correccionY = 0;
+
+        for (Fruta f : listaCompra) {
+            int col = -1, row = 0;
+            switch (f.id) {
+                case 1:
+                    col = 1;
+                    row = 5;
+                    break; // Manzana
+                case 2:
+                    col = 1;
+                    break; // Banana
+                case 3:
+                    col = 2;
+                    break; // Naranja
+                case 4:
+                    col = 3;
+                    break; // Uva
+                case 5:
+                    col = 4;
+                    break; // Pera
+                case 6:
+                    col = 5;
+                    break; // Sandía
+            }
+
+            if (col != -1) {
+                int x = (col * anchoSprite) + correccionX;
+                int y = (row * altoSprite) + correccionY;
+                if (x < 0)
+                    x = 0;
+                if (y < 0)
+                    y = 0;
+                f.imagenBitmap = cortarBitmap(bitmapCompleto, x, y, anchoSprite, altoSprite);
+            }
+        }
 
         // 2. Configurar RecyclerView (Reusamos FrutaAdapter)
         recycler.setLayoutManager(new LinearLayoutManager(this));
@@ -56,5 +107,14 @@ public class CheckoutActivity extends AppCompatActivity {
         tvTotal.setText("Total a Pagar: " + String.format("%.2f", totalPrecio) + "€");
 
         btnVolver.setOnClickListener(v -> finish());
+    }
+
+    private android.graphics.Bitmap cortarBitmap(android.graphics.Bitmap original, int x, int y, int width,
+            int height) {
+        if (x + width > original.getWidth())
+            width = original.getWidth() - x;
+        if (y + height > original.getHeight())
+            height = original.getHeight() - y;
+        return android.graphics.Bitmap.createBitmap(original, x, y, width, height);
     }
 }

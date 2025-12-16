@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class FrutaAdapter extends RecyclerView.Adapter<FrutaAdapter.MyViewHolder> {
-    
+
     private Context mContext;
     private ArrayList<Fruta> listaFrutas;
 
@@ -36,8 +36,8 @@ public class FrutaAdapter extends RecyclerView.Adapter<FrutaAdapter.MyViewHolder
             tvPrecio = view.findViewById(R.id.tvPrecio);
             tvCantidad = view.findViewById(R.id.tvCantidad);
             imgFruta = view.findViewById(R.id.imgFruta);
-            btnMas = view.findViewById(R.id.btnMas); // Botón + 
-            btnMenos = view.findViewById(R.id.btnMenos); // Botón - 
+            btnMas = view.findViewById(R.id.btnMas); // Botón +
+            btnMenos = view.findViewById(R.id.btnMenos); // Botón -
         }
     }
 
@@ -55,7 +55,12 @@ public class FrutaAdapter extends RecyclerView.Adapter<FrutaAdapter.MyViewHolder
         holder.tvNombre.setText(fruta.nombre);
         holder.tvPrecio.setText(String.valueOf(fruta.precio) + "€");
         holder.tvCantidad.setText(String.valueOf(fruta.cantidad)); // Elemento cantidad
-        holder.imgFruta.setImageResource(fruta.imagenResId); // Imagen del elemento
+
+        if (fruta.imagenBitmap != null) {
+            holder.imgFruta.setImageBitmap(fruta.imagenBitmap);
+        } else {
+            holder.imgFruta.setImageResource(fruta.imagenResId); // Imagen del recurso por defecto
+        }
 
         // Lógica Botón Sumar (+)
         holder.btnMas.setOnClickListener(v -> {
@@ -66,7 +71,7 @@ public class FrutaAdapter extends RecyclerView.Adapter<FrutaAdapter.MyViewHolder
 
         // Lógica Botón Restar (-)
         holder.btnMenos.setOnClickListener(v -> {
-            if (fruta.cantidad > 0) { // La cantidad no puede ser negativa 
+            if (fruta.cantidad > 0) { // La cantidad no puede ser negativa
                 fruta.cantidad--;
                 holder.tvCantidad.setText(String.valueOf(fruta.cantidad));
                 updateCantidadEnDB(fruta);
@@ -75,14 +80,16 @@ public class FrutaAdapter extends RecyclerView.Adapter<FrutaAdapter.MyViewHolder
     }
 
     @Override
-    public int getItemCount() { return listaFrutas.size(); }
+    public int getItemCount() {
+        return listaFrutas.size();
+    }
 
     private void updateCantidadEnDB(Fruta fruta) {
         AdmBaseDatosSQLite admin = new AdmBaseDatosSQLite(mContext);
         SQLiteDatabase db = admin.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("cantidad", fruta.cantidad);
-        db.update("frutas", values, "id = ?", new String[]{String.valueOf(fruta.id)});
+        db.update("frutas", values, "id = ?", new String[] { String.valueOf(fruta.id) });
         db.close();
     }
 }

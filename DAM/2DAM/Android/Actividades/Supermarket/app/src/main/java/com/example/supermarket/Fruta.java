@@ -1,9 +1,12 @@
 package com.example.supermarket;
 
+import android.graphics.Bitmap;
+
 public class Fruta {
     public int id;
     public String nombre;
     public int imagenResId; // ID del recurso drawable (R.drawable.manzana)
+    public Bitmap imagenBitmap; // Imagen recortada (prioridad sobre imagenResId)
     public double precio;
     public int cantidad; // Elemento donde aparece la cantidad comprada
 
