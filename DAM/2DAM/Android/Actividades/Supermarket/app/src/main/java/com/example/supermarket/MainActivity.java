@@ -11,7 +11,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import android.os.Handler;
+import android.os.Looper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,22 +43,13 @@ public class MainActivity extends AppCompatActivity {
         Button btnPagar = findViewById(R.id.btnPagar);
 
         // --- LÓGICA DE CONEXIÓN Y SINCRONIZACIÓN ---
-        // Aquí cumplimos el requisito de usar SQLite como caché del backend [cite: 20,
-        // 21]
-
-        if (hayConexionInternet()) {
-            // 1. Si hay internet, "descargamos" los datos y actualizamos la BD local
-            ArrayList<Fruta> datosNuevos = simularDescargaBackend();
-            admin.sincronizarFrutas(datosNuevos);
-            Toast.makeText(this, "Catálogo actualizado desde el servidor", Toast.LENGTH_SHORT).show();
-        } else {
-            // 2. Si NO hay internet, no hacemos nada aquí.
-            // La app cargará los datos que existan en SQLite en el siguiente paso.
-            Toast.makeText(this, "Modo Offline: Usando datos locales", Toast.LENGTH_LONG).show();
-        }
+        // Intentamos conectar a XAMPP. Si falla, cargamos lo local (Offline).
+        attemptSyncWithServer();
 
         // --- CARGA DE LA LISTA ---
-        cargarListaDesdeSQLite();
+        // NOTA: La carga de la lista ocurrirá después del intento de sync (en
+        // attemptSyncWithServer)
+        // para asegurar que mostramos los datos actualizados si hubo conexión.
 
         // --- BOTÓN PAGAR ---
         btnPagar.setOnClickListener(v -> {
@@ -144,67 +146,80 @@ public class MainActivity extends AppCompatActivity {
 
     // --- MÉTODOS SIMULADOS (BACKEND) ---
 
-    private boolean hayConexionInternet() {
-        // Retornamos true para simular que SIEMPRE hay conexión y actualiza los datos
-        // al abrir.
-        // Si pones false, probarás el modo offline (los datos persisten).
-        return true;
+    // --- MÉTODOS DE CONEXIÓN REAL (XAMPP) ---
+
+    private void attemptSyncWithServer() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(() -> {
+            ArrayList<Fruta> frutasRemotas = null;
+            try {
+                // CAMBIAR IP SI ES NECESARIO: 10.0.2.2 es localhost para Emulador Android.
+                // Si usas dispositivo real, pon la IP de tu PC (ej. 192.168.1.35)
+                String jsonStr = downloadDataFromUrl("http://10.0.2.2/supermarket/get_frutas.php");
+                if (jsonStr != null) {
+                    frutasRemotas = parsearJsonFrutas(jsonStr);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            final ArrayList<Fruta> nuevosDatos = frutasRemotas;
+
+            handler.post(() -> {
+                if (nuevosDatos != null && !nuevosDatos.isEmpty()) {
+                    // CONEXIÓN EXITOSA: Actualizamos SQLite
+                    admin.sincronizarFrutas(nuevosDatos);
+                    Toast.makeText(MainActivity.this, "Conectado a XAMPP: Datos actualizados", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    // FALLO DE CONEXIÓN: Usamos lo que haya en SQLite
+                    Toast.makeText(MainActivity.this, "Sin conexión a XAMPP. Modo Offline (SQLite)", Toast.LENGTH_LONG)
+                            .show();
+                }
+                // SIEMPRE cargamos la lista al final (sea nueva o vieja)
+                cargarListaDesdeSQLite();
+            });
+        });
     }
 
-    private ArrayList<Fruta> simularDescargaBackend() {
-        // Obtenemos el bitmap completo de la hoja de sprites
-        Bitmap bitmapCompleto = BitmapFactory.decodeResource(getResources(), R.drawable.imagen);
+    private String downloadDataFromUrl(String urlString) throws Exception {
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setConnectTimeout(5000); // 5 segundos de espera max
+        conn.setReadTimeout(5000);
 
-        // AJUSTE DE GRILLA: Define cuántas frutas hay por fila y columna en la imagen
-        // original
-        int NUM_COLUMNAS = 7; // <-- CUENTA LAS COLUMNAS DE TU FOTO Y PON EL NÚMERO AQUÍ
-        int NUM_FILAS = 6; // <-- CUENTA LAS FILAS DE TU FOTO Y PON EL NÚMERO AQUÍ
+        if (conn.getResponseCode() == 200) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            reader.close();
+            return sb.toString();
+        }
+        return null;
+    }
 
-        int anchoTotal = bitmapCompleto.getWidth();
-        int altoTotal = bitmapCompleto.getHeight();
-        int anchoSprite = anchoTotal / NUM_COLUMNAS;
-        int altoSprite = altoTotal / NUM_FILAS;
-
-        // AJUSTES FINOS: Si se sigue viendo mal, mueve esto pixel a pixel
-        int correccionX = 0;
-        int correccionY = 0;
-
+    private ArrayList<Fruta> parsearJsonFrutas(String jsonStr) {
         ArrayList<Fruta> lista = new ArrayList<>();
-
-        // Asignamos los primeros 6 iconos de la fila 0 (o variados)
-        // Fruta 1: Manzana
-        Fruta manzana = new Fruta(1, "Manzana", 0, 1.50, 0);
-        // NOTA: Si cambias el número de columnas, tendrás que ajustar 'col' y 'row'
-        // abajo
-        // para encontrar tu fruta.
-        // Ejemplo: Si Manzana está en la 3º columna, pon col=2.
-        lista.add(manzana);
-
-        // Fruta 2: Banana
-        Fruta banana = new Fruta(2, "Banana", 0, 0.50, 0);
-        banana.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite, 0, anchoSprite, altoSprite);
-        lista.add(banana);
-
-        // Fruta 3: Naranja
-        Fruta naranja = new Fruta(3, "Naranja", 0, 0.80, 0);
-        naranja.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite * 2, 0, anchoSprite, altoSprite);
-        lista.add(naranja);
-
-        // Fruta 4: Uva
-        Fruta uva = new Fruta(4, "Uva", 0, 2.00, 0);
-        uva.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite * 3, 0, anchoSprite, altoSprite);
-        lista.add(uva);
-
-        // Fruta 5: Pera
-        Fruta pera = new Fruta(5, "Pera", 0, 1.20, 0);
-        pera.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite * 4, 0, anchoSprite, altoSprite);
-        lista.add(pera);
-
-        // Fruta 6: Sandía
-        Fruta sandia = new Fruta(6, "Sandía", 0, 3.50, 0);
-        sandia.imagenBitmap = cortarBitmap(bitmapCompleto, anchoSprite * 5, 0, anchoSprite, altoSprite);
-        lista.add(sandia);
-
+        try {
+            JSONArray jsonArray = new JSONArray(jsonStr);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
+                int id = obj.getInt("id");
+                String nombre = obj.getString("nombre");
+                double precio = obj.getDouble("precio");
+                // imagenResId lo dejamos en 0, se gestiona localmente con los sprites
+                // id se usa para el mapeo del sprite
+                lista.add(new Fruta(id, nombre, 0, precio, 0));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return lista;
     }
 
