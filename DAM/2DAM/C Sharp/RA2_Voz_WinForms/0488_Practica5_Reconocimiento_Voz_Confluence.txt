@@ -1,0 +1,105 @@
+h1. 0488-Desenvolupament d’Interfícies Práctica 5: Reconocimiento de voz en Windows Forms
+
+*Módulo:* M07 – Desenvolupament d’interfícies
+
+h2. Objetivos
+
+* Aprender a integrar el reconocimiento de voz en una aplicación WinForms.
+* Manejar componentes básicos de una interfaz: botones, etiquetas, paneles y cuadros de texto.
+* Asociar comandos de voz a acciones (abrir programas, cambiar color, limpiar).
+* Familiarizarse con el uso de gramáticas y eventos en System.Speech.
+
+h2. Requisitos
+
+* Windows 10/11 con micrófono habilitado.
+* Visual Studio 2019/2022.
+* Proyecto Windows Forms App (.NET Framework 4.7.2 o 4.8).
+* Añadir la referencia *System.Speech* en Assemblies > Framework.
+
+h2. Enunciado
+
+Se pide desarrollar una aplicación llamada *RA2 Voz WinForms* que:
+
+# Muestre una interfaz con:
+** Dos botones: *Iniciar voz*, *Parar voz*.
+** Una etiqueta que muestre lo último reconocido.
+** Un panel que cambiará de color según el comando.
+** Un cuadro de texto multilinea (log).
+# Al pulsar *Iniciar voz*, el programa debe empezar a escuchar y reconocer comandos.
+# Los comandos básicos que debe reconocer son:
+** *hola* -> muestra un MessageBox.
+** *limpiar* -> borra el log.
+** *salir* -> cierra la aplicación.
+** *color rojo / verde / azul* -> cambia el color del panel.
+** *abrir bloc de notas* -> abre Notepad.
+** *abrir navegador* -> abre la web de Wikipedia.
+# El log debe mostrar la hora, el comando reconocido y la confianza.
+
+h2. Código base
+
+Se entrega un esqueleto con huecos a completar:
+
+{code:c#}
+// TODO: importar los espacios de nombres necesarios
+using System;
+using System.Windows.Forms;
+// ...
+
+namespace RA2_Voz_WinForms
+{
+    public partial class Form1 : Form
+    {
+        // TODO: definir el motor de reconocimiento y la cultura
+        // private SpeechRecognitionEngine _rec;
+        // private CultureInfo _culture;
+
+        public Form1()
+        {
+            InitializeComponent();
+            Shown += Form1_Shown;
+            FormClosing += Form1_FormClosing;
+            btnStart.Click += (_, __) => StartRecognition();
+            btnStop.Click += (_, __) => StopRecognition();
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            // TODO: inicializar el reconocedor
+            // 1. Comprobar reconocedores instalados
+            // 2. Crear gramática de comandos
+            // 3. Cargar la gramática en el motor
+            // 4. Configurar el micrófono como fuente
+        }
+
+        private void StartRecognition()
+        {
+            // TODO: iniciar reconocimiento asíncrono
+        }
+
+        private void StopRecognition()
+        {
+            // TODO: parar reconocimiento
+        }
+
+        private void Rec_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            // TODO: filtrar por confianza y ejecutar acciones
+        }
+
+        private void Log(string msg, bool isError = false)
+        {
+            txtLog.AppendText($"[{DateTime.Now:HH:mm:ss}] {msg}\n");
+        }
+    }
+}
+{code}
+
+h2. Entrega
+
+El alumno debe entregar:
+* El proyecto completo en Visual Studio.
+* Capturas de pantalla mostrando:
+** El formulario en ejecución.
+** Ejemplos de log con comandos reconocidos.
+** Panel con colores cambiados.
+* Explicación breve de cómo ha resuelto cada hueco de código.
