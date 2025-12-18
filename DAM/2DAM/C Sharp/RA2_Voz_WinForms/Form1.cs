@@ -74,7 +74,19 @@ namespace RA2_Voz_WinForms
                     "borrar",
                     "tabulador",
                     "activar dictado",
-                    "modo escritura"
+                    "modo escritura",
+                    "abrir explorador",
+                    "abrir google",
+                    "abrir youtube",
+                    "color naranja",
+                    "color violeta",
+                    "color rosa",
+                    "color gris",
+                    "copiar",
+                    "pegar",
+                    "cortar",
+                    "deshacer",
+                    "seleccionar todo"
                 });
 
                 var gb = new GrammarBuilder();
@@ -312,6 +324,57 @@ namespace RA2_Voz_WinForms
 
                 case "color blanco":
                     pnlColor.BackColor = Color.White;
+                    break;
+
+                case "abrir explorador":
+                    try { System.Diagnostics.Process.Start("explorer.exe"); }
+                    catch (Exception ex) { AppendLog($"Error abriendo explorador: {ex.Message}"); }
+                    break;
+
+                case "abrir google":
+                    try { System.Diagnostics.Process.Start("https://www.google.com"); }
+                    catch (Exception ex) { AppendLog($"Error abriendo Google: {ex.Message}"); }
+                    break;
+
+                case "abrir youtube":
+                    try { System.Diagnostics.Process.Start("https://www.youtube.com"); }
+                    catch (Exception ex) { AppendLog($"Error abriendo YouTube: {ex.Message}"); }
+                    break;
+
+                case "color naranja":
+                    pnlColor.BackColor = Color.Orange;
+                    break;
+
+                case "color violeta":
+                    pnlColor.BackColor = Color.Violet;
+                    break;
+
+                case "color rosa":
+                    pnlColor.BackColor = Color.Pink;
+                    break;
+
+                case "color gris":
+                    pnlColor.BackColor = Color.Gray;
+                    break;
+
+                case "copiar":
+                    SendKeys.SendWait("^c");
+                    break;
+
+                case "pegar":
+                    SendKeys.SendWait("^v");
+                    break;
+
+                case "cortar":
+                    SendKeys.SendWait("^x");
+                    break;
+
+                case "deshacer":
+                    SendKeys.SendWait("^z");
+                    break;
+
+                case "seleccionar todo":
+                    SendKeys.SendWait("^a");
                     break;
             }
         }
