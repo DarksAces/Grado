@@ -156,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Fruta> frutasRemotas = null;
             try {
                 // CAMBIAR IP SI ES NECESARIO: 10.0.2.2 es localhost para Emulador Android.
-                // Si usas dispositivo real, pon la IP de tu PC (ej. 192.168.1.35)
-                String jsonStr = downloadDataFromUrl("http://10.0.2.2/supermarket/get_frutas.php");
+                // Si usas dispositivo real, pon la IP de tu PC http://192.168.0.162/supermarket/get_frutas.php
+                String jsonStr = downloadDataFromUrl("");
                 if (jsonStr != null) {
                     frutasRemotas = parsearJsonFrutas(jsonStr);
                 }
