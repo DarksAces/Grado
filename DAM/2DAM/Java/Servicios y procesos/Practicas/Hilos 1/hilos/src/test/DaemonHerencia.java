@@ -2,12 +2,12 @@ package test;
 
 public class DaemonHerencia {
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("[MAIN] isDaemon = " + Thread.currentThread().isDaemon()); // false
+        System.out.println("[MAIN] isDaemon = " + Thread.currentThread().isDaemon() + " DGB"); // false
         Thread noDaemon = new Thread(() -> {
-            System.out.println("[NO-DAEMON] isDaemon = " + Thread.currentThread().isDaemon());
+            System.out.println("[NO-DAEMON] isDaemon = " + Thread.currentThread().isDaemon() + " DGB");
             // Hilo creado desde un hilo normal (no daemon)
             Thread hijo = new Thread(() -> {
-                System.out.println("[HIJO DE NO-DAEMON] isDaemon = " + Thread.currentThread().isDaemon());
+                System.out.println("[HIJO DE NO-DAEMON] isDaemon = " + Thread.currentThread().isDaemon() + " DGB");
             });
             hijo.start();
             try {
@@ -16,10 +16,10 @@ public class DaemonHerencia {
             }
         });
         Thread daemon = new Thread(() -> {
-            System.out.println("[DAEMON] isDaemon = " + Thread.currentThread().isDaemon());
+            System.out.println("[DAEMON] isDaemon = " + Thread.currentThread().isDaemon() + " DGB");
             // Hilo creado desde un hilo daemon
             Thread hijo = new Thread(() -> {
-                System.out.println("[HIJO DE DAEMON] isDaemon = " + Thread.currentThread().isDaemon());
+                System.out.println("[HIJO DE DAEMON] isDaemon = " + Thread.currentThread().isDaemon() + " DGB");
             });
             hijo.start();
             try {
@@ -32,6 +32,6 @@ public class DaemonHerencia {
         daemon.start();
         noDaemon.join();
         daemon.join();
-        System.out.println("[MAIN] fin");
+        System.out.println("[MAIN] fin DGB");
     }
 }
