@@ -1,0 +1,46 @@
+ómo probar tu API Flask
+Ya que estás en Windows (PowerShell), aquí tienes los comandos para probar tu API.
+
+Asegúrate de que el servidor esté corriendo (flask run).
+
+1. POST (Crear un libro)
+Crea un nuevo recurso en la base de datos.
+
+Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:5000/book" -ContentType "application/json" -Body '{"title": "Harry Potter", "author": "J.K. Rowling", "year": 1997}'
+2. GET (Ver todos los libros)
+Obtiene la lista de libros.
+
+Invoke-RestMethod -Method Get -Uri "http://127.0.0.1:5000/books"
+3. GET (Ver un libro específico)
+Obtiene un libro por su ID (ejemplo ID 1).
+
+Invoke-RestMethod -Method Get -Uri "http://127.0.0.1:5000/book/1"
+4. PUT (Actualizar un libro)
+Modifica datos de un libro existente (ejemplo ID 1).
+
+Invoke-RestMethod -Method Put -Uri "http://127.0.0.1:5000/book/1" -ContentType "application/json" -Body '{"year": 2000}'
+5. DELETE (Borrar un libro)
+Elimina un libro por su ID (ejemplo ID 1).
+
+Invoke-RestMethod -Method Delete -Uri "http://127.0.0.1:5000/book/1"
+Opción Alternativa: Visual Studio Code REST Client
+Si prefieres no usar la terminal, puedes crear un archivo llamado test.http en tu proyecto y pegar esto (necesitas la extensión "REST Client"):
+
+### Crear libro
+POST http://127.0.0.1:5000/book
+Content-Type: application/json
+{
+    "title": "El Señor de los Anillos",
+    "author": "J.R.R. Tolkien",
+    "year": 1954
+}
+### Listar libros
+GET http://127.0.0.1:5000/books
+### Actualizar libro
+PUT http://127.0.0.1:5000/book/1
+Content-Type: application/json
+{
+    "year": 2024
+}
+### Borrar libro
+DELETE http://127.0.0.1:5000/book/1

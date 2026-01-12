@@ -1,0 +1,27 @@
+### 1. Obtener todos los libros (GET)
+GET http://127.0.0.1:5000/books
+
+### 2. Crear un nuevo libro (POST)
+POST http://127.0.0.1:5000/book
+
+{
+    "title": "El Principito",
+    "author": "Antoine de Saint-Exupéry",
+    "year": 1943
+}
+
+### 3. Obtener un libro específico por ID (GET)
+# Asegúrate de usar un ID que exista (ej. 1 o 2)
+GET http://127.0.0.1:5000/book/1
+
+### 4. Actualizar un libro (PUT)
+# Cambia el ID (1) por el que quieras editar
+PUT http://127.0.0.1:5000/book/1
+
+{
+    "year": 2024
+}
+
+### 5. Borrar un libro (DELETE)
+# Cambia el ID (1) por el que quieras borrar
+DELETE http://127.0.0.1:5000/book/1
