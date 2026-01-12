@@ -107,7 +107,7 @@ public class DemoSleepYieldPriority {
         Thread p3 = new Thread(new PriorityTask("Prioridad_Alta"));
         // Prioridades (1 a 10)
         p1.setPriority(Thread.MIN_PRIORITY); // 1
-        p2.setPriority(Thread.NORM_PRIORITY); // 5
+        // p2.setPriority(Thread.NORM_PRIORITY); // 5
         p3.setPriority(Thread.MAX_PRIORITY); // 10
         System.out.println("Prioridad_Baja = " + p1.getPriority() + " DGB");
         System.out.println("Prioridad_Media = " + p2.getPriority() + " DGB");
