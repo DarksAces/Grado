@@ -15,7 +15,7 @@ public class DaemonBasico {
             }
         });
         // Lo marcamos como hilo demonio ANTES de arrancarlo
-        daemon.setDaemon(true);
+        // daemon.setDaemon(true);
         System.out.println("¿daemon.isDaemon()? " + daemon.isDaemon() + " DGB"); // true
         daemon.start();
         // El hilo main sigue con su vida
