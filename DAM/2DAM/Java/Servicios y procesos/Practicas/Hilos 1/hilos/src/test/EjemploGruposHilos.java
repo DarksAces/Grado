@@ -51,6 +51,10 @@ public class EjemploGruposHilos {
         hilo2.start();
         hilo3.start();
         // hiloLambda.start();
+
+        Thread hiloDefault = new Thread(new Tarea("Tarea Default"), "Hilo-Default");
+        hiloDefault.start();
+        System.out.println("Grupo de Hilo-Default: " + hiloDefault.getThreadGroup().getName() + " DGB");
         // Esperamos un poco para asegurarnos de que ya han arrancado
         Thread.sleep(200);
         // ====== 4. Información de grupos mientras los hilos están activos ======
@@ -59,8 +63,8 @@ public class EjemploGruposHilos {
         System.out.println("Subgrupos activos dentro de grupoPadre: " + grupoPadre.activeGroupCount() + " DGB");
         // Lista de hilos dentro de grupoPadre (sin recorrer subgrupos)
         Thread[] listaHilos = new Thread[grupoPadre.activeCount()];
-        int numHilos = grupoPadre.enumerate(listaHilos, false); // false = no incluir subgrupos
-        System.out.println("\nHilos encontrados en grupoPadre (sin subgrupos): DGB");
+        int numHilos = grupoPadre.enumerate(listaHilos, true); // true = incluir subgrupos
+        System.out.println("\nHilos encontrados en grupoPadre (CON subgrupos): DGB");
         for (int i = 0; i < numHilos; i++) {
             Thread t = listaHilos[i];
             System.out.println("- " + t.getName() + " (grupo: " + t.getThreadGroup().getName() + ") DGB");

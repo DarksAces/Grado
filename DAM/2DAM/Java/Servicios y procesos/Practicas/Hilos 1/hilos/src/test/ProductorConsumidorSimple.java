@@ -17,7 +17,7 @@ public class ProductorConsumidorSimple {
             System.out.println(Thread.currentThread().getName()
                     + " ha producido: " + nuevoDato + " DGB");
             // Despertamos a posibles consumidores
-            notifyAll();
+            notify();
         }
 
         public synchronized int tomar() throws InterruptedException {
@@ -32,7 +32,7 @@ public class ProductorConsumidorSimple {
             System.out.println(Thread.currentThread().getName()
                     + " ha consumido: " + resultado + " DGB");
             // Despertamos a posibles productores
-            notifyAll();
+            notify();
             return resultado;
         }
     }
@@ -49,7 +49,7 @@ public class ProductorConsumidorSimple {
         public void run() {
             try {
                 for (int i = 1; i <= 10; i++) {
-                    Thread.sleep(1000); // simulamos trabajo
+                    Thread.sleep(500); // simulamos trabajo
                     buffer.poner(i);
                 }
             } catch (InterruptedException e) {
@@ -71,7 +71,7 @@ public class ProductorConsumidorSimple {
             try {
                 for (int i = 1; i <= 10; i++) {
                     int valor = buffer.tomar();
-                    Thread.sleep(2000); // simulamos procesamiento
+                    Thread.sleep(500); // simulamos procesamiento
                 }
             } catch (InterruptedException e) {
                 System.out.println("Consumidor interrumpido DGB");
