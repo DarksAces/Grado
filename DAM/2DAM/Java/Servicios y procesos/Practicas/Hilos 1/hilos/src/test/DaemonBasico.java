@@ -7,7 +7,7 @@ public class DaemonBasico {
             while (true) {
                 System.out.println("[DAEMON] trabajando... " + i++ + " DGB");
                 try {
-                    Thread.sleep(500); // medio segundo
+                    Thread.sleep(1000); // medio segundo
                 } catch (InterruptedException e) {
                     System.out.println("[DAEMON] interrumpido DGB");
                     break;
@@ -15,7 +15,7 @@ public class DaemonBasico {
             }
         });
         // Lo marcamos como hilo demonio ANTES de arrancarlo
-        // daemon.setDaemon(true);
+        daemon.setDaemon(true);
         System.out.println("¿daemon.isDaemon()? " + daemon.isDaemon() + " DGB"); // true
         daemon.start();
         // El hilo main sigue con su vida

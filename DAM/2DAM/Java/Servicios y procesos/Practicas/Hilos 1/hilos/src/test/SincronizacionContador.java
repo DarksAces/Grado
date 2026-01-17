@@ -6,14 +6,14 @@ public class SincronizacionContador {
         private int valor = 0;
         // Versión SIN sincronizar (descomentar para probar)
 
-        // public void incrementar() {
-        // valor++; // NO es atómico
-        // }
+        public void incrementar() {
+         valor++; // NO es atómico
+        }
 
         // Versión CON sincronización
-        public synchronized void incrementar() {
-            valor++; // ahora este incremento es atómico respecto a otros hilos
-        }
+        //public synchronized void incrementar() {
+          //  valor++; // ahora este incremento es atómico respecto a otros hilos
+        //}
 
         public int getValor() {
             return valor;
@@ -41,7 +41,7 @@ public class SincronizacionContador {
     public static void main(String[] args) throws InterruptedException {
         Contador contador = new Contador();
         int repeticiones = 1_000_000;
-        int numHilos = 5;
+        int numHilos = 2;
         Thread[] hilos = new Thread[numHilos];
 
         for (int i = 0; i < numHilos; i++) {

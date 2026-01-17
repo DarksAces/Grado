@@ -71,7 +71,7 @@ public class EjemploGruposHilos {
         }
         // Lista de subgrupos dentro de grupoPadre
         ThreadGroup[] listaGrupos = new ThreadGroup[grupoPadre.activeGroupCount()];
-        int numGrupos = grupoPadre.enumerate(listaGrupos, false);
+        int numGrupos = grupoPadre.enumerate(listaGrupos, true);
         System.out.println("\nSubgrupos dentro de grupoPadre: DGB");
         for (int i = 0; i < numGrupos; i++) {
             ThreadGroup tg = listaGrupos[i];
