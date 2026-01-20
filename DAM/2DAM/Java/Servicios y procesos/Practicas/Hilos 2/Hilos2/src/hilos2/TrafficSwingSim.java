@@ -13,13 +13,9 @@ public class TrafficSwingSim {
     static final int ARRIVAL_RATE = 200; // ms
 
     // ===== Layout Fisico (Nodos) =====
-    // 1. Rotonda OESTE
     static final int ROT_W_LEN = 20;
-    // 2. Rotonda ESTE
     static final int ROT_E_LEN = 20;
-    // 3. Autopista Connector (West -> East)
     static final int LINK_LEN = 40;
-    // 4. Entradas/Salidas varias
     static final int ROAD_LEN = 30;
 
     // Model Classes
@@ -28,7 +24,6 @@ public class TrafficSwingSim {
         Color color;
         // Navigation goal
         int destination; // 0=Local Exit, 1=Cross to other Roundabout
-
         // Location
         int zone; // 0=RoadIn, 1=RotWest, 2=Link, 3=RotEast, 4=ExitRoad
         int pos;
@@ -36,7 +31,6 @@ public class TrafficSwingSim {
         Car(int id) {
             this.id = id;
             this.destination = (id % 2); // 50% stay local, 50% go far
-            // Color logic
             if (destination == 0)
                 this.color = new Color(50, 205, 50); // Green (Local)
             else
@@ -44,21 +38,20 @@ public class TrafficSwingSim {
         }
     }
 
-    // Estructuras (Simplificadas a listas/arrays)
-    // Usaremos Arrays para simular slots físicos
+    // Estructuras
     Car[] rotWest = new Car[ROT_W_LEN];
     Car[] rotEast = new Car[ROT_E_LEN];
-    Car[] link = new Car[LINK_LEN]; // W -> E
-    Car[] entryW = new Car[ROAD_LEN]; // Feeder for West
-    Car[] entryE = new Car[ROAD_LEN]; // Feeder for East (from top?)
-
-    // Indices clave
-    // RotWest: Entry at 0, Link Out at 10, Local Exit at 15
-    // RotEast: Entry from Link at 0, Local Exit at 10
+    Car[] link = new Car[LINK_LEN];
+    Car[] entryW = new Car[ROAD_LEN];
+    Car[] entryE = new Car[ROAD_LEN];
 
     final ConcurrentLinkedQueue<Car> spawnQueue = new ConcurrentLinkedQueue<>();
     final AtomicInteger idGen = new AtomicInteger(1);
     final Random rnd = new Random();
+
+    // Stats
+    final AtomicInteger exitedLocal = new AtomicInteger(0);
+    final AtomicInteger exitedTransit = new AtomicInteger(0);
 
     // GUI
     JFrame frame;
@@ -70,7 +63,7 @@ public class TrafficSwingSim {
     }
 
     void start() {
-        frame = new JFrame("Complex Network: Dual Roundabouts & Highway");
+        frame = new JFrame("Complex Network: Dual Roundabouts & Highway with Stats");
         panel = new SimPanel(this);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
@@ -93,7 +86,6 @@ public class TrafficSwingSim {
     void tick() {
         // Proc Entries
         if (!spawnQueue.isEmpty()) {
-            // Randomly pick West or East entry
             if (rnd.nextBoolean() && entryW[0] == null) {
                 Car c = spawnQueue.poll();
                 c.zone = 0;
@@ -102,13 +94,10 @@ public class TrafficSwingSim {
             } else if (!spawnQueue.isEmpty() && entryE[0] == null) {
                 Car c = spawnQueue.poll();
                 c.zone = 5;
-                c.pos = 0; // Zone 5 logic for EntryE? Let's just use EntryE array
+                c.pos = 0;
                 entryE[0] = c;
             }
         }
-
-        // Move flows (Reverse order of dependency usually better, or double buffer)
-        // Here we do straightforward logic order:
 
         moveRotWest();
         moveRotEast();
@@ -117,11 +106,10 @@ public class TrafficSwingSim {
     }
 
     void moveEntries() {
-        moveLinearRoad(entryW, 100); // 100 = Target Zone ID (Logic handled below)
+        moveLinearRoad(entryW, 100);
         moveLinearRoad(entryE, 101);
     }
 
-    // Special move logic for feeders
     void moveLinearRoad(Car[] road, int targetType) {
         for (int i = ROAD_LEN - 1; i >= 0; i--) {
             if (road[i] == null)
@@ -129,15 +117,14 @@ public class TrafficSwingSim {
             Car c = road[i];
 
             if (i == ROAD_LEN - 1) {
-                // Try enter target
-                if (targetType == 100) { // EntryW -> RotWest[0]
+                if (targetType == 100) {
                     if (rotWest[0] == null) {
                         road[i] = null;
                         c.zone = 1;
                         c.pos = 0;
                         rotWest[0] = c;
                     }
-                } else if (targetType == 101) { // EntryE -> RotEast[10] (Opposite side)
+                } else if (targetType == 101) {
                     if (rotEast[10] == null) {
                         road[i] = null;
                         c.zone = 3;
@@ -155,13 +142,12 @@ public class TrafficSwingSim {
         }
     }
 
-    void moveLink() { // Connects RotWest -> RotEast
+    void moveLink() {
         for (int i = LINK_LEN - 1; i >= 0; i--) {
             if (link[i] == null)
                 continue;
             Car c = link[i];
             if (i == LINK_LEN - 1) {
-                // Enters RotEast at 0
                 if (rotEast[0] == null) {
                     link[i] = null;
                     c.zone = 3;
@@ -186,18 +172,15 @@ public class TrafficSwingSim {
                 boolean moved = false;
 
                 // Exits?
-                // If Dest=1 (Transit) try exit at 10 (Link)
-                if (c.destination == 1 && i == 10) {
+                if (c.destination == 1 && i == 10) { // Transit -> Join Link
                     if (link[0] == null) {
                         c.zone = 2;
                         c.pos = 0;
                         link[0] = c;
                         moved = true;
                     }
-                }
-                // If Dest=0 (Local) try exit at 15
-                else if (c.destination == 0 && i == 15) {
-                    // Just vanish (Exit City)
+                } else if (c.destination == 0 && i == 15) { // Local -> Exit
+                    exitedLocal.incrementAndGet(); // Increment STATS
                     moved = true;
                 }
 
@@ -223,10 +206,8 @@ public class TrafficSwingSim {
                 Car c = rotEast[i];
                 boolean moved = false;
 
-                // Exits? All exit at 5 (South) or 15 (North)?
-                // Let's say all East traffic exits at 15
-                if (i == 15) {
-                    // Exit
+                if (i == 15) { // Exit
+                    exitedTransit.incrementAndGet(); // Increment STATS
                     moved = true;
                 }
 
@@ -251,7 +232,7 @@ public class TrafficSwingSim {
 
         SimPanel(TrafficSwingSim sim) {
             this.sim = sim;
-            setBackground(new Color(30, 100, 30)); // Green field
+            setBackground(new Color(30, 100, 30));
         }
 
         @Override
@@ -259,6 +240,15 @@ public class TrafficSwingSim {
             super.paintComponent(g0);
             Graphics2D g = (Graphics2D) g0;
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // HUD STATS
+            g.setColor(new Color(0, 0, 0, 150));
+            g.fillRect(10, 10, 320, 80);
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Monospaced", Font.BOLD, 14));
+            g.drawString("Cola Espera: " + sim.spawnQueue.size(), 20, 30);
+            g.drawString("Salidos (Verde/Local): " + sim.exitedLocal.get(), 20, 50);
+            g.drawString("Salidos (Naranja/Lejos): " + sim.exitedTransit.get(), 20, 70);
 
             int yC = 250;
             int xRotW = 300;
@@ -268,51 +258,37 @@ public class TrafficSwingSim {
             // Draw Roads
             g.setColor(Color.GRAY);
             // EntryW
-            g.fillRect(0, yC - 20 - 45, xRotW, 40); // Diagonal-ish visual fix? No, just straight box
-            // Actually let's draw EntryW coming from Left
             g.fillRect(50, yC - 20, 250, 40);
-
             // Link
             g.fillRect(xRotW, yC - 20, xRotE - xRotW, 40);
-
-            // EntryE (from Top into East Rot)
+            // EntryE
             g.fillRect(xRotE - 20, 50, 40, 200);
-
-            // Exits (Visual Stubs)
-            g.fillRect(xRotW, yC + 40, 40, 100); // South Exit W
-            g.fillRect(xRotE, yC + 40, 40, 100); // South Exit E
+            // Exits
+            g.fillRect(xRotW, yC + 40, 40, 100);
+            g.fillRect(xRotE, yC + 40, 40, 100);
 
             // Roundabouts
             drawRot(g, xRotW, yC, rRad);
             drawRot(g, xRotE, yC, rRad);
 
             // Cars
-            // Entry W (Horizontal)
-            for (int i = 0; i < ROAD_LEN; i++) {
+            for (int i = 0; i < ROAD_LEN; i++)
                 if (sim.entryW[i] != null)
                     drawCar(g, 50 + i * 8, yC - 10, sim.entryW[i]);
-            }
-            // Entry E (Vertical) from top (inverted index logic for visual flow down)
-            for (int i = 0; i < ROAD_LEN; i++) {
+            for (int i = 0; i < ROAD_LEN; i++)
                 if (sim.entryE[i] != null)
                     drawCar(g, xRotE - 10, 50 + i * 6, sim.entryE[i]);
-            }
-            // Link
-            for (int i = 0; i < LINK_LEN; i++) {
+            for (int i = 0; i < LINK_LEN; i++)
                 if (sim.link[i] != null)
                     drawCar(g, xRotW + 60 + i * 10, yC - 10, sim.link[i]);
-            }
 
-            // Rot West
             drawRotCars(g, xRotW, yC, rRad, sim.rotWest);
-            // Rot East
             drawRotCars(g, xRotE, yC, rRad, sim.rotEast);
 
-            // Labels
             g.setColor(Color.WHITE);
-            g.drawString("WEST ROUNDABOUT", xRotW - 50, yC - 80);
-            g.drawString("EAST ROUNDABOUT", xRotE - 50, yC - 80);
-            g.drawString("HIGHWAY", (xRotW + xRotE) / 2 - 20, yC - 30);
+            g.setFont(new Font("Arial", Font.BOLD, 12));
+            g.drawString("ROTONDA OESTE", xRotW - 50, yC - 80);
+            g.drawString("ROTONDA ESTE", xRotE - 50, yC - 80);
         }
 
         void drawRot(Graphics2D g, int x, int y, int r) {
@@ -326,7 +302,7 @@ public class TrafficSwingSim {
             int len = rot.length;
             for (int i = 0; i < len; i++) {
                 if (rot[i] != null) {
-                    double ang = -Math.PI + (2 * Math.PI * i) / len; // Start left
+                    double ang = -Math.PI + (2 * Math.PI * i) / len;
                     int rad = (int) (r * 0.75);
                     int x = cx + (int) (rad * Math.cos(ang));
                     int y = cy + (int) (rad * Math.sin(ang));
