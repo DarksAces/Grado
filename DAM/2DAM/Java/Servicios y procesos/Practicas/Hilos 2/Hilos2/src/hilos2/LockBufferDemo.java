@@ -56,7 +56,7 @@ public class LockBufferDemo {
             for (int i = 1; i <= 20; i++) {
                 try {
                     buffer.put(i);
-                    System.out.println(Thread.currentThread().getName() + " produce: " + i);
+                    System.out.println("[DGB] " + Thread.currentThread().getName() + " produce: " + i);
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -68,7 +68,7 @@ public class LockBufferDemo {
             for (int i = 1; i <= 20; i++) {
                 try {
                     int v = buffer.take();
-                    System.out.println(Thread.currentThread().getName() + " consume: " + v);
+                    System.out.println("[DGB] " + Thread.currentThread().getName() + " consume: " + v);
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
