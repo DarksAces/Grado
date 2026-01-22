@@ -1,0 +1,4 @@
+psycopg2-binary
+opencv-python
+python-dotenv
+pillow
