@@ -1,0 +1,107 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\TestRelojDigital.csproj": {}
+  },
+  "projects": {
+    "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\MisComponentesLib.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\MisComponentesLib.csproj",
+        "projectName": "MisComponentesLib",
+        "projectPath": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\MisComponentesLib.csproj",
+        "packagesPath": "C:\\Users\\danielgarbru\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\danielgarbru\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\TestRelojDigital.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\TestRelojDigital.csproj",
+        "projectName": "TestRelojDigital",
+        "projectPath": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\TestRelojDigital.csproj",
+        "packagesPath": "C:\\Users\\danielgarbru\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\danielgarbru\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {
+              "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\MisComponentesLib.csproj": {
+                "projectPath": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\MisComponentesLib.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

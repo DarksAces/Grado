@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\MisComponentesLib\MisComponentesLib.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+
+    <UseWindowsForms>true</UseWindowsForms>
+
+  </PropertyGroup>
+
+</Project>
