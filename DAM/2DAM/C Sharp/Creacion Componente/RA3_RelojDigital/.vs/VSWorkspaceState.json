@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\MisComponentesLib",
+    "\\MisComponentesLib\\bin",
     "\\TestRelojDigital"
   ],
-  "SelectedNode": "\\TestRelojDigital\\Program.cs",
+  "SelectedNode": "\\MisComponentesLib\\RelojDigital.cs",
   "PreviewInSolutionExplorer": false
 }
