@@ -43,9 +43,39 @@ public class PlayerActivity extends AppCompatActivity {
         initViews();
         getIntentData();
 
-        initializeMediaPlayer();
+        if (savedInstanceState != null) {
+            position = savedInstanceState.getInt("POSITION", 0);
+            int currentPos = savedInstanceState.getInt("CURRENT_POS", 0);
+            boolean wasPlaying = savedInstanceState.getBoolean("IS_PLAYING", false);
+
+            initializeMediaPlayer();
+            if (mediaPlayer != null) {
+                mediaPlayer.seekTo(currentPos);
+                if (wasPlaying) {
+                    playMusic();
+                } else {
+                    // Update UI but don't start
+                    txtCurrentTime.setText(formatDuration(currentPos));
+                    seekBar.setProgress(currentPos);
+                    btnPlayPause.setImageResource(android.R.drawable.ic_media_play);
+                }
+            }
+        } else {
+            initializeMediaPlayer();
+            playMusic(); // Auto-play if fresh start
+        }
 
         setupListeners();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("POSITION", position);
+        if (mediaPlayer != null) {
+            outState.putInt("CURRENT_POS", mediaPlayer.getCurrentPosition());
+            outState.putBoolean("IS_PLAYING", mediaPlayer.isPlaying());
+        }
     }
 
     private void initViews() {
@@ -92,7 +122,7 @@ public class PlayerActivity extends AppCompatActivity {
                 mediaPlayer.setOnCompletionListener(mp -> playNext());
                 txtTotalTime.setText(formatDuration(mediaPlayer.getDuration()));
                 seekBar.setMax(mediaPlayer.getDuration());
-                playMusic();
+                // We don't auto-play here anymore, explicit call needed
             } else {
                 Toast.makeText(this, "Error loading file", Toast.LENGTH_SHORT).show();
             }
@@ -116,13 +146,19 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void playNext() {
+        if (songList == null || songList.isEmpty())
+            return;
         position = (position + 1) % songList.size();
         initializeMediaPlayer();
+        playMusic();
     }
 
     private void playPrev() {
+        if (songList == null || songList.isEmpty())
+            return;
         position = (position - 1 < 0) ? (songList.size() - 1) : (position - 1);
         initializeMediaPlayer();
+        playMusic();
     }
 
     private void stopMusic() {
@@ -136,9 +172,13 @@ public class PlayerActivity extends AppCompatActivity {
                 mediaPlayer.seekTo(0);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
             }
             btnPlayPause.setImageResource(android.R.drawable.ic_media_play);
-            handler.removeCallbacks(updateSeekBarAction);
+            if (handler != null && updateSeekBarAction != null) {
+                handler.removeCallbacks(updateSeekBarAction);
+            }
             seekBar.setProgress(0);
             txtCurrentTime.setText(formatDuration(0));
         }
@@ -218,12 +258,19 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            updateSeekBar();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        // If we want to keep playing in background, we shouldn't pause here.
-        // But requested: "Volver a la primera actividad. La canción se ha de dejar de
-        // escuchar."
-        // This implies if we leave the activity (e.g. back button), it should stop.
+        if (handler != null && updateSeekBarAction != null) {
+            handler.removeCallbacks(updateSeekBarAction);
+        }
     }
 
     @Override
