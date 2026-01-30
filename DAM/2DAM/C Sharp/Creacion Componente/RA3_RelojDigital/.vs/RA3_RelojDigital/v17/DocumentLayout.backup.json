@@ -7,12 +7,24 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TestRelojDigital\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\Form1.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TestRelojDigital\\Form1.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\RelojDigital.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MisComponentesLib\\RelojDigital.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TestRelojDigital\\Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\Form1.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TestRelojDigital\\Form1.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\RelojDigital.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MisComponentesLib\\RelojDigital.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\TestRelojDigital.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TestRelojDigital\\TestRelojDigital.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +34,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RelojDigital.Designer.cs",
+              "DocumentMoniker": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\RelojDigital.Designer.cs",
+              "RelativeDocumentMoniker": "MisComponentesLib\\RelojDigital.Designer.cs",
+              "ToolTip": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\RelojDigital.Designer.cs",
+              "RelativeToolTip": "MisComponentesLib\\RelojDigital.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T16:21:03.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TestRelojDigital.csproj",
+              "DocumentMoniker": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\TestRelojDigital.csproj",
+              "RelativeDocumentMoniker": "TestRelojDigital\\TestRelojDigital.csproj",
+              "ToolTip": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\TestRelojDigital.csproj",
+              "RelativeToolTip": "TestRelojDigital\\TestRelojDigital.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-30T15:58:25.161Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RelojDigital.cs",
+              "DocumentMoniker": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\RelojDigital.cs",
+              "RelativeDocumentMoniker": "MisComponentesLib\\RelojDigital.cs",
+              "ToolTip": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\MisComponentesLib\\RelojDigital.cs",
+              "RelativeToolTip": "MisComponentesLib\\RelojDigital.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-23T16:53:15.919Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,14 +81,14 @@
               "RelativeDocumentMoniker": "TestRelojDigital\\Program.cs",
               "ToolTip": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\Program.cs",
               "RelativeToolTip": "TestRelojDigital\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-23T16:51:26.229Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "TestRelojDigital\\Form1.Designer.cs",
@@ -47,8 +96,7 @@
               "RelativeToolTip": "TestRelojDigital\\Form1.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-23T16:51:25.179Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-23T16:51:25.179Z"
             },
             {
               "$type": "Document",
@@ -58,10 +106,9 @@
               "RelativeDocumentMoniker": "TestRelojDigital\\Form1.cs",
               "ToolTip": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Creacion Componente\\RA3_RelojDigital\\TestRelojDigital\\Form1.cs",
               "RelativeToolTip": "TestRelojDigital\\Form1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-23T16:51:24.301Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-23T16:51:24.301Z"
             }
           ]
         }

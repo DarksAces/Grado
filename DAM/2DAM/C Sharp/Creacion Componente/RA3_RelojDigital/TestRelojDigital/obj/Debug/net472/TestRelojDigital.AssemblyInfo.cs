@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TestRelojDigital")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3f5d23588a25e6cead1acbfcd2bc8374c68647aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+243582ac88930a75d88b80bd0fc27613b1f1ad75")]
 [assembly: System.Reflection.AssemblyProductAttribute("TestRelojDigital")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TestRelojDigital")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -15,12 +15,15 @@ namespace TestRelojDigital
             ConfigurarReloj();
         }
 
+        private DateTimePicker dtpAlarma;
+        private Button btnFijarAlarma;
+
         private void ConfigurarReloj()
         {
-            // 1. Create instance
+         
             reloj = new RelojDigital();
             
-            // 2. Configure position and visual properties
+       
             reloj.Location = new Point(50, 50);
             reloj.Size = new Size(300, 120);
             reloj.BorderStyle = BorderStyle.FixedSingle; // Make it visible
@@ -30,17 +33,42 @@ namespace TestRelojDigital
             reloj.ColorTexto = Color.DarkBlue;
             reloj.MostrarSegundos = true;
             
-            // 3. Set alarm (e.g., 1 minute from now)
-            reloj.HoraAlarma = DateTime.Now.AddMinutes(1);
-
-            // 4. Subscribe to event
+         
             reloj.AlarmaActivada += Reloj_AlarmaActivada;
 
-            // 5. Add to controls
+       
             this.Controls.Add(reloj);
 
-            // 6. Start
+            
+            ConfigurarControlesAlarma();
+
+            
             reloj.Iniciar();
+        }
+
+        private void ConfigurarControlesAlarma()
+        {
+          
+            dtpAlarma = new DateTimePicker();
+            dtpAlarma.Format = DateTimePickerFormat.Time;
+            dtpAlarma.ShowUpDown = true;
+            dtpAlarma.Location = new Point(50, 200);
+            dtpAlarma.Size = new Size(100, 30);
+            this.Controls.Add(dtpAlarma);
+
+                        
+            btnFijarAlarma = new Button();
+            btnFijarAlarma.Text = "Fijar Alarma";
+            btnFijarAlarma.Location = new Point(160, 200);
+            btnFijarAlarma.Size = new Size(100, 30);
+            btnFijarAlarma.Click += BtnFijarAlarma_Click;
+            this.Controls.Add(btnFijarAlarma);
+        }
+
+        private void BtnFijarAlarma_Click(object sender, EventArgs e)
+        {
+            reloj.HoraAlarma = dtpAlarma.Value;
+            MessageBox.Show($"Alarma establecida a las: {reloj.HoraAlarma.Value.ToLongTimeString()}", "Alarma Configurada");
         }
 
         private void Reloj_AlarmaActivada(object sender, EventArgs e)

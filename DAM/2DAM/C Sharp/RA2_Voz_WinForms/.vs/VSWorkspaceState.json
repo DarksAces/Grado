@@ -2,7 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\bin",
-    "\\obj"
+    "\\bin\\Debug",
+    "\\bin\\Release",
+    "\\obj",
+    "\\obj\\Release"
   ],
+  "SelectedNode": "\\RA2_Voz_WinForms.csproj",
   "PreviewInSolutionExplorer": false
 }
