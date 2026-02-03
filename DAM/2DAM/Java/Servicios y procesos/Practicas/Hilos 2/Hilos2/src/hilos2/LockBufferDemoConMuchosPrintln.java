@@ -21,30 +21,30 @@ public class LockBufferDemoConMuchosPrintln {
         }
 
         public void put(T item) throws InterruptedException {
-            System.out.println("[DGB] [PRODUCER] wants to produce item=" + item);
+            System.out.println("[PRODUCER] wants to produce item=" + item);
 
             lock.lock();
             try {
-                System.out.println("[DGB] [LOCK] Producer enters lock for item=" + item
+                System.out.println("[LOCK] Producer enters lock for item=" + item
                         + " (buffer=" + queue.size() + ")");
 
                 while (queue.size() == capacity) {
-                    System.out.println("[DGB] [WAIT] Producer BLOCKED for item=" + item
+                    System.out.println("[WAIT] Producer BLOCKED for item=" + item
                             + " -> buffer FULL");
                     notFull.await();
-                    System.out.println("[DGB] [WAKE] Producer wakes up for item=" + item
+                    System.out.println("[WAKE] Producer wakes up for item=" + item
                             + " (buffer=" + queue.size() + ")");
                 }
 
                 queue.add(item);
-                System.out.println("[DGB] [PUT ] Producer produces item=" + item
+                System.out.println("[PUT ] Producer produces item=" + item
                         + " (buffer=" + queue.size() + ")");
 
-                System.out.println("[DGB] [SIGNAL] notEmpty after producing item=" + item);
+                System.out.println("[SIGNAL] notEmpty after producing item=" + item);
                 notEmpty.signal();
 
             } finally {
-                System.out.println("[DGB] [UNLOCK] Producer releases lock after item=" + item);
+                System.out.println("[UNLOCK] Producer releases lock after item=" + item);
                 lock.unlock();
             }
         }
@@ -52,27 +52,27 @@ public class LockBufferDemoConMuchosPrintln {
         public T take() throws InterruptedException {
             T item = null; // lo inicializamos fuera
 
-            System.out.println("[DGB] [CONSUMER] wants to consume next item");
+            System.out.println("[CONSUMER] wants to consume next item");
 
             lock.lock();
             try {
-                System.out.println("[DGB] [LOCK] Consumer enters lock (buffer=" + queue.size() + ")");
+                System.out.println("[LOCK] Consumer enters lock (buffer=" + queue.size() + ")");
 
                 while (queue.isEmpty()) {
-                    System.out.println("[DGB] [WAIT] Consumer BLOCKED -> buffer EMPTY");
+                    System.out.println("[WAIT] Consumer BLOCKED -> buffer EMPTY");
                     notEmpty.await();
-                    System.out.println("[DGB] [WAKE] Consumer wakes up (buffer=" + queue.size() + ")");
+                    System.out.println("[WAKE] Consumer wakes up (buffer=" + queue.size() + ")");
                 }
 
                 item = queue.remove();
-                System.out.println("[DGB] [TAKE] Consumer consumes item=" + item
+                System.out.println("[TAKE] Consumer consumes item=" + item
                         + " (buffer=" + queue.size() + ")");
 
-                System.out.println("[DGB] [SIGNAL] notFull after consuming item=" + item);
+                System.out.println("[SIGNAL] notFull after consuming item=" + item);
                 notFull.signal();
 
             } finally {
-                System.out.println("[DGB] [UNLOCK] Consumer releases lock after item=" + item);
+                System.out.println("[UNLOCK] Consumer releases lock after item=" + item);
                 lock.unlock();
             }
 
