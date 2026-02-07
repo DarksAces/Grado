@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,19 +86,88 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadSongs() {
         songList.clear();
-        File downloadsFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        java.util.HashSet<String> addedPaths = new java.util.HashSet<>();
 
+        // 1. Cargar desde MediaStore (Sistema)
+        try (android.database.Cursor cursor = getContentResolver().query(
+                android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                null,
+                android.provider.MediaStore.Audio.Media.IS_MUSIC + " != 0",
+                null,
+                android.provider.MediaStore.Audio.Media.TITLE + " ASC")) {
+
+            if (cursor != null) {
+                int idColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media._ID);
+                int titleColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE);
+                int artistColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ARTIST);
+                int albumColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM);
+                int durationColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.DURATION);
+                int albumIdColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM_ID);
+                
+                while (cursor.moveToNext()) {
+                    long id = cursor.getLong(idColumn);
+                    String title = cursor.getString(titleColumn);
+                    String artist = cursor.getString(artistColumn);
+                    String album = cursor.getString(albumColumn);
+                    long duration = cursor.getLong(durationColumn);
+                    long albumId = cursor.getLong(albumIdColumn);
+
+                    android.net.Uri contentUri = android.content.ContentUris.withAppendedId(
+                            android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
+
+                    if (artist == null || artist.equals("<unknown>")) artist = "Unknown Artist";
+                    if (album == null || album.equals("<unknown>")) album = "Unknown Album";
+
+                    String uriString = contentUri.toString();
+                    songList.add(new Song(title, artist, album, uriString, duration, albumId));
+                    addedPaths.add(uriString);
+                }
+            }
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error querying MediaStore", e);
+        }
+
+        // 2. Escanear carpeta de Descargas manualmente (SIEMPRE, para asegurar)
+        File downloadsFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         if (downloadsFolder != null && downloadsFolder.exists() && downloadsFolder.isDirectory()) {
             File[] files = downloadsFolder.listFiles();
             if (files != null) {
                 for (File file : files) {
                     if (file.isFile() && file.getName().toLowerCase().endsWith(".mp3")) {
-                        Song song = extractSongData(file);
-                        songList.add(song);
+                        String distinctPath = Uri.fromFile(file).toString();
+                        
+                        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                        String title = file.getName();
+                        if (title.lastIndexOf(".") > 0) title = title.substring(0, title.lastIndexOf("."));
+                        String artist = "Unknown Artist";
+                        String album = "Unknown Album";
+                        long duration = 0;
+
+                        try {
+                            retriever.setDataSource(this, Uri.fromFile(file));
+                            String t = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                            String a = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            String al = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+                            String d = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+
+                            if (t != null && !t.isEmpty()) title = t;
+                            if (a != null && !a.isEmpty()) artist = a;
+                            if (al != null && !al.isEmpty()) album = al;
+                            if (d != null && !d.isEmpty()) duration = Long.parseLong(d);
+                        } catch (Exception e) {
+                            Log.e("MainActivity", "Error manual metadata", e);
+                        } finally {
+                            try { retriever.release(); } catch (IOException e) { e.printStackTrace(); }
+                        }
+                        
+                        // Añadimos a la lista con albumId -1 (no disponible desde archivo directo fácilmente)
+                        songList.add(new Song(title, artist, album, distinctPath, duration, -1));
                     }
                 }
             }
         }
+
+        Toast.makeText(this, "Encontradas: " + songList.size() + " canciones", Toast.LENGTH_SHORT).show();
 
         if (songList.isEmpty()) {
             txtEmptyState.setVisibility(View.VISIBLE);
@@ -113,33 +184,4 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
         }
     }
-
-    private Song extractSongData(File file) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        String title = file.getName();
-        String artist = "Unknown Artist";
-        String album = "Unknown Album";
-        long duration = 0;
-
-        try {
-            retriever.setDataSource(file.getAbsolutePath());
-            String extractedTitle = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-            String extractedArtist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-            String extractedAlbum = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-            String extractedDuration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-
-            if (extractedTitle != null && !extractedTitle.isEmpty())
-                title = extractedTitle;
-            if (extractedArtist != null && !extractedArtist.isEmpty())
-                artist = extractedArtist;
-            if (extractedAlbum != null && !extractedAlbum.isEmpty())
-                album = extractedAlbum;
-            if (extractedDuration != null && !extractedDuration.isEmpty())
-                duration = Long.parseLong(extractedDuration);
-        } catch (Exception e) {
-            Log.e("MainActivity", "Error extracting metadata", e);
-        }
-
-        return new Song(title, artist, album, file.getAbsolutePath(), duration);
-    }
-}
+} 

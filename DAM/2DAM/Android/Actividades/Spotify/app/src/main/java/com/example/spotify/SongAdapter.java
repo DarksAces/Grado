@@ -56,11 +56,35 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         // Ideally we should have an album art URI, but we can pass the file path or a
         // default image.
 
-        Glide.with(context)
-                .load(song.getPath()) // Glide can often extract album art from audio files
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
-                .into(holder.imgAlbumArt);
+        if (song.getAlbumId() != -1) {
+            // Carga normal para canciones del sistema
+            Uri albumArtUri = android.content.ContentUris.withAppendedId(
+                    Uri.parse("content://media/external/audio/albumart"), song.getAlbumId());
+            Glide.with(context)
+                    .asBitmap()
+                    .load(albumArtUri)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(holder.imgAlbumArt);
+        } else {
+            // Carga MANUAL para archivos sueltos (Descargas) usando MediaMetadataRetriever
+            holder.imgAlbumArt.setImageResource(R.drawable.ic_launcher_background);
+            new Thread(() -> {
+                android.media.MediaMetadataRetriever retriever = new android.media.MediaMetadataRetriever();
+                try {
+                    retriever.setDataSource(context, Uri.parse(song.getPath()));
+                    byte[] art = retriever.getEmbeddedPicture();
+                    if (art != null) {
+                        android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(art, 0, art.length);
+                        holder.itemView.post(() -> holder.imgAlbumArt.setImageBitmap(bitmap));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try { retriever.release(); } catch (Exception e) { }
+                }
+            }).start();
+        }
 
         holder.itemView.setOnClickListener(v -> listener.onItemClick(position));
     }

@@ -26,7 +26,7 @@ public class PlayerActivity extends AppCompatActivity {
     private ImageView imgAlbumArt;
     private TextView txtTitle, txtArtist, txtCurrentTime, txtTotalTime;
     private SeekBar seekBar;
-    private ImageButton btnPlayPause, btnPrev, btnNext, btnRewind, btnForward;
+    private ImageButton btnPlayPause, btnPrev, btnNext, btnRewind, btnForward, btnBack;
     private Button btnStop;
 
     private MediaPlayer mediaPlayer;
@@ -91,6 +91,7 @@ public class PlayerActivity extends AppCompatActivity {
         btnRewind = findViewById(R.id.btnRewind);
         btnForward = findViewById(R.id.btnForward);
         btnStop = findViewById(R.id.btnStop);
+        btnBack = findViewById(R.id.btnBack);
     }
 
     private void getIntentData() {
@@ -104,27 +105,79 @@ public class PlayerActivity extends AppCompatActivity {
             txtTitle.setText(currentSong.getTitle());
             txtArtist.setText(currentSong.getArtist());
 
-            Glide.with(this)
-                    .load(currentSong.getPath())
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_background)
-                    .into(imgAlbumArt);
+                if (currentSong.getAlbumId() != -1) {
+                    Uri artworkUri = android.content.ContentUris.withAppendedId(
+                            Uri.parse("content://media/external/audio/albumart"), currentSong.getAlbumId());
+                    Glide.with(this)
+                            .asBitmap()
+                            .load(artworkUri)
+                            .placeholder(R.drawable.ic_launcher_background)
+                            .error(R.drawable.ic_launcher_background)
+                            .into(imgAlbumArt);
+                } else {
+                    imgAlbumArt.setImageResource(R.drawable.ic_launcher_background);
+                    new Thread(() -> {
+                        android.media.MediaMetadataRetriever retriever = new android.media.MediaMetadataRetriever();
+                        try {
+                            retriever.setDataSource(this, Uri.parse(currentSong.getPath()));
+                            byte[] art = retriever.getEmbeddedPicture();
+                            if (art != null) {
+                                android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(art, 0, art.length);
+                                runOnUiThread(() -> imgAlbumArt.setImageBitmap(bitmap));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try { retriever.release(); } catch (Exception e) { }
+                        }
+                    }).start();
+                }
 
-            Uri uri = Uri.parse(currentSong.getPath());
-
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
+            String path = currentSong.getPath();
+            Uri uri;
+            if (path.startsWith("content://")) {
+                uri = Uri.parse(path);
+            } else {
+                // Si es una ruta de archivo pura (/storage...), aseguramos que tenga file://
+                if (path.startsWith("/") && !path.startsWith("file://")) {
+                    path = "file://" + path;
+                }
+                uri = Uri.parse(path);
             }
 
-            mediaPlayer = MediaPlayer.create(this, uri);
             if (mediaPlayer != null) {
-                mediaPlayer.setOnCompletionListener(mp -> playNext());
-                txtTotalTime.setText(formatDuration(mediaPlayer.getDuration()));
-                seekBar.setMax(mediaPlayer.getDuration());
-                // We don't auto-play here anymore, explicit call needed
-            } else {
-                Toast.makeText(this, "Error loading file", Toast.LENGTH_SHORT).show();
+                mediaPlayer.reset(); // Usar reset en lugar de stop/release para reutilizar si es posible, o release para limpiar
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+
+            try {
+                mediaPlayer = MediaPlayer.create(this, uri);
+                
+                if (mediaPlayer != null) {
+                    mediaPlayer.setOnCompletionListener(mp -> playNext());
+                    txtTotalTime.setText(formatDuration(mediaPlayer.getDuration()));
+                    seekBar.setMax(mediaPlayer.getDuration());
+                    playMusic();
+                } else {
+                    // Si create devuelve null, a veces es porque el archivo no es leíble o codec no soportado
+                    Toast.makeText(this, "Error: Codec no soportado o archivo dañado.", Toast.LENGTH_LONG).show();
+                    // Intentar método alternativo setDataSource
+                    try {
+                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer.setDataSource(this, uri);
+                        mediaPlayer.prepare();
+                        mediaPlayer.setOnCompletionListener(mp -> playNext());
+                        txtTotalTime.setText(formatDuration(mediaPlayer.getDuration()));
+                        seekBar.setMax(mediaPlayer.getDuration());
+                        playMusic();
+                    } catch (IOException io) {
+                        Toast.makeText(this, "Error crítico al abrir archivo.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Excepción al reproducir: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -255,6 +308,8 @@ public class PlayerActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+        btnBack.setOnClickListener(v -> finish());
     }
 
     @Override
