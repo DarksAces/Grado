@@ -27,21 +27,21 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int PERMISSION_REQUEST_CODE = 100;
-    private RecyclerView recyclerView;
-    private SongAdapter adapter;
-    private List<Song> songList;
-    private TextView txtEmptyState;
+    private static final int PERMISSION_REQUEST_CODE_DGB = 100;
+    private RecyclerView recyclerView_DGB;
+    private SongAdapter adapter_DGB;
+    private List<Song> songList_DGB;
+    private TextView txtEmptyState_DGB;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState_DGB) {
+        super.onCreate(savedInstanceState_DGB);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        txtEmptyState = findViewById(R.id.txtEmptyState);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        songList = new ArrayList<>();
+        recyclerView_DGB = findViewById(R.id.recyclerView);
+        txtEmptyState_DGB = findViewById(R.id.txtEmptyState);
+        recyclerView_DGB.setLayoutManager(new LinearLayoutManager(this));
+        songList_DGB = new ArrayList<>();
 
         if (checkPermission()) {
             loadSongs();
@@ -63,19 +63,19 @@ public class MainActivity extends AppCompatActivity {
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_MEDIA_AUDIO },
-                    PERMISSION_REQUEST_CODE);
+                    PERMISSION_REQUEST_CODE_DGB);
         } else {
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
-                    PERMISSION_REQUEST_CODE);
+                    PERMISSION_REQUEST_CODE_DGB);
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    public void onRequestPermissionsResult(int requestCode_DGB, @NonNull String[] permissions_DGB,
+            @NonNull int[] grantResults_DGB) {
+        super.onRequestPermissionsResult(requestCode_DGB, permissions_DGB, grantResults_DGB);
+        if (requestCode_DGB == PERMISSION_REQUEST_CODE_DGB) {
+            if (grantResults_DGB.length > 0 && grantResults_DGB[0] == PackageManager.PERMISSION_GRANTED) {
                 loadSongs();
             } else {
                 Toast.makeText(this, "Permission Denied. Please allow permission to load songs.", Toast.LENGTH_SHORT)
@@ -85,103 +85,104 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadSongs() {
-        songList.clear();
-        java.util.HashSet<String> addedPaths = new java.util.HashSet<>();
+        songList_DGB.clear();
+        java.util.HashSet<String> addedPaths_DGB = new java.util.HashSet<>();
 
         // 1. Cargar desde MediaStore (Sistema)
-        try (android.database.Cursor cursor = getContentResolver().query(
+        try (android.database.Cursor cursor_DGB = getContentResolver().query(
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 null,
                 android.provider.MediaStore.Audio.Media.IS_MUSIC + " != 0",
                 null,
                 android.provider.MediaStore.Audio.Media.TITLE + " ASC")) {
 
-            if (cursor != null) {
-                int idColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media._ID);
-                int titleColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE);
-                int artistColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ARTIST);
-                int albumColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM);
-                int durationColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.DURATION);
-                int albumIdColumn = cursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM_ID);
+            if (cursor_DGB != null) {
+                int idColumn_DGB = cursor_DGB.getColumnIndex(android.provider.MediaStore.Audio.Media._ID);
+                int titleColumn_DGB = cursor_DGB.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE);
+                int artistColumn_DGB = cursor_DGB.getColumnIndex(android.provider.MediaStore.Audio.Media.ARTIST);
+                int albumColumn_DGB = cursor_DGB.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM);
+                int durationColumn_DGB = cursor_DGB.getColumnIndex(android.provider.MediaStore.Audio.Media.DURATION);
+                int albumIdColumn_DGB = cursor_DGB.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM_ID);
                 
-                while (cursor.moveToNext()) {
-                    long id = cursor.getLong(idColumn);
-                    String title = cursor.getString(titleColumn);
-                    String artist = cursor.getString(artistColumn);
-                    String album = cursor.getString(albumColumn);
-                    long duration = cursor.getLong(durationColumn);
-                    long albumId = cursor.getLong(albumIdColumn);
+                while (cursor_DGB.moveToNext()) {
+                    long id_DGB = cursor_DGB.getLong(idColumn_DGB);
+                    String title_DGB = cursor_DGB.getString(titleColumn_DGB);
+                    String artist_DGB = cursor_DGB.getString(artistColumn_DGB);
+                    String album_DGB = cursor_DGB.getString(albumColumn_DGB);
+                    long duration_DGB = cursor_DGB.getLong(durationColumn_DGB);
+                    long albumId_DGB = cursor_DGB.getLong(albumIdColumn_DGB);
 
-                    android.net.Uri contentUri = android.content.ContentUris.withAppendedId(
-                            android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
+                    android.net.Uri contentUri_DGB = android.content.ContentUris.withAppendedId(
+                            android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id_DGB);
 
-                    if (artist == null || artist.equals("<unknown>")) artist = "Unknown Artist";
-                    if (album == null || album.equals("<unknown>")) album = "Unknown Album";
+                    if (artist_DGB == null || artist_DGB.equals("<unknown>")) artist_DGB = "Unknown Artist";
+                    if (album_DGB == null || album_DGB.equals("<unknown>")) album_DGB = "Unknown Album";
 
-                    String uriString = contentUri.toString();
-                    songList.add(new Song(title, artist, album, uriString, duration, albumId));
-                    addedPaths.add(uriString);
+                    String uriString_DGB = contentUri_DGB.toString();
+                    songList_DGB.add(new Song(title_DGB, artist_DGB, album_DGB, uriString_DGB, duration_DGB, albumId_DGB));
+                    addedPaths_DGB.add(uriString_DGB);
                 }
             }
-        } catch (Exception e) {
-            Log.e("MainActivity", "Error querying MediaStore", e);
+        } catch (Exception e_DGB) {
+            Log.e("MainActivity", "Error querying MediaStore", e_DGB);
         }
 
         // 2. Escanear carpeta de Descargas manualmente (SIEMPRE, para asegurar)
-        File downloadsFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        if (downloadsFolder != null && downloadsFolder.exists() && downloadsFolder.isDirectory()) {
-            File[] files = downloadsFolder.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile() && file.getName().toLowerCase().endsWith(".mp3")) {
-                        String distinctPath = Uri.fromFile(file).toString();
+        File downloadsFolder_DGB = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        if (downloadsFolder_DGB != null && downloadsFolder_DGB.exists() && downloadsFolder_DGB.isDirectory()) {
+            File[] files_DGB = downloadsFolder_DGB.listFiles();
+            if (files_DGB != null) {
+                for (File file_DGB : files_DGB) {
+                    if (file_DGB.isFile() && file_DGB.getName().toLowerCase().endsWith(".mp3")) {
+                        String distinctPath_DGB = Uri.fromFile(file_DGB).toString();
                         
-                        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                        String title = file.getName();
-                        if (title.lastIndexOf(".") > 0) title = title.substring(0, title.lastIndexOf("."));
-                        String artist = "Unknown Artist";
-                        String album = "Unknown Album";
-                        long duration = 0;
+                        MediaMetadataRetriever retriever_DGB = new MediaMetadataRetriever();
+                        String title_DGB = file_DGB.getName();
+                        if (title_DGB.lastIndexOf(".") > 0) title_DGB = title_DGB.substring(0, title_DGB.lastIndexOf("."));
+                        String artist_DGB = "Unknown Artist";
+                        String album_DGB = "Unknown Album";
+                        long duration_DGB = 0;
 
                         try {
-                            retriever.setDataSource(this, Uri.fromFile(file));
-                            String t = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-                            String a = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-                            String al = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-                            String d = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                            retriever_DGB.setDataSource(this, Uri.fromFile(file_DGB));
+                            String t_DGB = retriever_DGB.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                            String a_DGB = retriever_DGB.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            String al_DGB = retriever_DGB.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+                            String d_DGB = retriever_DGB.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
 
-                            if (t != null && !t.isEmpty()) title = t;
-                            if (a != null && !a.isEmpty()) artist = a;
-                            if (al != null && !al.isEmpty()) album = al;
-                            if (d != null && !d.isEmpty()) duration = Long.parseLong(d);
-                        } catch (Exception e) {
-                            Log.e("MainActivity", "Error manual metadata", e);
+                            if (t_DGB != null && !t_DGB.isEmpty()) title_DGB = t_DGB;
+                            if (a_DGB != null && !a_DGB.isEmpty()) artist_DGB = a_DGB;
+                            if (al_DGB != null && !al_DGB.isEmpty()) album_DGB = al_DGB;
+                            if (d_DGB != null && !d_DGB.isEmpty()) duration_DGB = Long.parseLong(d_DGB);
+                        } catch (Exception e_DGB) {
+                            Log.e("MainActivity", "Error manual metadata", e_DGB);
                         } finally {
-                            try { retriever.release(); } catch (IOException e) { e.printStackTrace(); }
+                            try { retriever_DGB.release(); } catch (IOException e_DGB) { e_DGB.printStackTrace(); }
                         }
                         
                         // Añadimos a la lista con albumId -1 (no disponible desde archivo directo fácilmente)
-                        songList.add(new Song(title, artist, album, distinctPath, duration, -1));
+                        songList_DGB.add(new Song(title_DGB, artist_DGB, album_DGB, distinctPath_DGB, duration_DGB, -1));
                     }
                 }
             }
         }
 
-        Toast.makeText(this, "Encontradas: " + songList.size() + " canciones", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Encontradas: " + songList_DGB.size() + " canciones", Toast.LENGTH_SHORT).show();
 
-        if (songList.isEmpty()) {
-            txtEmptyState.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+        if (songList_DGB.isEmpty()) {
+            txtEmptyState_DGB.setVisibility(View.VISIBLE);
+            recyclerView_DGB.setVisibility(View.GONE);
         } else {
-            txtEmptyState.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            adapter = new SongAdapter(this, songList, position -> {
-                Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
-                intent.putParcelableArrayListExtra("SONG_LIST", (ArrayList<Song>) songList);
-                intent.putExtra("POSITION", position);
-                startActivity(intent);
+            txtEmptyState_DGB.setVisibility(View.GONE);
+            recyclerView_DGB.setVisibility(View.VISIBLE);
+            adapter_DGB = new SongAdapter(this, songList_DGB, position_DGB -> {
+                Intent intent_DGB = new Intent(MainActivity.this, PlayerActivity.class);
+                intent_DGB.putParcelableArrayListExtra("SONG_LIST", (ArrayList<Song>) songList_DGB);
+                intent_DGB.putExtra("POSITION", position_DGB);
+                startActivity(intent_DGB);
             });
-            recyclerView.setAdapter(adapter);
+            recyclerView_DGB.setAdapter(adapter_DGB);
         }
     }
-} 
+}
+ 

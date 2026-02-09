@@ -4,40 +4,40 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Song implements Parcelable {
-    private String title;
-    private String artist;
-    private String album;
-    private String path;
-    private long duration;
-    private long albumId;
+    private String title_DGB;
+    private String artist_DGB;
+    private String album_DGB;
+    private String path_DGB;
+    private long duration_DGB;
+    private long albumId_DGB;
 
-    public Song(String title, String artist, String album, String path, long duration, long albumId) {
-        this.title = title;
-        this.artist = artist;
-        this.album = album;
-        this.path = path;
-        this.duration = duration;
-        this.albumId = albumId;
+    public Song(String title_DGB, String artist_DGB, String album_DGB, String path_DGB, long duration_DGB, long albumId_DGB) {
+        this.title_DGB = title_DGB;
+        this.artist_DGB = artist_DGB;
+        this.album_DGB = album_DGB;
+        this.path_DGB = path_DGB;
+        this.duration_DGB = duration_DGB;
+        this.albumId_DGB = albumId_DGB;
     }
 
-    protected Song(Parcel in) {
-        title = in.readString();
-        artist = in.readString();
-        album = in.readString();
-        path = in.readString();
-        duration = in.readLong();
-        albumId = in.readLong();
+    protected Song(Parcel in_DGB) {
+        title_DGB = in_DGB.readString();
+        artist_DGB = in_DGB.readString();
+        album_DGB = in_DGB.readString();
+        path_DGB = in_DGB.readString();
+        duration_DGB = in_DGB.readLong();
+        albumId_DGB = in_DGB.readLong();
     }
 
     public static final Creator<Song> CREATOR = new Creator<Song>() {
         @Override
-        public Song createFromParcel(Parcel in) {
-            return new Song(in);
+        public Song createFromParcel(Parcel in_DGB) {
+            return new Song(in_DGB);
         }
 
         @Override
-        public Song[] newArray(int size) {
-            return new Song[size];
+        public Song[] newArray(int size_DGB) {
+            return new Song[size_DGB];
         }
     };
 
@@ -47,38 +47,38 @@ public class Song implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(artist);
-        dest.writeString(album);
-        dest.writeString(path);
-        dest.writeLong(duration);
-        dest.writeLong(albumId);
+    public void writeToParcel(Parcel dest_DGB, int flags_DGB) {
+        dest_DGB.writeString(title_DGB);
+        dest_DGB.writeString(artist_DGB);
+        dest_DGB.writeString(album_DGB);
+        dest_DGB.writeString(path_DGB);
+        dest_DGB.writeLong(duration_DGB);
+        dest_DGB.writeLong(albumId_DGB);
     }
 
     // Getters
 
     public long getAlbumId() {
-        return albumId;
+        return albumId_DGB;
     }
 
     public String getTitle() {
-        return title;
+        return title_DGB;
     }
 
     public String getArtist() {
-        return artist;
+        return artist_DGB;
     }
 
     public String getAlbum() {
-        return album;
+        return album_DGB;
     }
 
     public String getPath() {
-        return path;
+        return path_DGB;
     }
 
     public long getDuration() {
-        return duration;
+        return duration_DGB;
     }
 }
