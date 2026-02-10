@@ -36,3 +36,15 @@ class DBConnection:
         if cls._connection and cls._connection.closed == 0:
             cls._connection.close()
             print("Database connection closed.")
+
+if __name__ == "__main__":
+    try:
+        conn = DBConnection.get_connection()
+        # Optionally execute a query to verify
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT 1;")
+            print("Query executed successfully: SELECT 1")
+    except Exception as e:
+        print(f"Failed to connect: {e}")
+    finally:
+        DBConnection.close_connection()

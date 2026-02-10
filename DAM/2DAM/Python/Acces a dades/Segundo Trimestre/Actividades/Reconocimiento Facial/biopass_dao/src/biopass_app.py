@@ -50,6 +50,8 @@ class BioPassApp:
     def update_camera(self):
         ret, frame = self.cap.read()
         if ret:
+            # Flip frame horizontally (mirror effect)
+            frame = cv2.flip(frame, 1)
             self.current_frame = frame
             # Convert to RGB for Tkinter
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
