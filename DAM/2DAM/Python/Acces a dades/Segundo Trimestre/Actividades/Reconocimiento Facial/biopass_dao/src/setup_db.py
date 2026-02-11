@@ -6,15 +6,15 @@ import os
 def setup_database():
     print("--- BioPass DAO Setup ---")
     
-    # 1. Connect to default 'postgres' database to check/create target DB
-    print(f"1. Connecting to PostgreSQL server (user={Config.DB_USER})...")
+    # 1. Conectar a la base de datos por defecto 'postgres' para verificar/crear la BD objetivo
+    print(f"1. Conectando al servidor PostgreSQL (usuario={Config.DB_USER})...")
     try:
         con = psycopg2.connect(
             host=Config.DB_HOST,
             user=Config.DB_USER,
             password=Config.DB_PASSWORD,
             port=Config.DB_PORT,
-            database='postgres' # Connect to default DB first
+            database='postgres' # Conectar a la BD por defecto primero
         )
         con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cursor = con.cursor()
@@ -23,9 +23,9 @@ def setup_database():
         print(f"Error details: {e}")
         return
 
-    # 2. Check if database exists
+    # 2. Verificar si la base de datos existe
     target_db = Config.DB_NAME
-    print(f"2. Checking if database '{target_db}' exists...")
+    print(f"2. Verificando si la base de datos '{target_db}' existe...")
     cursor.execute(f"SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{target_db}'")
     exists = cursor.fetchone()
     
@@ -43,10 +43,10 @@ def setup_database():
     cursor.close()
     con.close()
 
-    # 3. Create Tables in the target database
-    print(f"3. Creating tables in '{target_db}'...")
+    # 3. Crear Tablas en la base de datos objetivo
+    print(f"3. Creando tablas en '{target_db}'...")
     try:
-        # Connect to the NEW database
+        # Conectar a la NUEVA base de datos
         con = psycopg2.connect(
             host=Config.DB_HOST,
             user=Config.DB_USER,
@@ -56,7 +56,7 @@ def setup_database():
         )
         cursor = con.cursor()
         
-        # Read SQL file
+        # Leer archivo SQL
         sql_file_path = os.path.join(os.path.dirname(__file__), '..', 'db', 'create_tables.sql')
         with open(sql_file_path, 'r') as f:
             sql_script = f.read()
