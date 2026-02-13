@@ -8,7 +8,7 @@ def init_db():
         try:
             cursor = conn.cursor()
             
-            # Read SQL file
+            # Leer archivo SQL
             sql_file_path = os.path.join(os.path.dirname(__file__), '..', 'db', 'create_tables.sql')
             with open(sql_file_path, 'r') as f:
                 sql_script = f.read()

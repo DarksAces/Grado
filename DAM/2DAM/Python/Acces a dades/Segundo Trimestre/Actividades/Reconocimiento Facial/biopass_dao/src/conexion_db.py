@@ -3,16 +3,16 @@ from src.config import Config
 
 class DBConnection:
     """
-    Singleton class to manage database connection.
-    Ensures only one connection is active.
+    Clase Singleton para gestionar la conexión a la base de datos.
+    Asegura que solo una conexión esté activa.
     """
     _connection = None
 
     @classmethod
     def get_connection(cls):
         """
-        Returns the active database connection.
-        If no connection exists or it's closed, creates a new one.
+        Devuelve la conexión activa a la base de datos.
+        Si no existe conexión o está cerrada, crea una nueva.
         """
         try:
             if cls._connection is None or cls._connection.closed != 0:
@@ -32,7 +32,7 @@ class DBConnection:
 
     @classmethod
     def close_connection(cls):
-        """Closes the active connection if it exists."""
+        """Cierra la conexión activa si existe."""
         if cls._connection and cls._connection.closed == 0:
             cls._connection.close()
             print("Database connection closed.")
@@ -40,7 +40,7 @@ class DBConnection:
 if __name__ == "__main__":
     try:
         conn = DBConnection.get_connection()
-        # Optionally execute a query to verify
+        # Opcionalmente ejecutar una consulta para verificar
         with conn.cursor() as cursor:
             cursor.execute("SELECT 1;")
             print("Query executed successfully: SELECT 1")

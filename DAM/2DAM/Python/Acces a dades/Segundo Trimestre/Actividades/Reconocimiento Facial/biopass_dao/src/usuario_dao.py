@@ -3,21 +3,21 @@ import psycopg2
 
 class UsuarioDAO:
     """
-    Data Access Object for User operations.
-    Decouples business logic from data access.
+    Objeto de Acceso a Datos (DAO) para operaciones de Usuario.
+    Desacopla la lógica de negocio del acceso a datos.
     """
 
     @staticmethod
     def registrar_usuario(nombre, image_bytes):
         """
-        Registers a new user with their face image (BLOB).
+        Registra un nuevo usuario con su imagen facial (BLOB).
         """
         connection = DBConnection.get_connection()
         cursor = None
         try:
             cursor = connection.cursor()
             query = "INSERT INTO usuarios (nombre, imagen_facial) VALUES (%s, %s)"
-            # psycopg2.Binary is used to safely pass binary data
+            # psycopg2.Binary se usa para pasar datos binarios de forma segura
             cursor.execute(query, (nombre, psycopg2.Binary(image_bytes)))
             connection.commit()
             print(f"User {nombre} registered successfully.")
@@ -33,8 +33,8 @@ class UsuarioDAO:
     @staticmethod
     def obtener_todos():
         """
-        Retrieves all users and their face images for training.
-        Returns a list of tuples (id, nombre, imagen_facial_bytes).
+        Recupera todos los usuarios y sus imágenes faciales para entrenamiento.
+        Devuelve una lista de tuplas (id, nombre, imagen_facial_bytes).
         """
         connection = DBConnection.get_connection()
         cursor = None
@@ -42,7 +42,7 @@ class UsuarioDAO:
             cursor = connection.cursor()
             query = "SELECT id, nombre, imagen_facial FROM usuarios"
             cursor.execute(query)
-            # Fetch all results
+            # Obtener todos los resultados
             results = cursor.fetchall()
             return results
         except psycopg2.Error as e:

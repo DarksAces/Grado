@@ -1,13 +1,13 @@
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
 class Config:
     """
-    Configuration class to load environment variables.
-    Strictly responsible for providing configuration data, not connecting.
+    Clase de configuración para cargar variables de entorno.
+    Estrictamente responsable de proporcionar datos de configuración, no de conectar.
     """
     DB_HOST = os.getenv('DB_HOST')
     DB_NAME = os.getenv('DB_NAME')
