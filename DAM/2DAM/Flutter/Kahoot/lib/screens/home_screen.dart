@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/custom_button.dart';
+import 'host_lobby_screen.dart';
+import 'client_join_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,22 +30,23 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 64),
             CustomButton(
-              text: 'Jugar Quiz',
+              text: 'Jugar Quiz (Cliente)',
               color: Colors.green,
               onPressed: () {
-                // Navegación o lógica aquí
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Comenzando juego...')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ClientJoinScreen()),
                 );
               },
             ),
             const SizedBox(height: 16),
             CustomButton(
-              text: 'Crear Quiz',
+              text: 'Crear Quiz (Servidor)',
               color: Colors.blue,
               onPressed: () {
-                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Creando nuevo quiz...')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HostLobbyScreen()),
                 );
               },
             ),
