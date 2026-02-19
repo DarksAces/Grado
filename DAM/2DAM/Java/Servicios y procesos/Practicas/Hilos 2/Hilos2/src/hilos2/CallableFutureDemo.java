@@ -8,79 +8,72 @@ import java.util.Random;
 
 import java.util.concurrent.*;
 
-
 public class CallableFutureDemo {
 
+    public static void main(String[] args) {
 
-public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-ExecutorService executor = Executors.newFixedThreadPool(3);
+        Random rnd = new Random();
 
-Random rnd = new Random();
+        List<Future<Integer>> futures = new ArrayList<>();
 
+        try {
 
-List<Future<Integer>> futures = new ArrayList<>();
+            for (int i = 1; i <= 5; i++) {
 
+                final int taskId = i;
 
-try {
+                Callable<Integer> task = () -> {
 
-for (int i = 1; i <= 5; i++) {
+                    int value = rnd.nextInt(1000);
 
-final int taskId = i;
+                    String tname = Thread.currentThread().getName();
 
-Callable<Integer> task = () -> {
+                    System.out.println("Tarea " + taskId + " (" + tname + ") -> DGB" + value);
 
-int value = rnd.nextInt(1000);
+                    Thread.sleep(200 + rnd.nextInt(300));
 
-String tname = Thread.currentThread().getName();
+                    return value;
 
-System.out.println("Tarea " + taskId + " (" + tname + ") -> " + value);
+                };
 
-Thread.sleep(200 + rnd.nextInt(300));
+                futures.add(executor.submit(task));
 
-return value;
+            }
 
-};
+            // Recoger resultados (AHORA sí esperamos)
 
-futures.add(executor.submit(task));
+            int max = Integer.MIN_VALUE;
 
-}
+            for (Future<Integer> f : futures) {
 
+                try {
 
-// Recoger resultados (AHORA sí esperamos)
+                    int v = f.get(); // bloquea hasta que esa tarea termine
 
-int max = Integer.MIN_VALUE;
+                    max = Math.max(max, v);
 
-for (Future<Integer> f : futures) {
+                } catch (InterruptedException e) {
 
-try {
+                    Thread.currentThread().interrupt();
 
-int v = f.get(); // bloquea hasta que esa tarea termine
+                } catch (ExecutionException e) {
 
-max = Math.max(max, v);
+                    System.out.println("Error en tarea:  DGB" + e.getCause());
 
-} catch (InterruptedException e) {
+                }
 
-Thread.currentThread().interrupt();
+            }
 
-} catch (ExecutionException e) {
+            System.out.println("Mayor número =  DGB" + max);
 
-System.out.println("Error en tarea: " + e.getCause());
+        } finally {
 
-}
+            executor.shutdown();
 
-}
+        }
 
-
-System.out.println("Mayor número = " + max);
-
-
-} finally {
-
-executor.shutdown();
-
-}
-
-}
+    }
 
 }

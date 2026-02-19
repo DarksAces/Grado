@@ -2,41 +2,62 @@ package hilos2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+
 public class TrafficSwingSim {
+
     // ===== Configuración =====
-    static final int ROAD_LEN = 70;
-    static final int ENTRY1_POS = 0;
-    static final int ENTRY2_POS = 12;
-    static final int EXIT1_POS = 40;
-    static final int EXIT2_POS = 65;
-    static final double ENTRY1_RATE_PER_MIN = 200;
-    static final double ENTRY2_RATE_PER_MIN = 200;
-    static final double EXIT1_RATE_PER_MIN = 18;
-    static final double EXIT2_RATE_PER_MIN = 10;
-    static final int TICK_MS = 120;
-    // Distancia mínima: número de celdas VACÍAS que deben existir por delante de un coche
-    static final int MIN_GAP = 2; // prueba 1, 2, 3...
+    static final int ROUND_LEN = 140;
+    static final int ENTRY_LEN = 40;
+    static final int EXIT_LEN = 40;
+
+    // Configuración de Entradas y Salidas
+    // Soportamos N entradas y M salidas.
+    // Vamos a poner 4 entradas y 4 salidas intercaladas simétricamente.
+    // Round len 140.
+    // Entradas en: 0, 35, 70, 105.
+    // Salidas en: 17, 52, 87, 122. (Aprox mitad de cuadrante)
+
+    static final int[] ENTRY_NODES = { 0, 35, 70, 105 };
+    static final int[] EXIT_NODES = { 17, 52, 87, 122 };
+
+    static final double ENTRY_RATE_PER_MIN = 20.0; // por cada entrada
+    static final double OUT_RATE_PER_MIN = 60.0; // por cada salida
+
+    static final int TICK_MS = 100;
+    static final int MIN_GAP = 1;
+
     // ===== Modelo =====
     static class Car {
         final int id;
+        final int destExitIndex; // Índice en el array de exits (0..NUM_EXITS-1)
         int pos;
-        Car(int id, int pos) {
+
+        Car(int id, int destExitIndex, int pos) {
             this.id = id;
+            this.destExitIndex = destExitIndex;
             this.pos = pos;
         }
     }
+
     static class TokenBucket {
         private final double ratePerMin;
         private double tokens = 0.0;
+
         TokenBucket(double ratePerMin) {
             this.ratePerMin = Math.max(0.0, ratePerMin);
         }
+
         void addTimeMs(long dtMs) {
             tokens += ratePerMin * (dtMs / 60000.0);
             tokens = Math.min(tokens, 10.0);
         }
+
         boolean tryConsumeOne() {
             if (tokens >= 1.0) {
                 tokens -= 1.0;
@@ -45,36 +66,66 @@ public class TrafficSwingSim {
             return false;
         }
     }
+
     // ===== Estado =====
-    final Car[] road = new Car[ROAD_LEN];
-    final ConcurrentLinkedQueue<Integer> pendingE1 = new ConcurrentLinkedQueue<>();
-    final ConcurrentLinkedQueue<Integer> pendingE2 = new ConcurrentLinkedQueue<>();
-    long maxQueueE1 = 0;
-    long maxQueueE2 = 0;
+    final Car[] roundabout = new Car[ROUND_LEN];
+
+    // Arrays de Arrays para Entradas y Salidas
+    final List<Car[]> entries = new ArrayList<>();
+    final List<Car[]> exits = new ArrayList<>();
+
+    // Colas de espera externas
+    final List<ConcurrentLinkedQueue<Integer>> worldQueues = new ArrayList<>();
+
+    // Stats
+    final long[] exitedCounts;
+
+    // Sinks
+    final List<TokenBucket> exitBuckets = new ArrayList<>();
+
     final AtomicInteger idGen = new AtomicInteger(1);
-    long exited1 = 0;
-    long exited2 = 0;
-    final TokenBucket exit1Bucket = new TokenBucket(EXIT1_RATE_PER_MIN);
-    final TokenBucket exit2Bucket = new TokenBucket(EXIT2_RATE_PER_MIN);
+
     // ===== GUI =====
     JFrame frame;
     SimPanel panel;
+
     // ===== Scheduler =====
-    final ScheduledExecutorService sched = Executors.newScheduledThreadPool(4);
+    final ScheduledExecutorService sched = Executors.newScheduledThreadPool(8);
+
+    public TrafficSwingSim() {
+        // Inicializar estructuras dinámicas
+        for (int i = 0; i < ENTRY_NODES.length; i++) {
+            entries.add(new Car[ENTRY_LEN]);
+            worldQueues.add(new ConcurrentLinkedQueue<>());
+        }
+
+        exitedCounts = new long[EXIT_NODES.length];
+        for (int i = 0; i < EXIT_NODES.length; i++) {
+            exits.add(new Car[EXIT_LEN]);
+            exitBuckets.add(new TokenBucket(OUT_RATE_PER_MIN));
+        }
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new TrafficSwingSim().start());
     }
+
     void start() {
-        frame = new JFrame("Traffic Swing Sim (gap + colas, 1 carril, 2 entradas, 2 salidas)");
+        frame = new JFrame("Traffic Sim - 4 Entradas / 4 Salidas");
         panel = new SimPanel(this);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
-        frame.setSize(1100, 280);
+        frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        scheduleArrivals(pendingE1, ENTRY1_RATE_PER_MIN);
-        scheduleArrivals(pendingE2, ENTRY2_RATE_PER_MIN);
-        final long[] lastTick = {System.currentTimeMillis()};
+
+        // Generadores de tráfico
+        for (ConcurrentLinkedQueue<Integer> q : worldQueues) {
+            scheduleArrivals(q, ENTRY_RATE_PER_MIN);
+        }
+
+        // Loop de simulación
+        final long[] lastTick = { System.currentTimeMillis() };
         sched.scheduleAtFixedRate(() -> {
             long now = System.currentTimeMillis();
             long dt = now - lastTick[0];
@@ -82,6 +133,7 @@ public class TrafficSwingSim {
             tick(dt);
             SwingUtilities.invokeLater(panel::repaint);
         }, 0, TICK_MS, TimeUnit.MILLISECONDS);
+
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -89,170 +141,336 @@ public class TrafficSwingSim {
             }
         });
     }
+
     void scheduleArrivals(ConcurrentLinkedQueue<Integer> q, double ratePerMin) {
-        if (ratePerMin <= 0) {
+        if (ratePerMin <= 0)
             return;
-        }
         long periodMs = Math.max(1, Math.round(60000.0 / ratePerMin));
         sched.scheduleAtFixedRate(() -> q.add(idGen.getAndIncrement()),
                 0, periodMs, TimeUnit.MILLISECONDS);
     }
-    // ===== Tick =====
+
+    // ===== Lógica Principal del Tick =====
     void tick(long dtMs) {
-        exit1Bucket.addTimeMs(dtMs);
-        exit2Bucket.addTimeMs(dtMs);
-        processEntries();
-        processMovementAndExits();
-        // métricas de cola
-        maxQueueE1 = Math.max(maxQueueE1, pendingE1.size());
-        maxQueueE2 = Math.max(maxQueueE2, pendingE2.size());
+        // Actualizar buckets
+        for (TokenBucket tb : exitBuckets) {
+            tb.addTimeMs(dtMs);
+        }
+
+        // 1. Mover coches en carreteras de SALIDA
+        for (int i = 0; i < exits.size(); i++) {
+            moveOnExitRoad(exits.get(i), i);
+        }
+
+        // 2. Transferir de Rotonda -> Salida
+        for (int i = 0; i < EXIT_NODES.length; i++) {
+            tryExitRoundabout(EXIT_NODES[i], exits.get(i), i);
+        }
+
+        // 3. Mover coches DENTRO de la rotonda
+        moveOnRoundabout();
+
+        // 4. Transferir de Entrada -> Rotonda
+        for (int i = 0; i < ENTRY_NODES.length; i++) {
+            tryEnterRoundabout(ENTRY_NODES[i], entries.get(i));
+        }
+
+        // 5. Mover coches en carreteras de ENTRADA
+        for (int i = 0; i < entries.size(); i++) {
+            moveOnEntryRoad(entries.get(i), worldQueues.get(i));
+        }
     }
-    // ¿Se puede “ocupar” pos respetando MIN_GAP por delante?
-    boolean canOccupyWithGap(int pos) {
-        if (pos < 0 || pos >= ROAD_LEN) {
-            return false;
+
+    // --- Lógica de Movimiento ---
+
+    void moveOnExitRoad(Car[] road, int exitIndex) {
+        for (int i = road.length - 1; i >= 0; i--) {
+            if (road[i] == null)
+                continue;
+
+            // Salir del mapa
+            if (i == road.length - 1) {
+                if (exitBuckets.get(exitIndex).tryConsumeOne()) {
+                    road[i] = null;
+                    exitedCounts[exitIndex]++;
+                }
+                continue;
+            }
+
+            // Avanzar
+            int next = i + 1;
+            if (isGapFreeLinear(road, next)) {
+                road[next] = road[i];
+                road[next].pos = next;
+                road[i] = null;
+            }
         }
-        if (road[pos] != null) {
-            return false;
+    }
+
+    void moveOnEntryRoad(Car[] road, ConcurrentLinkedQueue<Integer> queue) {
+        // 1. Mover existentes
+        for (int i = road.length - 2; i >= 0; i--) {
+            if (road[i] == null)
+                continue;
+            int next = i + 1;
+            if (road[next] == null) {
+                road[next] = road[i];
+                road[next].pos = next;
+                road[i] = null;
+            }
         }
-        // requiere MIN_GAP celdas libres por delante (si existen)
+
+        // 2. Meter nuevos
+        if (road[0] == null && !queue.isEmpty()) {
+            Integer id = queue.poll();
+            if (id != null) {
+                // Asignar destino aleatorio (índice de salida 0..N-1)
+                int dest = ThreadLocalRandom.current().nextInt(EXIT_NODES.length);
+                road[0] = new Car(id, dest, 0);
+            }
+        }
+    }
+
+    void tryEnterRoundabout(int nodeIdx, Car[] entryRoad) {
+        int lastEntryIdx = entryRoad.length - 1;
+        Car c = entryRoad[lastEntryIdx];
+        if (c == null)
+            return;
+
+        if (roundabout[nodeIdx] == null) {
+            boolean safe = true;
+            for (int k = 1; k <= MIN_GAP + 2; k++) {
+                int prev = (nodeIdx - k + ROUND_LEN) % ROUND_LEN;
+                if (roundabout[prev] != null) {
+                    safe = false;
+                    break;
+                }
+            }
+            if (safe) {
+                entryRoad[lastEntryIdx] = null;
+                c.pos = nodeIdx;
+                roundabout[nodeIdx] = c;
+            }
+        }
+    }
+
+    void tryExitRoundabout(int nodeIdx, Car[] exitRoad, int exitIndex) {
+        Car c = roundabout[nodeIdx];
+        if (c == null)
+            return;
+
+        if (c.destExitIndex == exitIndex) {
+            if (exitRoad[0] == null) {
+                roundabout[nodeIdx] = null;
+                c.pos = 0;
+                exitRoad[0] = c;
+            }
+        }
+    }
+
+    void moveOnRoundabout() {
+        Car[] nextRoundabout = new Car[ROUND_LEN];
+
+        for (int i = 0; i < ROUND_LEN; i++) {
+            Car c = roundabout[i];
+            if (c == null)
+                continue;
+
+            int nextPos = (i + 1) % ROUND_LEN;
+            boolean canMove = true;
+
+            if (roundabout[nextPos] != null) {
+                canMove = false;
+            } else {
+                for (int k = 1; k <= MIN_GAP; k++) {
+                    int check = (nextPos + k) % ROUND_LEN;
+                    if (roundabout[check] != null) {
+                        canMove = false;
+                        break;
+                    }
+                }
+            }
+
+            if (canMove) {
+                c.pos = nextPos;
+                nextRoundabout[nextPos] = c;
+            } else {
+                c.pos = i;
+                nextRoundabout[i] = c;
+            }
+        }
+        System.arraycopy(nextRoundabout, 0, roundabout, 0, ROUND_LEN);
+    }
+
+    boolean isGapFreeLinear(Car[] road, int targetPos) {
+        if (targetPos >= road.length)
+            return false;
+        if (road[targetPos] != null)
+            return false;
         for (int k = 1; k <= MIN_GAP; k++) {
-            int ahead = pos + k;
-            if (ahead >= ROAD_LEN) {
-                break;
-            }
-            if (road[ahead] != null) {
+            int p = targetPos + k;
+            if (p < road.length && road[p] != null)
                 return false;
-            }
         }
         return true;
     }
-    void processEntries() {
-        // Entrada 1
-        Integer id1 = pendingE1.peek();
-        if (id1 != null && canOccupyWithGap(ENTRY1_POS)) {
-            pendingE1.poll();
-            road[ENTRY1_POS] = new Car(id1, ENTRY1_POS);
-        }
-        // Entrada 2
-        Integer id2 = pendingE2.peek();
-        if (id2 != null && canOccupyWithGap(ENTRY2_POS)) {
-            pendingE2.poll();
-            road[ENTRY2_POS] = new Car(id2, ENTRY2_POS);
-        }
-    }
-    void processMovementAndExits() {
-        for (int i = ROAD_LEN - 1; i >= 0; i--) {
-            Car c = road[i];
-            if (c == null) {
-                continue;
-            }
-            // Salidas: si está en la salida y hay token -> sale
-            if (i == EXIT1_POS) {
-                if (exit1Bucket.tryConsumeOne()) {
-                    road[i] = null;
-                    exited1++;
-                    continue;
-                }
-                // Si no puede salir, se queda (y el gap hará que el de detrás no se pegue)
-            }
-            if (i == EXIT2_POS) {
-                if (exit2Bucket.tryConsumeOne()) {
-                    road[i] = null;
-                    exited2++;
-                    continue;
-                }
-            }
-            // Al final, lo sacamos del sistema (opcional)
-            if (i == ROAD_LEN - 1) {
-                road[i] = null;
-                continue;
-            }
-            // Movimiento con distancia mínima: solo avanza si al ocupar i+1 se respeta el gap
-            int next = i + 1;
-            if (canOccupyWithGap(next)) {
-                road[i] = null;
-                c.pos = next;
-                road[next] = c;
-            }
-        }
-    }
-    // ===== Panel =====
+
+    // ===== Panel Visualización =====
     static class SimPanel extends JPanel {
         final TrafficSwingSim sim;
+
         SimPanel(TrafficSwingSim sim) {
             this.sim = sim;
-            setBackground(Color.WHITE);
-            setFont(new Font("SansSerif", Font.PLAIN, 12));
+            setBackground(new Color(245, 250, 245));
         }
+
         @Override
         protected void paintComponent(Graphics g0) {
             super.paintComponent(g0);
             Graphics2D g = (Graphics2D) g0.create();
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
             int w = getWidth();
             int h = getHeight();
-            int margin = 30;
-            int roadY = h / 2;
-            int roadH = 46;
-            int roadX = margin;
-            int roadW = w - 2 * margin;
-            // carretera
-            g.setColor(new Color(230, 230, 230));
-            g.fillRoundRect(roadX, roadY - roadH / 2, roadW, roadH, 16, 16);
-            g.setColor(Color.DARK_GRAY);
-            g.drawRoundRect(roadX, roadY - roadH / 2, roadW, roadH, 16, 16);
-            double cellW = roadW / (double) ROAD_LEN;
-            int carH = 26;
-            int carY = roadY - carH / 2;
-            drawMarker(g, roadX, roadY, cellW, ENTRY1_POS, "E1", new Color(70, 130, 180));
-            drawMarker(g, roadX, roadY, cellW, ENTRY2_POS, "E2", new Color(70, 130, 180));
-            drawMarker(g, roadX, roadY, cellW, EXIT1_POS, "X1", new Color(46, 139, 87));
-            drawMarker(g, roadX, roadY, cellW, EXIT2_POS, "X2", new Color(46, 139, 87));
-            // coches
-            for (int i = 0; i < ROAD_LEN; i++) {
-                Car c = sim.road[i];
-                if (c == null) {
-                    continue;
-                }
-                int x = (int) Math.round(roadX + i * cellW + 2);
-                int cw = (int) Math.max(12, Math.round(cellW - 4));
-                Color col = Color.getHSBColor((c.id % 24) / 24f, 0.55f, 0.90f);
-                g.setColor(col);
-                g.fillRoundRect(x, carY, cw, carH, 10, 10);
-                g.setColor(Color.BLACK);
-                g.drawRoundRect(x, carY, cw, carH, 10, 10);
-                String label = String.valueOf(c.id);
-                FontMetrics fm = g.getFontMetrics();
-                int tx = x + (cw - fm.stringWidth(label)) / 2;
-                int ty = carY + (carH + fm.getAscent()) / 2 - 2;
-                g.drawString(label, tx, ty);
+            int cx = w / 2;
+            int cy = h / 2;
+            int rRadius = 250;
+
+            // Dibujar carreteras
+            for (int i = 0; i < sim.entries.size(); i++) {
+                double ang = getAngle(TrafficSwingSim.ENTRY_NODES[i]);
+                drawRadialRoad(g, cx, cy, rRadius, ang, TrafficSwingSim.ENTRY_LEN, true, "E" + (i + 1));
             }
-            // HUD
+
+            for (int i = 0; i < sim.exits.size(); i++) {
+                double ang = getAngle(TrafficSwingSim.EXIT_NODES[i]);
+                drawRadialRoad(g, cx, cy, rRadius, ang, TrafficSwingSim.EXIT_LEN, false, "S" + (i + 1));
+            }
+
+            // Rotonda
+            g.setStroke(new BasicStroke(26, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g.setColor(Color.LIGHT_GRAY);
+            g.drawOval(cx - rRadius, cy - rRadius, rRadius * 2, rRadius * 2);
+            g.setStroke(new BasicStroke(1f));
+            g.setColor(Color.WHITE);
+            g.drawOval(cx - rRadius - 13, cy - rRadius - 13, (rRadius + 13) * 2, (rRadius + 13) * 2);
+            g.drawOval(cx - rRadius + 13, cy - rRadius + 13, (rRadius - 13) * 2, (rRadius - 13) * 2);
+
+            // Coches
+            for (int i = 0; i < sim.entries.size(); i++) {
+                double ang = getAngle(TrafficSwingSim.ENTRY_NODES[i]);
+                paintLineCars(g, sim.entries.get(i), cx, cy, rRadius, ang, true);
+            }
+            for (int i = 0; i < sim.exits.size(); i++) {
+                double ang = getAngle(TrafficSwingSim.EXIT_NODES[i]);
+                paintLineCars(g, sim.exits.get(i), cx, cy, rRadius, ang, false);
+            }
+            paintRoundCars(g, sim.roundabout, cx, cy, rRadius);
+
+            // Stats
             g.setColor(Color.BLACK);
-            g.drawString(
-                    "Cola E1: " + sim.pendingE1.size() + " (max " + sim.maxQueueE1 + ")"
-                    + " | Cola E2: " + sim.pendingE2.size() + " (max " + sim.maxQueueE2 + ")"
-                    + " | Salidos X1: " + sim.exited1
-                    + " | Salidos X2: " + sim.exited2,
-                    margin, 18
-            );
-            g.drawString(
-                    String.format("E1=%.1f/min E2=%.1f/min | X1 cap=%.1f/min X2 cap=%.1f/min | Tick=%dms | MIN_GAP=%d",
-                            ENTRY1_RATE_PER_MIN, ENTRY2_RATE_PER_MIN, EXIT1_RATE_PER_MIN, EXIT2_RATE_PER_MIN, TICK_MS, MIN_GAP),
-                    margin, h - 12
-            );
+            g.setFont(new Font("Monospaced", Font.PLAIN, 12));
+            int yText = 20;
+            for (int i = 0; i < sim.worldQueues.size(); i++) {
+                g.drawString("Cola E" + (i + 1) + ": " + sim.worldQueues.get(i).size(), 20, yText);
+                yText += 16;
+            }
+            yText = 20;
+            for (int i = 0; i < sim.exitedCounts.length; i++) {
+                g.drawString("Salidas S" + (i + 1) + ": " + sim.exitedCounts[i], w - 120, yText);
+                yText += 16;
+            }
+
             g.dispose();
         }
-        static void drawMarker(Graphics2D g, int roadX, int roadY, double cellW, int pos, String text, Color color) {
-            int x = (int) Math.round(roadX + pos * cellW);
-            int yTop = roadY - 48;
-            g.setColor(color);
-            g.fillRoundRect(x + 2, yTop, (int) Math.max(14, cellW - 4), 18, 8, 8);
+
+        private double getAngle(int nodeIdx) {
+            return -Math.PI / 2.0 + (2.0 * Math.PI * nodeIdx) / ROUND_LEN;
+        }
+
+        void drawRadialRoad(Graphics2D g, int cx, int cy, int rRadius, double angle, int cells, boolean isEntry,
+                String label) {
+            double cellLen = 14.0;
+            double roadLenPx = cells * cellLen;
+            double ux = Math.cos(angle);
+            double uy = Math.sin(angle);
+            double xStart = cx + ux * rRadius;
+            double yStart = cy + uy * rRadius;
+            double xEnd = xStart + ux * (roadLenPx + 20);
+            double yEnd = yStart + uy * (roadLenPx + 20);
+
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setStroke(new BasicStroke(24, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setColor(Color.GRAY);
+            g2.draw(new Line2D.Double(xStart, yStart, xEnd, yEnd));
+            // Linea amarilla
+            g2.setStroke(new BasicStroke(1f));
+            g2.setColor(Color.YELLOW);
+            g2.draw(new Line2D.Double(xStart, yStart, xEnd, yEnd));
+            // Texto
+            g2.setColor(Color.BLACK);
+            g2.drawString(label, (int) xEnd, (int) yEnd);
+            g2.dispose();
+        }
+
+        void paintLineCars(Graphics2D g, Car[] road, int cx, int cy, int rRadius, double angle, boolean isEntry) {
+            double cellLen = 14.0;
+            double ux = Math.cos(angle);
+            double uy = Math.sin(angle);
+
+            for (int i = 0; i < road.length; i++) {
+                Car c = road[i];
+                if (c == null)
+                    continue;
+                double distFromCircle;
+                if (isEntry) {
+                    distFromCircle = rRadius + 15 + (road.length - 1 - i) * cellLen;
+                } else {
+                    distFromCircle = rRadius + 15 + i * cellLen;
+                }
+                double carX = cx + ux * distFromCircle;
+                double carY = cy + uy * distFromCircle;
+                double carAngle = angle + (isEntry ? Math.PI : 0);
+                drawCar(g, c, carX, carY, carAngle);
+            }
+        }
+
+        void paintRoundCars(Graphics2D g, Car[] road, int cx, int cy, int rRadius) {
+            for (int i = 0; i < road.length; i++) {
+                Car c = road[i];
+                if (c == null)
+                    continue;
+                double ang = getAngle(i);
+                double carX = cx + Math.cos(ang) * rRadius;
+                double carY = cy + Math.sin(ang) * rRadius;
+                drawCar(g, c, carX, carY, ang + Math.PI / 2);
+            }
+        }
+
+        void drawCar(Graphics2D g, Car c, double x, double y, double angleRad) {
+            AffineTransform old = g.getTransform();
+            g.translate(x, y);
+            g.rotate(angleRad);
+
+            // Color por destino (Cyclic colors)
+            // HSB basado en index
+            float h = (c.destExitIndex * 0.25f) % 1.0f;
+            g.setColor(Color.getHSBColor(h, 0.7f, 0.9f));
+
+            g.fillRoundRect(-10, -5, 20, 10, 4, 4);
+            g.setColor(Color.BLACK);
+            g.drawRoundRect(-10, -5, 20, 10, 4, 4);
+            // Id text
+            // g.setFont(new Font("Arial", Font.PLAIN, 9));
+            // String s = String.valueOf(c.id);
+            // g.drawString(s, -5, 2);
+
+            // Dest text (S1, S2...)
             g.setColor(Color.WHITE);
-            g.drawString(text, x + 6, yTop + 13);
-            g.setColor(color.darker());
-            g.drawLine(x + (int) (cellW / 2), yTop + 18, x + (int) (cellW / 2), roadY - 24);
+            g.setFont(new Font("Arial", Font.BOLD, 9));
+            g.drawString("S" + (c.destExitIndex + 1), -6, 3);
+
+            g.setTransform(old);
         }
     }
 }

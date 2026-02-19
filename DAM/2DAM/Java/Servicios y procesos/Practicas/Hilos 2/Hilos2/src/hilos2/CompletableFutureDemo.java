@@ -4,87 +4,80 @@ import java.util.concurrent.CompletableFuture;
 
 import java.util.concurrent.TimeUnit;
 
-
 public class CompletableFutureDemo {
 
+    public static void main(String[] args) {
 
-public static void main(String[] args) {
+        CompletableFuture<Void> pipeline =
 
-CompletableFuture<Void> pipeline =
+                descargarDatosAsync()
 
-descargarDatosAsync()
+                        .thenApply(CompletableFutureDemo::procesarDatos) // transforma
 
-.thenApply(CompletableFutureDemo::procesarDatos) // transforma
+                        .thenAccept(CompletableFutureDemo::mostrarResultado) // consume
 
-.thenAccept(CompletableFutureDemo::mostrarResultado) // consume
+                        .exceptionally(ex -> { // errores
 
-.exceptionally(ex -> { // errores
+                            System.out.println("Error en pipeline:  DGB" + ex);
 
-System.out.println("Error en pipeline: " + ex);
+                            return null;
 
-return null;
+                        });
 
-});
+        // En un programa real, el main no debería acabar antes.
 
+        // Aquí hacemos join() solo para que se vea el resultado en consola.
 
-// En un programa real, el main no debería acabar antes.
+        pipeline.join();
 
-// Aquí hacemos join() solo para que se vea el resultado en consola.
+        System.out.println("Pipeline completado. DGB");
 
-pipeline.join();
+    }
 
-System.out.println("Pipeline completado.");
+    static CompletableFuture<String> descargarDatosAsync() {
 
-}
+        return CompletableFuture.supplyAsync(() -> {
 
+            sleep(400);
 
-static CompletableFuture<String> descargarDatosAsync() {
+            System.out.println("Descarga completada (" + Thread.currentThread().getName() + ")");
 
-return CompletableFuture.supplyAsync(() -> {
+            return "datos_crudos: 1,2,3,4,5  DGB";
 
-sleep(400);
+        });
 
-System.out.println("Descarga completada (" + Thread.currentThread().getName() + ")");
+    }
 
-return "datos_crudos: 1,2,3,4,5";
+    static String procesarDatos(String raw) {
 
-});
+        sleep(300);
 
-}
+        System.out.println("Procesamiento completado (" + Thread.currentThread().getName() + ")");
 
+        return raw.toUpperCase() + " | OK  DGB";
 
-static String procesarDatos(String raw) {
+    }
 
-sleep(300);
+    static void mostrarResultado(String processed) {
 
-System.out.println("Procesamiento completado (" + Thread.currentThread().getName() + ")");
+        sleep(100);
 
-return raw.toUpperCase() + " | OK";
+        System.out.println("Resultado (" + Thread.currentThread().getName() + "):  DGB" + processed);
 
-}
+    }
 
+    static void sleep(long ms) {
 
-static void mostrarResultado(String processed) {
+        try {
 
-sleep(100);
+            TimeUnit.MILLISECONDS.sleep(ms);
 
-System.out.println("Resultado (" + Thread.currentThread().getName() + "): " + processed);
+        } catch (InterruptedException e) {
 
-}
+            Thread.currentThread().interrupt();
 
+        }
 
-static void sleep(long ms) {
-
-try {
-
-TimeUnit.MILLISECONDS.sleep(ms);
-
-} catch (InterruptedException e) {
-
-Thread.currentThread().interrupt();
-
-}
-
-}
+    }
 
 }
