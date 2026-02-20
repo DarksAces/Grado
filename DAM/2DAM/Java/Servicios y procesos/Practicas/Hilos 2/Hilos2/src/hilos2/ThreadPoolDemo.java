@@ -14,71 +14,72 @@ import java.util.concurrent.Executors;
 
 import java.util.concurrent.TimeUnit;
 
-
 public class ThreadPoolDemo {
 
+    public static void main(String[] args) {
 
-public static void main(String[] args) {
+        // TEST 1: Tipo de Pool (Descomenta una opción)
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        // ExecutorService executor = Executors.newCachedThreadPool();
+        // ExecutorService executor = Executors.newSingleThreadExecutor();
 
-ExecutorService executor = Executors.newFixedThreadPool(3);
+        try {
 
+            // TEST 3: Carga de trabajo (Cambia el 10)
+            for (int i = 1; i <= 10; i++) {
 
-try {
+                final int taskId = i;
 
-for (int i = 1; i <= 10; i++) {
+                executor.submit(() -> {
 
-final int taskId = i;
+                    String tname = Thread.currentThread().getName();
 
-executor.submit(() -> {
+                    System.out.println("DGB Tarea " + taskId + " ejecutada por " + tname);
 
-String tname = Thread.currentThread().getName();
+                    try {
 
-System.out.println("Tarea " + taskId + " ejecutada por " + tname);
+                        Thread.sleep(200);
 
-try {
+                    } catch (InterruptedException e) {
 
-Thread.sleep(200);
+                        Thread.currentThread().interrupt();
 
-} catch (InterruptedException e) {
+                        System.out.println("DGB Tarea " + taskId + " interrumpida");
 
-Thread.currentThread().interrupt();
+                    }
 
-System.out.println("Tarea " + taskId + " interrumpida");
+                });
 
-}
+            }
 
-});
+        } finally {
 
-}
+            executor.shutdown(); // no acepta nuevas tareas
 
-} finally {
+        }
 
-executor.shutdown(); // no acepta nuevas tareas
+        // Espera cierre limpio
 
-}
+        try {
 
+            // TEST 2: Estrategia de Cierre (Prueba a bajar el tiempo o comentar el
+            // shutdownNow)
+            if (!executor.awaitTermination(3, TimeUnit.SECONDS)) {
 
-// Espera cierre limpio
+                executor.shutdownNow(); // fuerza
 
-try {
+            }
 
-if (!executor.awaitTermination(3, TimeUnit.SECONDS)) {
+        } catch (InterruptedException e) {
 
-executor.shutdownNow(); // fuerza
+            executor.shutdownNow();
 
-}
+            Thread.currentThread().interrupt();
 
-} catch (InterruptedException e) {
+        }
 
-executor.shutdownNow();
+        System.out.println("DGB Executor cerrado correctamente.");
 
-Thread.currentThread().interrupt();
-
-}
-
-
-System.out.println("Executor cerrado correctamente.");
-
-}
+    }
 
 }

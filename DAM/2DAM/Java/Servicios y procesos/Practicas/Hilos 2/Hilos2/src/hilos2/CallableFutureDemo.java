@@ -12,7 +12,10 @@ public class CallableFutureDemo {
 
     public static void main(String[] args) {
 
+        // TEST 1: Variar el tamaño del Pool (Descomenta una opción)
         ExecutorService executor = Executors.newFixedThreadPool(3);
+        // ExecutorService executor = Executors.newFixedThreadPool(1);
+        // ExecutorService executor = Executors.newCachedThreadPool();
 
         Random rnd = new Random();
 
@@ -30,7 +33,7 @@ public class CallableFutureDemo {
 
                     String tname = Thread.currentThread().getName();
 
-                    System.out.println("Tarea " + taskId + " (" + tname + ") -> DGB" + value);
+                    System.out.println("DGB Tarea " + taskId + " (" + tname + ") -> " + value);
 
                     Thread.sleep(200 + rnd.nextInt(300));
 
@@ -42,6 +45,9 @@ public class CallableFutureDemo {
 
             }
 
+            // TEST 3: Cancelación Selectiva (Descomenta para probar)
+            // futures.get(2).cancel(true);
+
             // Recoger resultados (AHORA sí esperamos)
 
             int max = Integer.MIN_VALUE;
@@ -50,7 +56,9 @@ public class CallableFutureDemo {
 
                 try {
 
+                    // TEST 2: Timeout (Intercambia estas líneas para probar)
                     int v = f.get(); // bloquea hasta que esa tarea termine
+                    // int v = f.get(400, TimeUnit.MILLISECONDS);
 
                     max = Math.max(max, v);
 
@@ -60,13 +68,21 @@ public class CallableFutureDemo {
 
                 } catch (ExecutionException e) {
 
-                    System.out.println("Error en tarea:  DGB" + e.getCause());
+                    System.out.println("DGB Error en tarea: " + e.getCause());
 
+                    /*
+                     * } catch (TimeoutException e) {
+                     * // Solo necesario para TEST 2 (Descomenta si usas f.get con tiempo)
+                     * System.out.println("DGB La tarea tardó demasiado!");
+                     */
+                } catch (CancellationException e) {
+                    // Solo necesario para TEST 3
+                    System.out.println("DGB Tarea cancelada!");
                 }
 
             }
 
-            System.out.println("Mayor número =  DGB" + max);
+            System.out.println("DGB Mayor número = " + max);
 
         } finally {
 

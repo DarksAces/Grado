@@ -14,11 +14,14 @@ public class CompletableFutureDemo {
 
                         .thenApply(CompletableFutureDemo::procesarDatos) // transforma
 
+                        // TEST 2: Encadenamiento extra (Descomenta para añadir un paso)
+                        // .thenApply(data -> data + " | VALIDADO DGB")
+
                         .thenAccept(CompletableFutureDemo::mostrarResultado) // consume
 
                         .exceptionally(ex -> { // errores
 
-                            System.out.println("Error en pipeline:  DGB" + ex);
+                            System.out.println("DGB Error en pipeline: " + ex);
 
                             return null;
 
@@ -30,7 +33,7 @@ public class CompletableFutureDemo {
 
         pipeline.join();
 
-        System.out.println("Pipeline completado. DGB");
+        System.out.println("DGB Pipeline completado.");
 
     }
 
@@ -38,9 +41,15 @@ public class CompletableFutureDemo {
 
         return CompletableFuture.supplyAsync(() -> {
 
+            // TEST 3: Retraso en descarga (Cambia los 400ms)
             sleep(400);
+            // sleep(2000); // Descarga lenta DGB
 
-            System.out.println("Descarga completada (" + Thread.currentThread().getName() + ")");
+            System.out.println("DGB Descarga completada (" + Thread.currentThread().getName() + ")");
+
+            // TEST 1: Simular Error (Descomenta la línea de abajo)
+            // if (true)
+            // throw new RuntimeException("Fallo de red simulado! DGB");
 
             return "datos_crudos: 1,2,3,4,5  DGB";
 
@@ -52,7 +61,7 @@ public class CompletableFutureDemo {
 
         sleep(300);
 
-        System.out.println("Procesamiento completado (" + Thread.currentThread().getName() + ")");
+        System.out.println("DGB Procesamiento completado (" + Thread.currentThread().getName() + ")");
 
         return raw.toUpperCase() + " | OK  DGB";
 
@@ -62,7 +71,7 @@ public class CompletableFutureDemo {
 
         sleep(100);
 
-        System.out.println("Resultado (" + Thread.currentThread().getName() + "):  DGB" + processed);
+        System.out.println("DGB Resultado (" + Thread.currentThread().getName() + "): " + processed);
 
     }
 
