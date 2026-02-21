@@ -54,7 +54,7 @@ public class LockBufferDemo {
 
     public static void main(String[] args) {
         // TEST 1: Capacidad del Buffer (Cambia el 5 por 1 o 10)
-        BoundedBuffer<Integer> buffer = new BoundedBuffer<>(5);
+        BoundedBuffer<Integer> buffer = new BoundedBuffer<>(1);
         Thread producer = new Thread(() -> {
             for (int i = 1; i <= 20; i++) {
                 try {
@@ -78,7 +78,7 @@ public class LockBufferDemo {
                     // Los prints internos ya tienen DGB
 
                     // TEST 2: Velocidad del Consumidor (Cambia los 50ms)
-                    Thread.sleep(50);
+                    Thread.sleep(200);
                     // Thread.sleep(500); // Consumidor lento -> se llena el buffer
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -89,8 +89,8 @@ public class LockBufferDemo {
         producer.start();
 
         // TEST 3: Múltiples Productores (Descomenta estas líneas)
-        // Thread producer2 = new Thread(producer, "Producer 2 DGB");
-        // producer2.start();
+        Thread producer2 = new Thread(producer, "Producer 2 DGB");
+        producer2.start();
 
         consumer.start();
     }

@@ -19,7 +19,7 @@ public class TrafficSwingSim {
     static final int TICK_MS = 80;
     static final int MIN_GAP = 1;
 
-    static final int NUM_ROUNDABOUTS = 60;
+    static final int NUM_ROUNDABOUTS = 100000;
     static final int ROUND_SIZE = 40;
     static final int ROAD_LENGTH = 10;
 

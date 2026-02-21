@@ -26,7 +26,7 @@ public class ThreadPoolDemo {
         try {
 
             // TEST 3: Carga de trabajo (Cambia el 10)
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 100; i++) {
 
                 final int taskId = i;
 
@@ -64,7 +64,7 @@ public class ThreadPoolDemo {
 
             // TEST 2: Estrategia de Cierre (Prueba a bajar el tiempo o comentar el
             // shutdownNow)
-            if (!executor.awaitTermination(3, TimeUnit.SECONDS)) {
+            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
 
                 executor.shutdownNow(); // fuerza
 

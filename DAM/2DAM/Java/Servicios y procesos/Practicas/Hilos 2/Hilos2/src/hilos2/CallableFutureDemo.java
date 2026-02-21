@@ -46,7 +46,7 @@ public class CallableFutureDemo {
             }
 
             // TEST 3: Cancelación Selectiva (Descomenta para probar)
-            // futures.get(2).cancel(true);
+            futures.get(2).cancel(true);
 
             // Recoger resultados (AHORA sí esperamos)
 
@@ -57,8 +57,8 @@ public class CallableFutureDemo {
                 try {
 
                     // TEST 2: Timeout (Intercambia estas líneas para probar)
-                    int v = f.get(); // bloquea hasta que esa tarea termine
-                    // int v = f.get(400, TimeUnit.MILLISECONDS);
+                    // int v = f.get(); // bloquea hasta que esa tarea termine
+                    int v = f.get(400, TimeUnit.MILLISECONDS);
 
                     max = Math.max(max, v);
 
@@ -68,13 +68,12 @@ public class CallableFutureDemo {
 
                 } catch (ExecutionException e) {
 
-                    System.out.println("DGB Error en tarea: " + e.getCause());
+                    // System.out.println("DGB Error en tarea: " + e.getCause());
 
-                    /*
-                     * } catch (TimeoutException e) {
-                     * // Solo necesario para TEST 2 (Descomenta si usas f.get con tiempo)
-                     * System.out.println("DGB La tarea tardó demasiado!");
-                     */
+                } catch (TimeoutException e) {
+                    // Solo necesario para TEST 2 (Descomenta si usas f.get con tiempo)
+                    System.out.println("DGB La tarea tardó demasiado!");
+
                 } catch (CancellationException e) {
                     // Solo necesario para TEST 3
                     System.out.println("DGB Tarea cancelada!");
