@@ -1,0 +1,4 @@
+SpeechRecognition
+PyAudio
+psycopg2-binary
+python-dotenv
