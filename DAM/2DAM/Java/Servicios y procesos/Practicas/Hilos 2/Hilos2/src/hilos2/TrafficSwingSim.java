@@ -19,13 +19,13 @@ public class TrafficSwingSim {
     static final int TICK_MS = 80;
     static final int MIN_GAP = 1;
 
-    static final int NUM_ROUNDABOUTS = 60;
+    static final int NUM_ROUNDABOUTS = 100;
     static final int ROUND_SIZE = 40;
     static final int ROAD_LENGTH = 10;
 
     static final float MAX_SAFE_SPEED = 0.85f;
-    static final long CRASH_DURATION_MS = 5000;
-    static final long IMMUNITY_DURATION_MS = 3000; // Prolongamos un poco DGB
+    static final long CRASH_DURATION_MS = 1000;
+    static final long IMMUNITY_DURATION_MS = 1000; // Prolongamos un poco DGB
     static final float ROUNDABOUT_SPEED_BOOST = 0.25f; // Más turbo DGB
 
     final AtomicInteger arrivedCount = new AtomicInteger(0);
