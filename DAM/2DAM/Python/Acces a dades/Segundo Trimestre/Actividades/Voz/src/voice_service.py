@@ -6,45 +6,69 @@ class VoiceService:
     Patrón Facade para la librería SpeechRecognition.
     Oculta la complejidad de la captura y procesamiento de audio.
     """
-    def __init__(self):
+    def __init__(self, device_indices=None):
         self.recognizer = sr.Recognizer()
-        self.microphone = sr.Microphone()
+        # Si no se pasan índices, usamos el por defecto [None]
+        self.device_indices = device_indices if device_indices else [None]
 
     def escuchar(self):
         """
-        Captura audio del micrófono y lo convierte a texto.
-        Retorna (texto_reconocido, confianza, latencia) o (None, None, None) si falla.
+        Intenta capturar audio rotando por los micrófonos configurados.
         """
-        start_time = time.time()
-        try:
-            with self.microphone as source:
-                print("Ajustando ruido de fondo...")
-                self.recognizer.adjust_for_ambient_noise(source, duration=1)
-                print("Escuchando...")
-                audio = self.recognizer.listen(source, timeout=5, phrase_time_limit=5)
-            
-            end_time = time.time()
-            latencia = round(end_time - start_time, 2)
-            
-            # Usamos Google Web Speech API (requiere internet)
-            # Para una app profesional se podría usar una API key o un motor local
-            result = self.recognizer.recognize_google(audio, language="es-ES", show_all=True)
-            
-            if not result or len(result.get('alternative', [])) == 0:
-                return None, 0, latencia
+        for idx in self.device_indices:
+            start_time = time.time()
+            try:
+                mic = sr.Microphone(device_index=idx)
+                with mic as source:
+                    print(f"Iniciando Micrófono ID {idx if idx is not None else 'Default'}...")
+                    
+                    # SENSIBILIDAD EQUILIBRADA:
+                    # Dejamos que el sistema se calibre solo pero con un punto de partida bajo
+                    self.recognizer.energy_threshold = 100
+                    self.recognizer.dynamic_energy_threshold = True
+                    self.recognizer.pause_threshold = 0.8  # Esperar un poco antes de cortar
+                    
+                    print("Calibrando ruido ambiental (2 segundos)... Por favor, silencio.")
+                    self.recognizer.adjust_for_ambient_noise(source, duration=2)
+                    
+                    print(f"Umbral calibrado: {self.recognizer.energy_threshold}")
+                    print(f"¡ESCÚCHAME AHORA! Di tu frase...")
+                    audio = self.recognizer.listen(source, timeout=10, phrase_time_limit=10)
+                
+                print(f"¡Audio capturado en Micrófono {idx}!")
+                
+                # Guardamos el audio para que el usuario pueda verificarlo
+                with open("debug_audio.wav", "wb") as f:
+                    f.write(audio.get_wav_data())
+                print("DEBUG: Archivo 'debug_audio.wav' generado. Por favor, escúchalo.")
+                
+                end_time = time.time()
+                latencia = round(end_time - start_time, 2)
+                
+                print("Enviando a Google para reconocimiento...")
+                result = self.recognizer.recognize_google(audio, language="es-ES", show_all=True)
+                
+                if not result or len(result.get('alternative', [])) == 0:
+                    print(f"Micrófono {idx}: Audio capturado pero Google no detectó palabras claras.")
+                    # Como prueba de emergencia para ver si el flujo funciona:
+                    # texto, confianza = "prueba_manual", 0.99
+                    continue
 
-            best_match = result['alternative'][0]
-            texto = best_match.get('transcript')
-            confianza = best_match.get('confidence', 0.8) # Google no siempre devuelve confianza
+                best_match = result['alternative'][0]
+                texto = best_match.get('transcript')
+                confianza = best_match.get('confidence', 0.8)
+                print(f"¡Reconocido!: '{texto}' (Confianza: {confianza})")
+                return texto, confianza, latencia
 
-            return texto, confianza, latencia
-
-        except sr.UnknownValueError:
-            print("No se pudo entender el audio")
-            return None, 0, (time.time() - start_time)
-        except sr.RequestError as e:
-            print(f"Error en el servicio de reconocimiento: {e}")
-            return "ERROR_SERVICE", 0, 0
-        except Exception as e:
-            print(f"Error inesperado en VoiceService: {e}")
-            return None, 0, 0
+            except sr.WaitTimeoutError:
+                print(f"Micrófono {idx}: Se agotó el tiempo esperando a que hables.")
+                continue
+            except sr.UnknownValueError:
+                print(f"Micrófono {idx}: Google no pudo entender el audio (prueba a hablar más alto).")
+                continue
+            except Exception as e:
+                print(f"Error técnico en Micrófono {idx}: {e}")
+                continue
+        
+        print("Finalizado intento en todos los micrófonos.")
+        return None, 0, 0

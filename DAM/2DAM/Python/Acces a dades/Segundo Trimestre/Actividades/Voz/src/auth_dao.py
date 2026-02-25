@@ -43,10 +43,16 @@ class AuthDAO:
     def obtener_usuario(self, username):
         conn = self.conexion_singleton.get_conexion()
         cur = conn.cursor()
-        cur.execute("SELECT id, username, passphrase_text, intentos_fallidos, bloqueado_hasta FROM usuarios_voz WHERE username = %s", (username,))
-        usuario = cur.fetchone()
-        cur.close()
-        return usuario
+        try:
+            cur.execute("SELECT id, username, passphrase_text, intentos_fallidos, bloqueado_hasta FROM usuarios_voz WHERE username = %s", (username,))
+            usuario = cur.fetchone()
+            return usuario
+        except Exception as e:
+            conn.rollback()
+            print(f"Error al obtener usuario: {e}")
+            return None
+        finally:
+            cur.close()
 
     def registrar_intento_login(self, usuario_id, status, extra_data=None):
         """
@@ -93,15 +99,21 @@ class AuthDAO:
         """
         conn = self.conexion_singleton.get_conexion()
         cur = conn.cursor()
-        query = """
-        SELECT u.username, l.fecha_intento, l.resultado_json->>'status' as status, l.resultado_json
-        FROM log_accesos_voz l
-        JOIN usuarios_voz u ON l.usuario_id = u.id
-        WHERE l.resultado_json->>'status' = 'FAIL' 
-           OR (l.resultado_json->>'confianza')::float < 0.6
-        ORDER BY l.fecha_intento DESC;
-        """
-        cur.execute(query)
-        logs = cur.fetchall()
-        cur.close()
-        return logs
+        try:
+            query = """
+            SELECT u.username, l.fecha_intento, l.resultado_json->>'status' as status, l.resultado_json
+            FROM log_accesos_voz l
+            JOIN usuarios_voz u ON l.usuario_id = u.id
+            WHERE l.resultado_json->>'status' = 'FAIL' 
+               OR (COALESCE(l.resultado_json->>'confianza', '0'))::float < 0.6
+            ORDER BY l.fecha_intento DESC;
+            """
+            cur.execute(query)
+            logs = cur.fetchall()
+            return logs
+        except Exception as e:
+            conn.rollback()
+            print(f"Error al obtener auditoría: {e}")
+            return []
+        finally:
+            cur.close()

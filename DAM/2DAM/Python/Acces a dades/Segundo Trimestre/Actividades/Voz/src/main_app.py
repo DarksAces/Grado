@@ -10,7 +10,8 @@ class VoiceAuditApp:
         self.root.title("VoiceAudit - Sistema de Acceso Seguro")
         self.root.geometry("600x500")
         
-        self.voice_service = VoiceService()
+        from src.config import Config
+        self.voice_service = VoiceService(device_indices=Config.MIC_INDICES)
         self.dao = AuthDAO()
         
         self.create_widgets()
@@ -50,9 +51,16 @@ class VoiceAuditApp:
             messagebox.showwarning("Error", "Introduce un nombre de usuario")
             return
         
+        import threading
         self.log_message(f"Iniciando registro para {username}...")
+        threading.Thread(target=self._registrar_async, args=(username,), daemon=True).start()
+
+    def _registrar_async(self, username):
         texto, confianza, latencia = self.voice_service.escuchar()
-        
+        # Volvemos al hilo principal para mostrar diálogos y actualizar UI
+        self.root.after(0, lambda: self._registrar_post_escucha(username, texto, confianza, latencia))
+
+    def _registrar_post_escucha(self, username, texto, confianza, latencia):
         if texto:
             confirm = messagebox.askyesno("Confirmar Frase", f"¿Es esta tu frase?\n\"{texto}\"")
             if confirm:
@@ -80,9 +88,16 @@ class VoiceAuditApp:
             messagebox.showerror("Bloqueo", f"Cuenta bloqueada hasta {u_bloqueo}")
             return
 
+        import threading
         self.log_message(f"Intentando login para {username}...")
+        threading.Thread(target=self._login_async, args=(u_id, username, u_passphrase, u_fallos), daemon=True).start()
+
+    def _login_async(self, u_id, username, u_passphrase, u_fallos):
         texto, confianza, latencia = self.voice_service.escuchar()
-        
+        # Volvemos al hilo principal para procesar el resultado
+        self.root.after(0, lambda: self._login_post_escucha(u_id, username, u_passphrase, u_fallos, texto, confianza, latencia))
+
+    def _login_post_escucha(self, u_id, username, u_passphrase, u_fallos, texto, confianza, latencia):
         if not texto:
             self.dao.registrar_intento_login(u_id, "ERROR", {"motivo": "no_voice"})
             self.log_message("Error: No se detectó voz.")
