@@ -45,7 +45,7 @@ class _ClientJoinScreenState extends State<ClientJoinScreen> {
       // Navigate to waiting/game screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => GameScreen(sessionCode: code, isHost: false)),
+        MaterialPageRoute(builder: (_) => GameScreen(sessionCode: code, isHost: false, nickname: name)),
       );
     } catch (e) {
       if (!mounted) return;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_button.dart';
 import 'host_lobby_screen.dart';
 import 'client_join_screen.dart';
+import 'question_creator_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -47,6 +48,17 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const HostLobbyScreen()),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            CustomButton(
+              text: 'Banco de Preguntas (Admin)',
+              color: Colors.orange,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const QuestionCreatorScreen()),
                 );
               },
             ),

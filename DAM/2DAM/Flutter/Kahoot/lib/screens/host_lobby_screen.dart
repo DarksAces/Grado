@@ -13,6 +13,7 @@ class HostLobbyScreen extends StatefulWidget {
 class _HostLobbyScreenState extends State<HostLobbyScreen> {
   final FirebaseService _firebaseService = FirebaseService();
   String? _sessionCode;
+  int? _randomValue;
   bool _isLoading = true;
 
   @override
@@ -58,14 +59,27 @@ class _HostLobbyScreenState extends State<HostLobbyScreen> {
                   children: [
                     const SizedBox(height: 32),
                     const Text('Game Code:', style: TextStyle(fontSize: 24)),
-                    Text(
-                      _sessionCode!,
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 8,
+                      Text(
+                        _sessionCode!,
+                        style: const TextStyle(
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 8,
+                          color: Colors.blue,
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 16),
+                      StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                        stream: _firebaseService.streamSession(_sessionCode!),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) return const SizedBox();
+                          final val = snapshot.data!.data()?['randomValue'];
+                          return Text(
+                            'Valor de Verificación: $val',
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.orange),
+                          );
+                        },
+                      ),
                     const SizedBox(height: 32),
                     const Text('Players joined:', style: TextStyle(fontSize: 18)),
                     Expanded(

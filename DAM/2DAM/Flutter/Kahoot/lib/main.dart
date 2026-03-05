@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyBYNJhstN0NkyiYvlk5-n2CK42VUn4byOA",
+        authDomain: "kahootdgb.firebaseapp.com",
+        databaseURL: "https://kahootdgb-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "kahootdgb",
+        storageBucket: "kahootdgb.firebasestorage.app",
+        messagingSenderId: "393366079750",
+        appId: "1:393366079750:web:f9e87f0a0be645f8b53687",
+        measurementId: "G-CRWVGG652L",
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
+  
   runApp(const MyApp());
 }
 
