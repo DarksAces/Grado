@@ -1,0 +1,44 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Generacion de Informes Profesionales\\WinFormsApp1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{267CABC9-C32A-4627-8A4D-BB97A518F985}|WinFormsApp1.csproj|d:\\github\\grado\\dam\\2dam\\c sharp\\generacion de informes profesionales\\winformsapp1\\setup_db.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
+      "RelativeMoniker": "D:0:0:{267CABC9-C32A-4627-8A4D-BB97A518F985}|WinFormsApp1.csproj|solutionrelative:setup_db.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{267CABC9-C32A-4627-8A4D-BB97A518F985}|WinFormsApp1.csproj|d:\\github\\grado\\dam\\2dam\\c sharp\\generacion de informes profesionales\\winformsapp1\\setup_db.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
+      "RelativeMoniker": "D:0:0:{267CABC9-C32A-4627-8A4D-BB97A518F985}|WinFormsApp1.csproj|solutionrelative:setup_db.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{267CABC9-C32A-4627-8A4D-BB97A518F985}|WinFormsApp1.csproj|d:\\github\\grado\\dam\\2dam\\c sharp\\generacion de informes profesionales\\winformsapp1\\setup_db.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|ResultFrame",
+      "RelativeMoniker": "D:0:0:{267CABC9-C32A-4627-8A4D-BB97A518F985}|WinFormsApp1.csproj|solutionrelative:setup_db.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|ResultFrame"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "setup_db.sql ",
+              "DocumentMoniker": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Generacion de Informes Profesionales\\WinFormsApp1\\setup_db.sql",
+              "RelativeDocumentMoniker": "setup_db.sql",
+              "ToolTip": "D:\\GitHub\\Grado\\DAM\\2DAM\\C Sharp\\Generacion de Informes Profesionales\\WinFormsApp1\\setup_db.sql",
+              "RelativeToolTip": "setup_db.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-03-06T16:24:19.344Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
