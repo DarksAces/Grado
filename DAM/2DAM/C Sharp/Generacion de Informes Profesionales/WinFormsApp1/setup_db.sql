@@ -1,8 +1,8 @@
--- Create Database (Optional, comment out if already exists)
--- CREATE DATABASE InformeProDB;
--- GO
--- USE InformeProDB;
--- GO
+Create Database (Optional, comment out if already exists)
+ CREATE DATABASE InformeProDB;
+ GO
+ USE InformeProDB;
+ GO
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Productos')
 BEGIN

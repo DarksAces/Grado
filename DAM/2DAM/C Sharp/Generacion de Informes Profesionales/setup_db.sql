@@ -1,9 +1,4 @@
-USE master;
-GO
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'InformeProDB')
-BEGIN
-    CREATE DATABASE InformeProDB;
-END
+CREATE DATABASE InformeProDB;
 GO
 USE InformeProDB;
 GO

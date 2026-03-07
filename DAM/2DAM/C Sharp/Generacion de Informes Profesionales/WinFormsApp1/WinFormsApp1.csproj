@@ -15,10 +15,10 @@
 
   <ItemGroup>
     <None Update="Reports\ReporteBasico.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Reports\ReporteAgrupado.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\dsProductos.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
