@@ -5,15 +5,15 @@ import 'dart:math';
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // --- Host Methods ---
+  // --- Métodos del Host ---
 
-  /// Creates a new game session and returns the session code.
+  /// Crea una nueva sesión de juego y devuelve el código de la sesión.
   Future<String> createSession() async {
     String code = _generateRandomCode();
-    // Ensure uniqueness (simple check, in real app loop until unique)
+    // Asegurar unicidad (comprobación simple, en una app real repetir hasta que sea único)
     DocumentSnapshot doc = await _firestore.collection('sessions').doc(code).get();
     if (doc.exists) {
-      // Very unlikely with 6 chars, but recursive retry just in case
+      // Muy poco probable con 6 caracteres, pero reintento recursivo por si acaso
       return createSession();
     }
 
@@ -27,7 +27,7 @@ class FirebaseService {
     return code;
   }
 
-  /// Starts the game for the given session.
+  /// Inicia el juego para la sesión dada.
   Future<void> startGame(String code) async {
     await _firestore.collection('sessions').doc(code).update({
       'status': 'active',
@@ -36,21 +36,21 @@ class FirebaseService {
     });
   }
 
-  /// Updates the current question index in the session.
+  /// Actualiza el índice de la pregunta actual en la sesión.
   Future<void> updateQuestionIndex(String code, int index) async {
     await _firestore.collection('sessions').doc(code).update({
       'currentQuestionIndex': index,
     });
   }
 
-  /// Ends the game session.
+  /// Finaliza la sesión de juego.
   Future<void> endGame(String code) async {
     await _firestore.collection('sessions').doc(code).update({
       'status': 'finished',
     });
   }
 
-  /// Streams the list of players for a session.
+  /// Obtiene un flujo (stream) de la lista de jugadores de una sesión.
   Stream<List<Map<String, dynamic>>> streamPlayers(String code) {
     return _firestore
         .collection('sessions')
@@ -62,14 +62,14 @@ class FirebaseService {
     });
   }
   
-  /// Stream session data
+  /// Obtiene un flujo (stream) de los datos de la sesión.
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamSession(String code) {
     return _firestore.collection('sessions').doc(code).snapshots();
   }
 
-  // --- Client Methods ---
+  // --- Métodos del Cliente ---
 
-  /// Joins a session with a nickname and the verification value.
+  /// Se une a una sesión con un apodo y el valor de verificación.
   Future<void> joinSession(String code, String nickname, int value) async {
     DocumentReference sessionRef = _firestore.collection('sessions').doc(code);
     DocumentSnapshot sessionSnapshot = await sessionRef.get();
@@ -78,13 +78,13 @@ class FirebaseService {
       throw Exception('Session not found');
     }
 
-    // Verify the random value
+    // Verificar el valor aleatorio
     int? serverValue = sessionSnapshot.get('randomValue');
     if (serverValue != value) {
        throw Exception('Incorrect value');
     }
 
-    // Add player
+    // Añadir jugador
     await sessionRef.collection('players').add({
       'name': nickname,
       'score': 0,
@@ -92,7 +92,7 @@ class FirebaseService {
     });
   }
 
-  /// Adds a new question to the global questions collection.
+  /// Añade una nueva pregunta a la colección global de preguntas.
   Future<void> addQuestion(String question, List<String> options, int answerIndex) async {
     await _firestore.collection('questions').add({
       'question': question,
@@ -102,7 +102,7 @@ class FirebaseService {
     });
   }
 
-  /// Fetches all questions from the database.
+  /// Obtiene todas las preguntas de la base de datos.
   Future<List<Map<String, dynamic>>> getQuestions() async {
     QuerySnapshot snapshot = await _firestore.collection('questions').orderBy('createdAt').get();
     return snapshot.docs.map((doc) {
@@ -112,7 +112,7 @@ class FirebaseService {
     }).toList();
   }
 
-  /// Submits an answer for a player in a session.
+  /// Envía una respuesta para un jugador en una sesión.
   Future<void> submitAnswer(String sessionCode, String playerName, bool isCorrect) async {
     var playersRef = _firestore.collection('sessions').doc(sessionCode).collection('players');
     var playerQuery = await playersRef.where('name', isEqualTo: playerName).get();
@@ -128,7 +128,7 @@ class FirebaseService {
     }
   }
 
-  // --- Utilities ---
+  // --- Utilidades ---
 
   String _generateRandomCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -139,6 +139,6 @@ class FirebaseService {
   
   int _generateRandomValue() {
     Random rnd = Random();
-    return rnd.nextInt(100); // 0 to 99
+    return rnd.nextInt(100); // 0 a 99
   }
 }

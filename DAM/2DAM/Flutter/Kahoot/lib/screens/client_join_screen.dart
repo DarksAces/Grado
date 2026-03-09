@@ -42,7 +42,7 @@ class _ClientJoinScreenState extends State<ClientJoinScreen> {
       await _firebaseService.joinSession(code, name, value);
       if (!mounted) return;
       
-      // Navigate to waiting/game screen
+      // Navegar a la pantalla de espera o del juego
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => GameScreen(sessionCode: code, isHost: false, nickname: name)),

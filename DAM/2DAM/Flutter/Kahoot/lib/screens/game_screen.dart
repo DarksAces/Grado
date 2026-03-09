@@ -90,7 +90,7 @@ class _GameScreenState extends State<GameScreen> {
           final String status = data['status'] ?? 'waiting';
           final int currentIndex = data['currentQuestionIndex'];
 
-          // Reset local answer state if the question index changes
+          // Restablecer el estado de la respuesta local si el índice de la pregunta cambia
           if (status == 'active' && currentIndex != _lastIndex) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted) {
@@ -176,9 +176,9 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _buildPlayerView(Map<String, dynamic> question, int index) {
-    // Reset answered status when question changes
-    // This is a bit tricky with StreamBuilder, so we track current index
-    // Simplified: local state reset handled in build logic or useEffect-like
+    // Restablecer el estado de respondido cuando la pregunta cambia
+    // Esto es un poco complicado con StreamBuilder, por lo que rastreamos el índice actual
+    // Simplificado: el reinicio del estado local se maneja en la lógica de construcción o similar a useEffect
     
     return Padding(
       padding: const EdgeInsets.all(16.0),
