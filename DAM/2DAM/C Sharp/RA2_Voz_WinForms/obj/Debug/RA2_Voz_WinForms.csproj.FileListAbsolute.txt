@@ -1,6 +1,0 @@
-C:\Users\Daniel\Documents\GitHub\Grado\DAM\2DAM\C Sharp\RA2_Voz_WinForms\obj\Debug\RA2_Voz_WinForms.csproj.AssemblyReference.cache
-C:\Users\Daniel\Documents\GitHub\Grado\DAM\2DAM\C Sharp\RA2_Voz_WinForms\obj\Debug\RA2_Voz_WinForms.csproj.CoreCompileInputs.cache
-C:\Users\Daniel\Documents\GitHub\Grado\DAM\2DAM\C Sharp\RA2_Voz_WinForms\bin\Debug\RA2_Voz_WinForms.exe
-C:\Users\Daniel\Documents\GitHub\Grado\DAM\2DAM\C Sharp\RA2_Voz_WinForms\bin\Debug\RA2_Voz_WinForms.pdb
-C:\Users\Daniel\Documents\GitHub\Grado\DAM\2DAM\C Sharp\RA2_Voz_WinForms\obj\Debug\RA2_Voz_WinForms.exe
-C:\Users\Daniel\Documents\GitHub\Grado\DAM\2DAM\C Sharp\RA2_Voz_WinForms\obj\Debug\RA2_Voz_WinForms.pdb
