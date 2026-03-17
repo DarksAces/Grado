@@ -69,3 +69,44 @@ node_modules/
 .npm/
 dist/
 .vscode/
+# Java
+*.class
+*.jar
+*.war
+
+# Gradle
+.gradle/
+gradle/caches/
+build/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# OS
+Thumbs.db
+.DS_Store
+
+# === ADDITIONAL RULES ===
+*.zip
+*.apk
+*.aar
+*.tmp
+*.temp
+.gradle/
+**/build/
+**/bin/
+**/out/
+**/target/
+capture/
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Specific Gradle distributions
+**/gradle/wrapper/gradle-*.zip
