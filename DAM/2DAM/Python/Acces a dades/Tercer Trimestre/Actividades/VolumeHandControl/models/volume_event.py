@@ -8,7 +8,7 @@ class VolumeEvent:
     previous_volume: float
     new_volume: float
     finger_distance: float
-    session_id: Optional[str] = None
+    session_id: Optional[int] = None
 
     def to_dict(self):
         return {

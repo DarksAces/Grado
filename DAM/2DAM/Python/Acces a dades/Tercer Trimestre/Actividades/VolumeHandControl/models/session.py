@@ -7,7 +7,7 @@ class Session:
     start_time: datetime
     end_time: Optional[datetime] = None
     duration_seconds: float = 0.0
-    id: Optional[str] = None
+    id: Optional[int] = None
 
     def to_dict(self):
         return {
