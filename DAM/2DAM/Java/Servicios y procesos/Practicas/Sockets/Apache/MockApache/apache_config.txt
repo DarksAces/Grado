@@ -1,0 +1,4 @@
+# Apache Mock Configuration
+Listen 8080
+DocumentRoot "d:\Documentos\GitHub\Grado\DAM\2DAM\Java\Servicios y procesos\Practicas\Sockets\Apache\MockApache"
+ServerName localhost

@@ -1,24 +1,39 @@
 package com.example.videogame;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        setContentView(R.layout.activity_setup);
+
+        EditText etName = findViewById(R.id.etName);
+        RadioGroup rgDifficulty = findViewById(R.id.rgDifficulty);
+        Button btnStart = findViewById(R.id.btnStart);
+
+        btnStart.setOnClickListener(v -> {
+            String name = etName.getText().toString().trim();
+            if (name.isEmpty()) {
+                Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int checkedId = rgDifficulty.getCheckedRadioButtonId();
+            int level = (checkedId == R.id.rbLevel1) ? 1 : 2;
+
+            Intent intent = new Intent(MainActivity.this, GameActivity.class);
+            intent.putExtra("PLAYER_NAME", name);
+            intent.putExtra("DIFFICULTY_LEVEL", level);
+            startActivity(intent);
         });
     }
 }
