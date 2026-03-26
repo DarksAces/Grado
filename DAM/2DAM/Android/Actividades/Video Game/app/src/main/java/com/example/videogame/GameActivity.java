@@ -8,30 +8,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity {
 
-    private GameView gameView;
+    private GameView gameView_dgb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        String playerName = getIntent().getStringExtra("PLAYER_NAME");
-        int difficultyLevel = getIntent().getIntExtra("DIFFICULTY_LEVEL", 1);
+        String playerName_dgb = getIntent().getStringExtra("PLAYER_NAME");
+        int difficultyLevel_dgb = getIntent().getIntExtra("DIFFICULTY_LEVEL", 1);
 
-        FrameLayout container = findViewById(R.id.gameContainer);
-        gameView = new GameView(this, playerName, difficultyLevel);
-        container.addView(gameView);
+        FrameLayout container_dgb = findViewById(R.id.gameContainer);
+        gameView_dgb = new GameView(this, playerName_dgb, difficultyLevel_dgb);
+        container_dgb.addView(gameView_dgb);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        gameView.pause();
+        gameView_dgb.pause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        gameView.resume();
+        gameView_dgb.resume();
     }
 }

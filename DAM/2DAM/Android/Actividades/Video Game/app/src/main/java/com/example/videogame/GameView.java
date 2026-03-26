@@ -22,23 +22,23 @@ import java.util.Random;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 
-    private Thread gameThread;
-    private boolean isRunning;
+    private Thread gameThread_dgb;
+    private boolean isRunning_dgb;
     private SurfaceHolder holder;
     private Canvas canvas;
 
     private Player player;
-    private List<Enemy> enemies;
-    private List<Bullet> playerBullets;
-    private List<Bullet> enemyBullets;
-    private List<Explosion> explosions;
+    private List<Enemy> enemies_dgb;
+    private List<Bullet> playerBullets_dgb;
+    private List<Bullet> enemyBullets_dgb;
+    private List<Explosion> explosions_dgb;
 
     private Bitmap playerBitmap, enemyBitmap, bulletBitmap, backgroundBitmap;
-    private String playerName;
-    private int difficultyLevel;
-    private int score = 0;
+    private String playerName_dgb;
+    private int difficultyLevel_dgb;
+    private int score_dgb = 0;
     private float enemySpeedBase = 5f;
-    private long startTime;
+    private long startTime_dgb;
 
     private Random random = new Random();
     private ToneGenerator toneGenerator;
@@ -47,25 +47,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     private boolean isMovingUp = false;
     private boolean isMovingDown = false;
 
-    public GameView(Context context, String playerName, int difficultyLevel) {
+    public GameView(Context context, String playerName_dgb, int difficultyLevel_dgb) {
         super(context);
-        this.playerName = playerName;
-        this.difficultyLevel = difficultyLevel;
+        this.playerName_dgb = playerName_dgb;
+        this.difficultyLevel_dgb = difficultyLevel_dgb;
         this.holder = getHolder();
         this.holder.addCallback(this);
 
         this.playerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player_ship);
+        this.playerBitmap = Bitmap.createScaledBitmap(playerBitmap, 100, 100, true);
+
         this.enemyBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.enemy_ship);
+        this.enemyBitmap = Bitmap.createScaledBitmap(enemyBitmap, 180, 180, true);
+
         this.bulletBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.laser_bullet);
+        this.bulletBitmap = Bitmap.createScaledBitmap(bulletBitmap, 100, 50, true);
+
         this.backgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.space_background);
 
-        this.enemies = new ArrayList<>();
-        this.playerBullets = new ArrayList<>();
-        this.enemyBullets = new ArrayList<>();
-        this.explosions = new ArrayList<>();
+        this.enemies_dgb = new ArrayList<>();
+        this.playerBullets_dgb = new ArrayList<>();
+        this.enemyBullets_dgb = new ArrayList<>();
+        this.explosions_dgb = new ArrayList<>();
 
         this.toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        this.startTime = System.currentTimeMillis();
+        this.startTime_dgb = System.currentTimeMillis();
 
         setFocusable(true);
         requestFocus();
@@ -73,8 +79,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        player = new Player(playerBitmap, getWidth() - playerBitmap.getWidth() - 50, getHeight() / 2f);
-        resume();
+        if (getWidth() > 0) {
+            player = new Player(playerBitmap, getWidth() - playerBitmap.getWidth() - 100, getHeight() / 2f);
+            resume();
+        }
     }
 
     @Override
@@ -86,23 +94,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     }
 
     public void pause() {
-        isRunning = false;
+        isRunning_dgb = false;
         try {
-            if (gameThread != null) gameThread.join();
+            if (gameThread_dgb != null) gameThread_dgb.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     public void resume() {
-        isRunning = true;
-        gameThread = new Thread(this);
-        gameThread.start();
+        isRunning_dgb = true;
+        gameThread_dgb = new Thread(this);
+        gameThread_dgb.start();
     }
 
     @Override
     public void run() {
-        while (isRunning) {
+        while (isRunning_dgb) {
             if (!holder.getSurface().isValid()) continue;
 
             update();
@@ -121,26 +129,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         if (isMovingUp) player.move(-15, getHeight());
         if (isMovingDown) player.move(15, getHeight());
 
-        // Increase speed over time
-        long elapsed = (System.currentTimeMillis() - startTime) / 1000;
-        float currentEnemySpeed = enemySpeedBase + (elapsed * 0.3f);
+        // Increase speed over time - MUCH FASTER for video demo
+        long elapsed = (System.currentTimeMillis() - startTime_dgb) / 1000;
+        float currentEnemySpeed = enemySpeedBase + (elapsed * 1.5f); // Increased from 0.3f
 
-        // Spawn enemies
-        if (random.nextInt(100) < (2 + difficultyLevel * 2)) {
-            float y = random.nextInt(getHeight() - enemyBitmap.getHeight());
-            enemies.add(new Enemy(enemyBitmap, -enemyBitmap.getWidth(), y, currentEnemySpeed, difficultyLevel == 2));
+        // Spawn enemies - increases over time
+        int spawnChance = (int) (2 + difficultyLevel_dgb * 2 + (elapsed / 2));
+        if (random.nextInt(100) < Math.min(25, spawnChance)) {
+            float y = random.nextInt(Math.max(1, getHeight() - enemyBitmap.getHeight()));
+            synchronized (enemies_dgb) {
+                enemies_dgb.add(new Enemy(enemyBitmap, -enemyBitmap.getWidth(), y, currentEnemySpeed, difficultyLevel_dgb == 2));
+            }
         }
 
         // Update enemies
-        synchronized (enemies) {
-            Iterator<Enemy> enemyIterator = enemies.iterator();
+        synchronized (enemies_dgb) {
+            Iterator<Enemy> enemyIterator = enemies_dgb.iterator();
             while (enemyIterator.hasNext()) {
                 Enemy enemy = enemyIterator.next();
                 enemy.update();
 
                 if (enemy.canShoot() && random.nextInt(100) < 1) {
-                    synchronized (enemyBullets) {
-                        enemyBullets.add(new Bullet(bulletBitmap, enemy.getX() + enemy.width, enemy.getY() + enemy.height / 2f, 15f));
+                    synchronized (enemyBullets_dgb) {
+                        enemyBullets_dgb.add(new Bullet(bulletBitmap, enemy.getX() + enemy.width, enemy.getY() + enemy.height / 2f, 15f));
                     }
                 }
 
@@ -154,25 +165,27 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         }
 
         // Update player bullets
-        synchronized (playerBullets) {
-            Iterator<Bullet> bulletIterator = playerBullets.iterator();
+        synchronized (playerBullets_dgb) {
+            Iterator<Bullet> bulletIterator = playerBullets_dgb.iterator();
             while (bulletIterator.hasNext()) {
                 Bullet b = bulletIterator.next();
-                b.x -= 25;
+                b.x -= 25; // Move LEFT
                 if (b.x < -b.width) {
                     bulletIterator.remove();
                     continue;
                 }
 
-                synchronized (enemies) {
-                    Iterator<Enemy> eIter = enemies.iterator();
+                synchronized (enemies_dgb) {
+                    Iterator<Enemy> eIter = enemies_dgb.iterator();
                     while (eIter.hasNext()) {
                         Enemy e = eIter.next();
                         if (Rect.intersects(b.getBounds(), e.getBounds())) {
-                            explosions.add(new Explosion(e.getX() + e.width/2, e.getY() + e.height/2));
+                            synchronized (explosions_dgb) {
+                                explosions_dgb.add(new Explosion(e.getX() + e.width / 2, e.getY() + e.height / 2));
+                            }
                             eIter.remove();
                             bulletIterator.remove();
-                            score += 10;
+                            score_dgb += 10;
                             break;
                         }
                     }
@@ -181,8 +194,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         }
 
         // Update enemy bullets
-        synchronized (enemyBullets) {
-            Iterator<Bullet> ebIterator = enemyBullets.iterator();
+        synchronized (enemyBullets_dgb) {
+            Iterator<Bullet> ebIterator = enemyBullets_dgb.iterator();
             while (ebIterator.hasNext()) {
                 Bullet b = ebIterator.next();
                 b.update();
@@ -196,11 +209,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         }
 
         // Update explosions
-        Iterator<Explosion> exIter = explosions.iterator();
-        while (exIter.hasNext()) {
-            Explosion ex = exIter.next();
-            ex.update();
-            if (ex.isFinished()) exIter.remove();
+        synchronized (explosions_dgb) {
+            Iterator<Explosion> exIter = explosions_dgb.iterator();
+            while (exIter.hasNext()) {
+                Explosion ex = exIter.next();
+                ex.update();
+                if (ex.isFinished()) exIter.remove();
+            }
         }
     }
 
@@ -210,29 +225,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
             canvas.drawBitmap(backgroundBitmap, null, new Rect(0, 0, getWidth(), getHeight()), null);
 
             player.draw(canvas);
-            synchronized (enemies) { for (Enemy e : enemies) e.draw(canvas); }
-            synchronized (playerBullets) { for (Bullet b : playerBullets) b.draw(canvas); }
-            synchronized (enemyBullets) { for (Bullet b : enemyBullets) b.draw(canvas); }
-            for (Explosion ex : explosions) ex.draw(canvas);
+            synchronized (enemies_dgb) { for (Enemy e : enemies_dgb) e.draw(canvas); }
+            synchronized (playerBullets_dgb) { for (Bullet b : playerBullets_dgb) b.draw(canvas); }
+            synchronized (enemyBullets_dgb) { for (Bullet b : enemyBullets_dgb) b.draw(canvas); }
+            synchronized (explosions_dgb) { for (Explosion ex : explosions_dgb) ex.draw(canvas); }
 
             Paint paint = new Paint();
             paint.setColor(Color.WHITE);
             paint.setTextSize(50);
             paint.setFakeBoldText(true);
-            canvas.drawText("Player: " + playerName, 50, 70, paint);
-            canvas.drawText("Score: " + score, 50, 130, paint);
+            canvas.drawText("Player: " + playerName_dgb, 50, 70, paint);
+            canvas.drawText("Score: " + score_dgb, 50, 130, paint);
 
             holder.unlockCanvasAndPost(canvas);
         }
     }
 
     private void gameOver() {
-        isRunning = false;
+        isRunning_dgb = false;
         toneGenerator.startTone(ToneGenerator.TONE_SUP_ERROR, 500);
         Intent intent = new Intent(getContext(), GameOverActivity.class);
-        intent.putExtra("PLAYER_NAME", playerName);
-        intent.putExtra("SCORE", score);
-        intent.putExtra("DIFFICULTY_LEVEL", difficultyLevel);
+        intent.putExtra("PLAYER_NAME", playerName_dgb);
+        intent.putExtra("SCORE", score_dgb);
+        intent.putExtra("DIFFICULTY_LEVEL", difficultyLevel_dgb);
         getContext().startActivity(intent);
     }
 
@@ -278,8 +293,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     }
 
     private void shoot() {
-        synchronized (playerBullets) {
-            playerBullets.add(new Bullet(bulletBitmap, player.getX() - bulletBitmap.getWidth(), player.getY() + player.height / 2f, -25f));
+        synchronized (playerBullets_dgb) {
+            playerBullets_dgb.add(new Bullet(bulletBitmap, player.getX() - bulletBitmap.getWidth(), player.getY() + player.height / 2f, -25f));
         }
         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 100);
     }

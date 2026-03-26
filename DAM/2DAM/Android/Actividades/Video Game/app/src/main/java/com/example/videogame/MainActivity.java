@@ -16,24 +16,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
-        EditText etName = findViewById(R.id.etName);
-        RadioGroup rgDifficulty = findViewById(R.id.rgDifficulty);
-        Button btnStart = findViewById(R.id.btnStart);
+        EditText etName_dgb = findViewById(R.id.etName);
+        RadioGroup rgDifficulty_dgb = findViewById(R.id.rgDifficulty);
+        Button btnStart_dgb = findViewById(R.id.btnStart);
 
-        btnStart.setOnClickListener(v -> {
-            String name = etName.getText().toString().trim();
+        btnStart_dgb.setOnClickListener(v -> {
+            String name = etName_dgb.getText().toString().trim();
             if (name.isEmpty()) {
                 Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            int checkedId = rgDifficulty.getCheckedRadioButtonId();
-            int level = (checkedId == R.id.rbLevel1) ? 1 : 2;
+            int checkedId = rgDifficulty_dgb.getCheckedRadioButtonId();
+            int level_dgb = (checkedId == R.id.rbLevel1) ? 1 : 2;
 
-            Intent intent = new Intent(MainActivity.this, GameActivity.class);
-            intent.putExtra("PLAYER_NAME", name);
-            intent.putExtra("DIFFICULTY_LEVEL", level);
-            startActivity(intent);
+            Intent intent_dgb = new Intent(MainActivity.this, GameActivity.class);
+            intent_dgb.putExtra("PLAYER_NAME", name);
+            intent_dgb.putExtra("DIFFICULTY_LEVEL", level_dgb);
+            startActivity(intent_dgb);
         });
     }
 }
