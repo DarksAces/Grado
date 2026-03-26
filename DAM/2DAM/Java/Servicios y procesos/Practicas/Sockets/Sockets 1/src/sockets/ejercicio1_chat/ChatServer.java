@@ -42,6 +42,10 @@ public class ChatServer {
                 
                 String message;
                 while ((message = in.readLine()) != null) {
+                    if (message.equalsIgnoreCase("bye") || message.equalsIgnoreCase("exit")) {
+                        out.println("[DZF] Disconnecting...");
+                        break;
+                    }
                     System.out.println("[DZF] [Client " + socket.getInetAddress() + "]: " + message);
                     broadcastMessage("[DZF] Client " + socket.getInetAddress() + ": " + message, out);
                 }
