@@ -9,8 +9,8 @@ public class ChatClient {
 
     public static void main(String[] args) {
         try (Socket socket = new Socket(HOST, PORT)) {
-            System.out.println("[DZF] Connected to the chat server.");
-            System.out.println("[DZF] Type 'quit' or 'exit' to gracefully disconnect.");
+            System.out.println("[DGB] Connected to the chat server.");
+            System.out.println("[DGB] Type 'quit' or 'exit' to gracefully disconnect.");
 
             Thread readerThread = new Thread(() -> {
                 try {
@@ -21,7 +21,7 @@ public class ChatClient {
                     }
                 } catch (IOException ex) {
                     if (!socket.isClosed()) {
-                        System.out.println("[DZF] Connection to server lost or closed.");
+                        System.out.println("[DGB] Connection to server lost or closed.");
                     }
                 }
             });
@@ -34,7 +34,7 @@ public class ChatClient {
             while (true) {
                 text = consoleReader.readLine();
                 if (text == null || "quit".equalsIgnoreCase(text.trim()) || "exit".equalsIgnoreCase(text.trim())) {
-                    System.out.println("[DZF] Exiting chat...");
+                    System.out.println("[DGB] Exiting chat...");
                     break;
                 }
                 out.println(text);
@@ -43,9 +43,9 @@ public class ChatClient {
             socket.close();
             
         } catch (UnknownHostException ex) {
-            System.err.println("[DZF] Server not found: " + ex.getMessage());
+            System.err.println("[DGB] Server not found: " + ex.getMessage());
         } catch (IOException ex) {
-            System.err.println("[DZF] I/O Error: " + ex.getMessage());
+            System.err.println("[DGB] I/O Error: " + ex.getMessage());
         }
     }
 }

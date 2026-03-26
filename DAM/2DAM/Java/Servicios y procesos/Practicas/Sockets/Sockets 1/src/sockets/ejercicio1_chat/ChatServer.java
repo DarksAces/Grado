@@ -9,16 +9,16 @@ public class ChatServer {
     private static Set<PrintWriter> clientWriters = Collections.synchronizedSet(new HashSet<>());
 
     public static void main(String[] args) {
-        System.out.println("[DZF] Chat Server is listening on port " + PORT);
+        System.out.println("[DGB] Chat Server is listening on port " + PORT);
         
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("[DZF] New client connected: " + clientSocket.getInetAddress().getHostAddress());
+                System.out.println("[DGB] New client connected: " + clientSocket.getInetAddress().getHostAddress());
                 new ClientHandler(clientSocket).start();
             }
         } catch (IOException ex) {
-            System.err.println("[DZF] Server exception: " + ex.getMessage());
+            System.err.println("[DGB] Server exception: " + ex.getMessage());
             ex.printStackTrace();
         }
     }
@@ -43,14 +43,14 @@ public class ChatServer {
                 String message;
                 while ((message = in.readLine()) != null) {
                     if (message.equalsIgnoreCase("bye") || message.equalsIgnoreCase("exit")) {
-                        out.println("[DZF] Disconnecting...");
+                        out.println("[DGB] Disconnecting...");
                         break;
                     }
-                    System.out.println("[DZF] [Client " + socket.getInetAddress() + "]: " + message);
-                    broadcastMessage("[DZF] Client " + socket.getInetAddress() + ": " + message, out);
+                    System.out.println("[DGB] [Client " + socket.getInetAddress() + "]: " + message);
+                    broadcastMessage("[DGB] Client " + socket.getInetAddress() + ": " + message, out);
                 }
             } catch (IOException e) {
-                System.out.println("[DZF] Error handling client: " + e.getMessage());
+                System.out.println("[DGB] Error handling client: " + e.getMessage());
             } finally {
                 if (out != null) {
                     clientWriters.remove(out);
@@ -60,7 +60,7 @@ public class ChatServer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                System.out.println("[DZF] Client disconnected.");
+                System.out.println("[DGB] Client disconnected.");
             }
         }
 

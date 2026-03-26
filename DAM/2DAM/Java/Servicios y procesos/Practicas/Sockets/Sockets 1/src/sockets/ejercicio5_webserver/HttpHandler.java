@@ -25,7 +25,7 @@ public class HttpHandler implements Runnable {
             if (requestLine == null || requestLine.isEmpty()) return;
 
             // Log access tentatively
-            System.out.println("[DZF] Incoming: " + requestLine);
+            System.out.println("[DGB] Incoming: " + requestLine);
             
             // Parse headers to find "Host: "
             String hostHeader = "localhost";

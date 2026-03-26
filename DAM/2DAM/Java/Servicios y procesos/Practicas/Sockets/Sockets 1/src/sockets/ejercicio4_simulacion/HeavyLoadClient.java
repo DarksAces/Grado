@@ -13,8 +13,8 @@ public class HeavyLoadClient {
     private static final List<Socket> openSockets = Collections.synchronizedList(new ArrayList<>());
 
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("[DZF] === Heavy Load Generator ===");
-        System.out.println("[DZF] Will attempt to open " + NUM_CONNECTIONS + " concurrent connections to port " + PORT);
+        System.out.println("[DGB] === Heavy Load Generator ===");
+        System.out.println("[DGB] Will attempt to open " + NUM_CONNECTIONS + " concurrent connections to port " + PORT);
         
         ExecutorService executor = Executors.newFixedThreadPool(100);
         
@@ -27,7 +27,7 @@ public class HeavyLoadClient {
                     openSockets.add(socket);
                     
                     if (id % 100 == 0) {
-                        System.out.println("[DZF] Successfully opened " + openSockets.size() + " connections...");
+                        System.out.println("[DGB] Successfully opened " + openSockets.size() + " connections...");
                     }
                     
                     OutputStream out = socket.getOutputStream();
@@ -38,7 +38,7 @@ public class HeavyLoadClient {
                         Thread.sleep(10000);
                     }
                 } catch (Exception e) {
-                    System.err.println("[DZF] Failed to connect or send data on connection #" + id + ": " + e.getMessage());
+                    System.err.println("[DGB] Failed to connect or send data on connection #" + id + ": " + e.getMessage());
                 }
             });
         }

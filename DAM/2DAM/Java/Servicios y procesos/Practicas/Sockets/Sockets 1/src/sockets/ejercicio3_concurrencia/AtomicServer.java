@@ -12,8 +12,8 @@ public class AtomicServer {
     private static AtomicInteger ticketCounter = new AtomicInteger(1);
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Atomic Ticket Server ===");
-        System.out.println("[DZF] Listening on port " + PORT);
+        System.out.println("[DGB] === Atomic Ticket Server ===");
+        System.out.println("[DGB] Listening on port " + PORT);
         
         ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS);
 

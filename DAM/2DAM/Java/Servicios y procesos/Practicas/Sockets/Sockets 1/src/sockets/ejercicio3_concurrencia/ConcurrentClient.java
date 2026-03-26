@@ -11,8 +11,8 @@ public class ConcurrentClient {
     private static final int NUM_CLIENTS = 2000;
 
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("[DZF] === Concurrent Ticket Client ===");
-        System.out.println("[DZF] Requesting " + NUM_CLIENTS + " tickets concurrently...");
+        System.out.println("[DGB] === Concurrent Ticket Client ===");
+        System.out.println("[DGB] Requesting " + NUM_CLIENTS + " tickets concurrently...");
         
         ExecutorService executor = Executors.newFixedThreadPool(500);
         List<Callable<String>> tasks = new ArrayList<>();
@@ -42,7 +42,7 @@ public class ConcurrentClient {
                 String ticket = f.get();
                 if (ticket != null && ticket.startsWith("Ticket #")) {
                     if (!tickets.add(ticket)) {
-                        System.out.println("[DZF] DUPLICATE DETECTED: " + ticket);
+                        System.out.println("[DGB] DUPLICATE DETECTED: " + ticket);
                         duplicates++;
                     }
                 }
@@ -50,16 +50,16 @@ public class ConcurrentClient {
             }
         }
         
-        System.out.println("[DZF] =========================================");
-        System.out.println("[DZF] Finished.");
-        System.out.println("[DZF] Total requests sent: " + NUM_CLIENTS);
-        System.out.println("[DZF] Unique tickets received: " + tickets.size());
-        System.out.println("[DZF] Total DUPLICATED tickets: " + duplicates);
+        System.out.println("[DGB] =========================================");
+        System.out.println("[DGB] Finished.");
+        System.out.println("[DGB] Total requests sent: " + NUM_CLIENTS);
+        System.out.println("[DGB] Unique tickets received: " + tickets.size());
+        System.out.println("[DGB] Total DUPLICATED tickets: " + duplicates);
         
         if (duplicates > 0) {
-            System.err.println("[DZF] WARNING: Race condition detected!");
+            System.err.println("[DGB] WARNING: Race condition detected!");
         } else {
-            System.out.println("[DZF] SUCCESS: No duplicates found!");
+            System.out.println("[DGB] SUCCESS: No duplicates found!");
         }
     }
 }

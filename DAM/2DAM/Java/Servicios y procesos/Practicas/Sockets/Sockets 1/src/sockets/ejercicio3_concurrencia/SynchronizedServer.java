@@ -12,8 +12,8 @@ public class SynchronizedServer {
     private static final Object lock = new Object();
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Synchronized Ticket Server ===");
-        System.out.println("[DZF] Listening on port " + PORT);
+        System.out.println("[DGB] === Synchronized Ticket Server ===");
+        System.out.println("[DGB] Listening on port " + PORT);
         
         ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS);
 

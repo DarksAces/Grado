@@ -9,8 +9,8 @@ public class ApacheSimulator {
     private static AtomicInteger activeThreads = new AtomicInteger(0);
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Apache Simulator (Thread-per-Connection) ===");
-        System.out.println("[DZF] Listening on port " + PORT + " using blocking I/O...");
+        System.out.println("[DGB] === Apache Simulator (Thread-per-Connection) ===");
+        System.out.println("[DGB] Listening on port " + PORT + " using blocking I/O...");
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
@@ -24,7 +24,7 @@ public class ApacheSimulator {
 
     private static void handleConnection(Socket socket) {
         int threads = activeThreads.incrementAndGet();
-        if (threads % 100 == 0) System.out.println("[DZF] Active Threads (Connections): " + threads);
+        if (threads % 100 == 0) System.out.println("[DGB] Active Threads (Connections): " + threads);
         
         try (
             InputStream in = socket.getInputStream();
@@ -34,7 +34,7 @@ public class ApacheSimulator {
             while ((data = in.read()) != -1) {
             }
 
-            String response = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\n[DZF] Hello from Apache Simulator!";
+            String response = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\n[DGB] Hello from Apache Simulator!";
             out.write(response.getBytes());
             out.flush();
 

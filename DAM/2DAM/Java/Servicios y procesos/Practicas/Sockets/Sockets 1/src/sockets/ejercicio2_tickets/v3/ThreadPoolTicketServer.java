@@ -10,20 +10,20 @@ public class ThreadPoolTicketServer {
     private static int ticketCounter = 1;
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Thread Pool Ticket Server (V3) ===");
-        System.out.println("[DZF] Listening on port " + PORT + " with max " + MAX_THREADS + " threads.");
+        System.out.println("[DGB] === Thread Pool Ticket Server (V3) ===");
+        System.out.println("[DGB] Listening on port " + PORT + " with max " + MAX_THREADS + " threads.");
         
         ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS);
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("[DZF] Client connected: " + clientSocket.getInetAddress() + " - Dispatching to pool.");
+                System.out.println("[DGB] Client connected: " + clientSocket.getInetAddress() + " - Dispatching to pool.");
                 
                 threadPool.submit(() -> handleClient(clientSocket));
             }
         } catch (IOException e) {
-            System.err.println("[DZF] Server error: " + e.getMessage());
+            System.err.println("[DGB] Server error: " + e.getMessage());
             e.printStackTrace();
         } finally {
             threadPool.shutdown();
@@ -43,9 +43,9 @@ public class ThreadPoolTicketServer {
                 out.println("Unknown command.");
             }
             
-            System.out.println("[DZF] Finished serving client. Closing connection.");
+            System.out.println("[DGB] Finished serving client. Closing connection.");
         } catch (IOException e) {
-            System.err.println("[DZF] Error handling client: " + e.getMessage());
+            System.err.println("[DGB] Error handling client: " + e.getMessage());
         } finally {
             try {
                 if (!clientSocket.isClosed()) {

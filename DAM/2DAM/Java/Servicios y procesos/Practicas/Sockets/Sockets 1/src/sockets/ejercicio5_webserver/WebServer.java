@@ -12,16 +12,16 @@ public class WebServer {
     private static ExecutorService threadPool = Executors.newFixedThreadPool(150);
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Java Socket Web Server (Apache Clone) ===");
+        System.out.println("[DGB] === Java Socket Web Server (Apache Clone) ===");
         
         try {
             // Load configuration
             config.load("conf/httpd.conf");
-            System.out.println("[DZF] Config loaded from conf/httpd.conf");
+            System.out.println("[DGB] Config loaded from conf/httpd.conf");
             
             // Setup Logger
             Logger.configure(config.customLog, config.errorLog);
-            System.out.println("[DZF] Logs configured.");
+            System.out.println("[DGB] Logs configured.");
 
             // Start listeners based on configured Listen ports
             for (int port : config.listenPorts) {
@@ -39,7 +39,7 @@ public class WebServer {
 
     private static void startPlainServer(int port) {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("[DZF] HTTP Server listening on port " + port);
+            System.out.println("[DGB] HTTP Server listening on port " + port);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 threadPool.submit(new HttpHandler(clientSocket, config));
@@ -65,7 +65,7 @@ public class WebServer {
 
             SSLServerSocketFactory sslFactory = sslContext.getServerSocketFactory();
             try (SSLServerSocket sslServerSocket = (SSLServerSocket) sslFactory.createServerSocket(port)) {
-                System.out.println("[DZF] HTTPS Server listening on port " + port);
+                System.out.println("[DGB] HTTPS Server listening on port " + port);
                 while (true) {
                     Socket clientSocket = sslServerSocket.accept();
                     threadPool.submit(new HttpHandler(clientSocket, config));

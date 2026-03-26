@@ -8,12 +8,12 @@ public class TicketClient {
     private static final int PORT = 9001;
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Ticket Client ===");
-        System.out.println("[DZF] Connecting to server on port " + PORT + "...");
+        System.out.println("[DGB] === Ticket Client ===");
+        System.out.println("[DGB] Connecting to server on port " + PORT + "...");
         
         try (Socket socket = new Socket(HOST, PORT)) {
-            System.out.println("[DZF] Connected!");
-            System.out.println("[DZF] Type 'Dame ticket' to get a ticket or 'quit' to exit.");
+            System.out.println("[DGB] Connected!");
+            System.out.println("[DGB] Type 'Dame ticket' to get a ticket or 'quit' to exit.");
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -22,7 +22,7 @@ public class TicketClient {
             String text;
             while ((text = consoleReader.readLine()) != null) {
                 if ("quit".equalsIgnoreCase(text.trim()) || "exit".equalsIgnoreCase(text.trim())) {
-                    System.out.println("[DZF] Exiting...");
+                    System.out.println("[DGB] Exiting...");
                     break;
                 }
                 
@@ -30,14 +30,14 @@ public class TicketClient {
                 
                 String response = in.readLine();
                 if (response == null) {
-                    System.out.println("[DZF] Server disconnected.");
+                    System.out.println("[DGB] Server disconnected.");
                     break;
                 }
                 
-                System.out.println("[DZF] Server says: " + response);
+                System.out.println("[DGB] Server says: " + response);
             }
         } catch (IOException e) {
-            System.err.println("[DZF] Communication error: " + e.getMessage());
+            System.err.println("[DGB] Communication error: " + e.getMessage());
         }
     }
 }

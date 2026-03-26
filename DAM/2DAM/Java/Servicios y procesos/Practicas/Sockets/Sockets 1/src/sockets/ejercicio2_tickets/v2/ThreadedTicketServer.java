@@ -8,18 +8,18 @@ public class ThreadedTicketServer {
     private static int ticketCounter = 1;
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Threaded Ticket Server (V2) ===");
-        System.out.println("[DZF] Listening on port " + PORT);
+        System.out.println("[DGB] === Threaded Ticket Server (V2) ===");
+        System.out.println("[DGB] Listening on port " + PORT);
         
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("[DZF] Client connected: " + clientSocket.getInetAddress());
+                System.out.println("[DGB] Client connected: " + clientSocket.getInetAddress());
                 
                 new Thread(() -> handleClient(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.println("[DZF] Server error: " + e.getMessage());
+            System.err.println("[DGB] Server error: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -37,9 +37,9 @@ public class ThreadedTicketServer {
                 out.println("Unknown command.");
             }
             
-            System.out.println("[DZF] Finished serving client. Closing connection.");
+            System.out.println("[DGB] Finished serving client. Closing connection.");
         } catch (IOException e) {
-            System.err.println("[DZF] Error handling client: " + e.getMessage());
+            System.err.println("[DGB] Error handling client: " + e.getMessage());
         } finally {
             try {
                 if (!clientSocket.isClosed()) {

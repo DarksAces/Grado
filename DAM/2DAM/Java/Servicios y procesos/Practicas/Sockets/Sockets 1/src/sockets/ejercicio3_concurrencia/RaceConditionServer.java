@@ -12,8 +12,8 @@ public class RaceConditionServer {
     private static int ticketCounter = 1;
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Race Condition Server ===");
-        System.out.println("[DZF] Listening on port " + PORT);
+        System.out.println("[DGB] === Race Condition Server ===");
+        System.out.println("[DGB] Listening on port " + PORT);
         
         ExecutorService threadPool = Executors.newFixedThreadPool(MAX_THREADS);
 

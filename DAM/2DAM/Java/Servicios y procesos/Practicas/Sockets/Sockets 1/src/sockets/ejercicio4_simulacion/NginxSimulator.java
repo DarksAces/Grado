@@ -12,8 +12,8 @@ public class NginxSimulator {
     private static int activeConnections = 0;
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Nginx Simulator (Event-Driven NIO) ===");
-        System.out.println("[DZF] Listening on port " + PORT + " using non-blocking I/O...");
+        System.out.println("[DGB] === Nginx Simulator (Event-Driven NIO) ===");
+        System.out.println("[DGB] Listening on port " + PORT + " using non-blocking I/O...");
 
         try {
             Selector selector = Selector.open();
@@ -39,7 +39,7 @@ public class NginxSimulator {
                         
                         activeConnections++;
                         if (activeConnections % 100 == 0) {
-                            System.out.println("[DZF] Active Connections: " + activeConnections + " (Running on 1 Thread)");
+                            System.out.println("[DGB] Active Connections: " + activeConnections + " (Running on 1 Thread)");
                         }
                     }
 

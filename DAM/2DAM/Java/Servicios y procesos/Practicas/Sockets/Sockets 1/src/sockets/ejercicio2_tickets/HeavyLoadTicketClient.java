@@ -15,7 +15,7 @@ public class HeavyLoadTicketClient {
     private static final int TOTAL_REQUESTS = 100;
 
     public static void main(String[] args) {
-        System.out.println("[DZF] === Simulación de Alta Carga de Tickets ===");
+        System.out.println("[DGB] === Simulación de Alta Carga de Tickets ===");
         
         ExecutorService executor = Executors.newFixedThreadPool(10);
         Set<String> receivedTickets = Collections.synchronizedSet(new HashSet<>());
@@ -35,7 +35,7 @@ public class HeavyLoadTicketClient {
                     if (ticket != null) {
                         synchronized(receivedTickets) {
                             if (receivedTickets.contains(ticket)) {
-                                System.err.println("[DZF] [ERROR] ¡TICKET DUPLICADO DETECTADO!: " + ticket);
+                                System.err.println("[DGB] [ERROR] ¡TICKET DUPLICADO DETECTADO!: " + ticket);
                                 duplicates.add(ticket);
                             } else {
                                 receivedTickets.add(ticket);
@@ -51,15 +51,15 @@ public class HeavyLoadTicketClient {
         executor.shutdown();
         try {
             executor.awaitTermination(30, TimeUnit.SECONDS);
-            System.out.println("\n[DZF] === RESULTADOS DE LA SIMULACIÓN ===");
-            System.out.println("[DZF] Peticiones totales: " + TOTAL_REQUESTS);
-            System.out.println("[DZF] Tickets únicos recibidos: " + receivedTickets.size());
-            System.out.println("[DZF] Duplicados detectados: " + duplicates.size());
+            System.out.println("\n[DGB] === RESULTADOS DE LA SIMULACIÓN ===");
+            System.out.println("[DGB] Peticiones totales: " + TOTAL_REQUESTS);
+            System.out.println("[DGB] Tickets únicos recibidos: " + receivedTickets.size());
+            System.out.println("[DGB] Duplicados detectados: " + duplicates.size());
             
             if (duplicates.size() > 0) {
-                System.out.println("[DZF] ¡Se ha comprobado la vulnerabilidad a condiciones de carrera!");
+                System.out.println("[DGB] ¡Se ha comprobado la vulnerabilidad a condiciones de carrera!");
             } else {
-                System.out.println("[DZF] No se detectaron duplicados.");
+                System.out.println("[DGB] No se detectaron duplicados.");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
