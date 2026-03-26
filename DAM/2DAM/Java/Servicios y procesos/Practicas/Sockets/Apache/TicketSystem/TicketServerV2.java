@@ -35,7 +35,7 @@ public class TicketServerV2 {
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
                 // Simulate processing time
-                Thread.sleep(2000000);
+                Thread.sleep(10000);
 
                 int ticketId;
                 synchronized (TicketServerV2.class) {

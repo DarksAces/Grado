@@ -23,7 +23,7 @@ public class TicketServerV1 {
                     System.out.println("Client connected: " + socket.getInetAddress());
 
                     // Simulate processing time
-                    Thread.sleep(20000000);
+                    Thread.sleep(10000);
 
                     int ticketId = ticketCounter++;
                     out.println("Your Ticket ID: " + ticketId);
