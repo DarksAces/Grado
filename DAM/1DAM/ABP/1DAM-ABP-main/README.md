@@ -1,228 +1,70 @@
-# ABP – Proyecto Final
- 
-## La Nostra Famiglia
- 
-Una API REST diseñada para gestionar la información de una organización ficticia, conectada a una base de datos remota en un servidor Linux. Esta API permite consultar, registrar y administrar datos sobre miembros, rangos, armas, contactos, servicios y pedidos, y está pensada para integrarse con una web desarrollada en paralelo.
- 
+# 🛡️ La Nostra Famiglia: RESTful Management API (ABP Final)
+# 🛡️ La Nostra Famiglia: API REST de Gestión (Final ABP)
+
+## 📋 Project Overview | Resumen del Proyecto
+
+A robust **REST API** designed to manage the internal data of a fictional organization ("La Nostra Famiglia"), integrated with a remote Linux-based MySQL server. This system handles complex administrative tasks such as member tracking, rank hierarchies, armory inventory, and secure service orders.
+
+Una **API REST** robusta diseñada para gestionar los datos internos de una organización ficticia ("La Nostra Famiglia"), integrada con un servidor remoto MySQL basado en Linux. Este sistema maneja tareas administrativas complejas como el seguimiento de miembros, jerarquías de rangos, inventario de armería y pedidos de servicios seguros.
+
 ---
- 
-## 👥 Integrantes
-- Miriam Hernández – [@kuroimichan4](https://github.com/kuroimichan4)
-- Daniel García – [@DarksAces](https://github.com/DarksAces)
-- Xavier Ortíz – [@Erpiolo](https://github.com/Erpiolo)
-- Javier Villena – [@sudoJavi](https://github.com/sudoJavi)
- 
+
+## 👥 Meet the Team | Integrantes
+
+- **Miriam Hernández** – [@kuroimichan4](https://github.com/kuroimichan4)
+- **Daniel García** – [@DarksAces](https://github.com/DarksAces)
+- **Xavier Ortíz** – [@Erpiolo](https://github.com/Erpiolo)
+- **Javier Villena** – [@sudoJavi](https://github.com/sudoJavi)
+
 ---
- 
-## 📝 Descripción del proyecto
- 
-**La Nostra Famiglia** es una API desarrollada con Java + Spring Boot y conectada a una base de datos **MySQL** alojada en un servidor Linux.
- 
-### Objetivos:
-- Facilitar el acceso y gestión de información para una web corporativa.
-- Ofrecer operaciones CRUD completas para todas las entidades de la organización.
-- Integrar relaciones complejas como encargados de pedidos (contacto o miembro) mediante `ENUM`.
- 
+
+## ✨ Key Features | Características Clave
+
+- **Full CRUD Support:** Complete Create, Read, Update, and Delete operations for all business entities. | *Soporte CRUD Completo: Operaciones completas para todas las entidades de negocio.*
+- **Complex Relationships:** Advanced data modeling using `ENUM` and many-to-one relationships for order management (Members vs. Contacts). | *Relaciones Complejas: Modelado de datos avanzado usando `ENUM` y relaciones de muchos-a-uno.*
+- **Linux Deployment:** Connected to a remote production environment on a dedicated Linux server. | *Despliegue en Linux: Conectado a un entorno de producción remoto en un servidor Linux dedicado.*
+- **Web Integration:** Specifically designed as a backend provider for a corporate web portal. | *Integración Web: Diseñada específicamente como proveedor backend para un portal web corporativo.*
+
 ---
- 
-## 🌐 Endpoints utilizados
- 
-### 📁 Servicios
-Obtener todos los servicios:
-```bash
-GET http://172.17.22.132:8081/lafamiglia/servicios
-```
-Obtener un servicio por ID:
-```bash
-GET http://172.17.22.132:8081/lafamiglia/servicios/{id}  
-```
-Crear nuevo servicio:
-```bash
-POST http://172.17.22.132:8081/lafamiglia/servicios
-```
-Modificar un servicio existente
-```bash
-PUT http://172.17.22.132:8081/lafamiglia/servicios/{id}  
-```
-Eliminar un servicio
- 
-```bash
-DELETE http://172.17.22.132:8081/lafamiglia/servicios/{id}  
-```
- 
-### 🔫 Armas
-Obtener todas las armas
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/armas          
-```
-Ver detalles de un arma
-```bash
-GET    http://172.17.22.132:8081 /lafamiglia/armas/{id}      
-```
-Añadir nueva arma
-```bash
-POST    http://172.17.22.132:8081/lafamiglia/armas            
-```
-Modificar arma existente
-```bash
-PUT     http://172.17.22.132:8081/lafamiglia/armas/{id}        
-```
-Eliminar arma
-```bash
-DELETE  http://172.17.22.132:8081/lafamiglia/armas/{id}        
-```
- 
- 
- 
-### 🧑‍🚀 Members
-Obtener todos los miembros
-```bash
-GET     http://172.17.22.132:8081/api/members                
-```
-Ver detalles de un miembro
-```bash
-GET     http://172.17.22.132:8081/api/members/{id}          
-```
-Crear miembro
-```bash
-POST    http://172.17.22.132:8081/api/members                
-```
-Modificar miembro
-```bash
-PUT     http://172.17.22.132:8081/api/members/{id}            
-```
-Eliminar miembro
-```bash
-DELETE  http://172.17.22.132:8081/api/members/{id}            
-```
- 
- 
- 
-### 🎖️ Rangos
-Listar todos los rangos
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/rangos        
-```
-Ver detalles de un rango
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/rangos/{id}    
-```
-Crear nuevo rango
-```bash
-POST    http://172.17.22.132:8081/lafamiglia/rangos          
-```
-Modificar rango
-```bash
-PUT     http://172.17.22.132:8081/lafamiglia/rangos/{id}    
-```
-Eliminar rango
-```bash
-DELETE  http://172.17.22.132:8081/lafamiglia/rangos/{id}  
-```
- 
- 
- 
-### 📇 Contactos
-Obtener todos los contactos
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/contactos    
-```
-Ver detalles de un contacto
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/contactos/{id}    
-```
-Crear nuevo contacto
-```bash
-POST    http://172.17.22.132:8081/lafamiglia/contactos        
-```
-Modificar contacto
-```bash
-PUT     http://172.17.22.132:8081/lafamiglia/contactos/{id}    
-```
-Eliminar contacto
-```bash
-DELETE  http://172.17.22.132:8081/lafamiglia/contactos/{id}    
-```
- 
- 
- 
-### 📦 Pedidos
-Obtener todos los pedidos
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/pedidos    
-```
-Ver detalles de un pedido
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/pedidos/{id}      
-```
-Crear nuevo pedido
-```bash
-POST    http://172.17.22.132:8081/lafamiglia/pedidos          
-```
-Modificar pedido
-```bash
-PUT     http://172.17.22.132:8081/lafamiglia/pedidos/{id}    
-```
-Eliminar pedido
-```bash
-DELETE  http://172.17.22.132:8081/lafamiglia/pedidos/{id}    
-```
- 
- 
- 
-### 🕴️ Encargados de Pedido
-Obtener todos los pedidos
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/encargados        
-```
-Ver detalles de un encargado
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/encargados/{id}
-```
-Crear nuevo encargado
-```bash
-POST    http://172.17.22.132:8081/lafamiglia/encargados    
-```
-Modificar encargado
-```bash
-PUT     http://172.17.22.132:8081/lafamiglia/encargados/{id}
-```
-Eliminar encargado
-```bash
-DELETE  http://172.17.22.132:8081/lafamiglia/encargados/{id}  
-```
- 
- 
- 
-### 👤 Usuarios
-Listar todos los usuarios
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/usuarios        
-```
-Ver detalles de un usuario
-```bash
-GET     http://172.17.22.132:8081/lafamiglia/usuarios/{id}    
-```
-Crear nuevo usuario
-```bash
-POST    http://172.17.22.132:8081/lafamiglia/usuarios  
-```
-Modificar usuario
-```bash
-PUT     http://172.17.22.132:8081/lafamiglia/usuarios/{id}  
-```
-Eliminar usuario
-```bash
-DELETE  http://172.17.22.132:8081/lafamiglia/usuarios/{id}    
-```
- 
+
+## 🛠️ Tech Stack | Tecnologías
+
+- **Language:** Java 17
+- **Framework:** Spring Boot (Spring Data JPA, Hibernate)
+- **Database:** MySQL
+- **Developer Tools:** IntelliJ IDEA, Lombok, Maven.
+
 ---
- 
-## 🧩 Tecnologías usadas
-- Java 17
-- Spring Boot
-- Spring Data JPA
-- MySQL
-- Lombok
-- IntelliJ IDEA
+
+## 🌐 API Endpoints | Puntos de Acceso
+
+### 📁 Services | Servicios
+- `GET /lafamiglia/servicios`: List all services. | *Listar todos los servicios.*
+- `POST /lafamiglia/servicios`: Create new service. | *Crear nuevo servicio.*
+- `PUT /lafamiglia/servicios/{id}`: Update service. | *Actualizar servicio.*
+
+### 🔫 Armory | Armas
+- `GET /lafamiglia/armas`: Retrieve full armory inventory. | *Obtener inventario completo de armas.*
+- `POST /lafamiglia/armas`: Register new weaponry. | *Registrar armamento nuevo.*
+
+### 🧑‍🚀 Members | Miembros
+- `GET /api/members`: Manage active organization personnel. | *Gestionar el personal activo de la organización.*
+- `PATCH /api/members/{id}`: Update specific member metadata. | *Actualizar metatados específicos de un miembro.*
+
+### 📦 Orders | Pedidos
+- `GET /lafamiglia/pedidos`: Tracking and logistics for service orders. | *Seguimiento y logística para pedidos de servicio.*
+
+---
+
+## 🚀 Deployment | Despliegue
+
+1.  Clone the repository. | *Clona el repositorio.*
+2.  Configure remote MySQL credentials in `application.properties`. | *Configura las credenciales de MySQL remoto en `application.properties`.*
+3.  Run the Spring Boot application: `./mvnw spring-boot:run`. | *Ejecuta la aplicación Spring Boot.*
+4.  Access the local documentation at `http://localhost:8081/swagger-ui.html`. | *Accede a la documentación local.*
+
+---
+
+> [!NOTE]
+> This project served as the **Final ABP Project** for the 1st year of DAM, achieving high marks in architecture and database integration.
  

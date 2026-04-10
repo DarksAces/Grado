@@ -1,55 +1,53 @@
-# Ejercicios de PL/SQL
+# 🛠️ PL/SQL Mastery: Advanced Oracle Database Programming
+# 🛠️ Maestría en PL/SQL: Programación Avanzada de Bases de Datos Oracle
 
-Este repositorio contiene una colección organizada de ejemplos y ejercicios de PL/SQL.
+## 📋 Overview | Resumen de Proyecto
 
-## Estructura del Proyecto
+This repository contains a comprehensive, categorized collection of **PL/SQL** scripts designed to master procedural programming within Oracle Database environments. From basic block structures to advanced solutions for complex database problems like **Mutating Tables**.
 
-- **01_Estructura_Basica**: Ejemplos de la estructura básica de bloques PL/SQL
-- **02_Cursores**: Diferentes tipos y usos de cursores en PL/SQL
-- **03_Tipos_Datos**: Ejemplos de tipos de datos y uso de ROWTYPE y RECORD
-- **04_Colecciones**: Tablas indexadas y colecciones en PL/SQL
-- **05_Excepciones**: Manejo de errores y excepciones
-- **06_Procedimientos_Funciones**: Ejemplos de procedimientos y funciones
-- **07_Triggers**: Ejemplos de triggers y soluciones a problemas comunes
-- **08_Bucles**: Diferentes tipos de bucles en PL/SQL
+Este repositorio contiene una colección completa y categorizada de scripts **PL/SQL** diseñados para dominar la programación procedimental en entornos de bases de Datos Oracle. Desde estructuras de bloques básicas hasta soluciones avanzadas para problemas complejos como **Tablas Mutantes**.
 
-## Índice de Ejemplos
+---
 
-### 01_Estructura_Basica
-- 01_estructura_bloque_plsql.sql - Estructura básica de un bloque PL/SQL
+## 📂 Project Structure | Estructura del Proyecto
 
-### 02_Cursores
-- 01_cursor_explicito_estatico.sql - Cursor explícito estático
-- 02_cursor_dinamico_en_linea.sql - Cursor dinámico en línea
-- 03_cursor_control_rowcount_notfound.sql - Control de cursor con ROWCOUNT y NOTFOUND
-- 04_cursor_simple_una_fila.sql - Cursor simple para una fila
-- 05_cursor_loop_notfound.sql - Cursor con bucle LOOP y NOTFOUND
-- 06_cursor_limite_filas_rowcount.sql - Cursor con límite de filas usando ROWCOUNT
-- 07_cursor_bucle_for_implicito.sql - Cursor implícito con bucle FOR
-- 08_bucle_for_cursor_implicito_en_linea.sql - Bucle FOR con cursor implícito en línea
-- 09_uso_isopen_cursor.sql - Uso de ISOPEN con cursores
-- 10_cursor_con_parametro.sql - Cursor con parámetros
-- 11_uso_current_of_actualizar_cursor.sql - Uso de CURRENT OF para actualizar registros
+- **`01_Estructura_Basica`**: Fundamentals of PL/SQL block structure. | *Fundamentos de la estructura de bloques PL/SQL.*
+- **`02_Cursores`**: Advanced cursor management (Explicit, Implicit, Dynamic, Parameters). | *Gestión avanzada de cursores (Explícitos, Implícitos, Dinámicos, Parámetros).*
+- **`03_Tipos_Datos`**: Use of `ROWTYPE`, `RECORD`, and custom types. | *Uso de `ROWTYPE`, `RECORD` y tipos personalizados.*
+- **`04_Colecciones`**: Indexed tables, associative arrays, and **BULK COLLECT**. | *Tablas indexadas, arrays asociativos y **BULK COLLECT**.*
+- **`05_Excepciones`**: Error handling and custom exception management. | *Manejo de errores y gestión de excepciones personalizadas.*
+- **`06_Procedimientos_Funciones`**: Reusable modules and business logic encapsulation. | *Módulos reutilizables y encapsulación de lógica de negocio.*
+- **`07_Triggers`**: Row-level and Statement-level triggers, including **Mutating Table fixes**. | *Triggers de fila y sentencia, incluyendo **soluciones a tablas mutantes**.*
+- **`08_Bucles`**: Advanced control structures and loops. | *Estructuras de control avanzadas y bucles.*
 
-### 03_Tipos_Datos
-- 01_record_rowtype_jobs.sql - Uso de RECORD y ROWTYPE
+---
 
-### 04_Colecciones
-- 01_table_indexada_claves_numericas.sql - Tabla indexada con claves numéricas
-- 02_table_indexada_texto_rowtype.sql - Tabla indexada con texto y ROWTYPE
-- 03_bulk_collect_arrays.sql - Uso de BULK COLLECT con arrays
+## ✨ Featured Solutions | Soluciones Destacadas
 
-### 05_Excepciones
-- 01_manejo_errores_exception.sql - Manejo básico de errores con EXCEPTION
-- 02_manejo_excepciones.sql - Manejo avanzado de excepciones
+### 🔄 Mutating Table Solution | Solución a Tabla Mutante
+A common issue in Oracle where a trigger tries to query or modify the same table that fired it. 
+*Un problema común en Oracle donde un trigger intenta consultar o modificar la misma tabla que lo disparó.*
 
-### 06_Procedimientos_Funciones
-- 01_procedimientos.sql - Ejemplos de procedimientos
-- 02_funciones.sql - Ejemplos de funciones
+- See: [`07_Triggers/02_trigger_compuesto_solucion_tabla_mutante.sql`](07_Triggers/02_trigger_compuesto_solucion_tabla_mutante.sql)
 
-### 07_Triggers
-- 01_trigger_simple_error_tabla_mutante.sql - Ejemplo de error de tabla mutante
-- 02_trigger_compuesto_solucion_tabla_mutante.sql - Solución al problema de tabla mutante
+---
 
-### 08_Bucles
-- 01_bucle_for_paso_personalizado.sql - Bucle FOR con paso personalizado
+## 🛠️ Tech Stack | Tecnologías
+
+- **Environment:** Oracle SQL Developer / SQL Plus
+- **Language:** PL/SQL (Procedural Language for SQL)
+- **Concepts:** OOP-like patterns in DB, Real-time auditing via triggers.
+
+---
+
+## 🚀 How to Run | Cómo Ejecutar
+
+1.  Connect to your **Oracle Database** instance. | *Conéctate a tu instancia de **Base de Datos Oracle**.*
+2.  Open the desired `.sql` script in a worksheet. | *Abre el script `.sql` deseado en una hoja de trabajo.*
+3.  Execute the script to compile the objects or run the anonymous blocks. | *Ejecuta el script para compilar los objetos o correr los bloques anónimos.*
+
+---
+
+> [!TIP]
+> Use this collection as a technical reference for database automation and security audits.
+> *Usa esta colección como referencia técnica para la automatización de bases de datos y auditorías de seguridad.*

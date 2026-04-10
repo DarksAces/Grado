@@ -1,54 +1,46 @@
-# BioPass DAO
+# 🆔 BioPass DAO: Biometric Access Control
+# 🆔 BioPass DAO: Control de Acceso Biométrico
 
-Sistema de control de accesos biométrico utilizando Python, PostgreSQL y OpenCV.
-Este proyecto implementa los patrones de diseño **DAO** (Data Access Object) y **Singleton**.
+## 📋 Overview | Resumen de Proyecto
 
-## Requisitos Previos
+A secure biometric access control system implemented in **Python**, utilizing **PostgreSQL** for persistence and **OpenCV** for real-time facial recognition. This project demonstrates professional software engineering patterns, specifically **DAO (Data Access Object)** and **Singleton**, ensuring high maintainability and performance.
 
-1.  **PostgreSQL**: Debe estar instalado y ejecutándose.
-2.  **Base de Datos**: Crea una base de datos llamada `biopass_db` (o el nombre que prefieras).
-3.  **Python 3.9+**.
+Un sistema de control de acceso biométrico seguro implementado en **Python**, utilizando **PostgreSQL** para la persistencia y **OpenCV** para el reconocimiento facial en tiempo real. Este proyecto demuestra patrones de ingeniería de software profesionales, específicamente **DAO (Data Access Object)** y **Singleton**, asegurando una alta mantenibilidad y rendimiento.
 
-## Configuración
+---
 
-1.  **Entorno Virtual (Opcional pero recomendado)**:
-    ```bash
-    python -m venv venv
-    .\venv\Scripts\activate
-    ```
+## ✨ Key Features | Características Clave
 
-2.  **Variables de Entorno**:
-    - Abre el archivo `.env` en esta carpeta.
-    - Modifica `DB_PASSWORD` con tu contraseña de PostgreSQL.
-    - Asegúrate de que `DB_USER` y `DB_NAME` sean correctos.
+- **Facial Recognition:** Uses LBPH (Local Binary Patterns Histograms) through OpenCV for real-time identity verification and training. | *Reconocimiento Facial: Usa LBPH a través de OpenCV para la verificación de identidad y entrenamiento en tiempo real.*
+- **DAO Pattern:** Centralized data access logic in `src/usuario_dao.py`, decoupling business logic from SQL queries. | *Patrón DAO: Lógica de acceso a datos centralizada en `src/usuario_dao.py`, desacoplando la lógica de negocio de las consultas SQL.*
+- **Singleton Pattern:** Implementation of a thread-safe singleton in `src/conexion_db.py` to manage the database connection life-cycle. | *Patrón Singleton: Implementación de un singleton seguro en `src/conexion_db.py` para gestionar el ciclo de vida de la conexión a la BD.*
+- **Blob Storage:** Direct storage of biometric templates (images) as binary large objects (BLOBs) within PostgreSQL. | *Almacenamiento Blob: Almacenamiento directo de plantillas biométricas (imágenes) como objetos binarios grandes (BLOBs) dentro de PostgreSQL.*
 
-3.  **Instalar Dependencias**:
-    ```bash
-    pip install -r requirements.txt
-    ```
+---
 
-4.  **Inicializar Base de Datos**:
-    Ejecuta este script para crear las tablas necesarias en PostgreSQL:
-    ```bash
-    python -m src.init_db
-    ```
+## 🛠️ Tech Stack | Tecnologías
 
-## Ejecución
+- **Environment:** Python 3.9+
+- **Computer Vision:** OpenCV
+- **Database:** PostgreSQL
+- **Pattern:** DAO, Singleton
+- **Environment:** `.env` for secure credential management.
 
-Para iniciar la aplicación principal:
+---
 
-```bash
-python -m src.biopass_app
-```
+## 📂 Project Structure | Estructura del Proyecto
 
-## Arquitectura
+- **`src/biopass_app.py`**: Main application GUI and flow. | *GUI y flujo de la aplicación principal.*
+- **`src/usuario_dao.py`**: Data Access Object for user management. | *Objecto de Acceso a Datos para la gestión de usuarios.*
+- **`src/conexion_db.py`**: Singleton database connector. | *Conector de base de datos Singleton.*
+- **`src/utils/camera_utils.py`**: OpenCV logic and image processing helpers. | *Lógica de OpenCV y utilidades de procesamiento de imágenes.*
 
--   **DAO (`src/usuario_dao.py`)**: Maneja todas las consultas SQL.
--   **Singleton (`src/conexion_db.py`)**: Asegura una única conexión a la base de datos.
--   **Config (`src/config.py`)**: Carga variables de entorno de forma segura.
--   **Utils (`src/utils/camera_utils.py`)**: Lógica de OpenCV y conversión de imágenes.
+---
 
-## Uso
+## 🚀 How to Run | Cómo Ejecutar
 
-1.  **Registro**: Escribe un nombre y pulsa "Registrar". La imagen se guardará como BLOB en la BD.
-2.  **Login**: Pulsa "Entrar". El sistema descargará las imágenes de la BD, entrenará el modelo en tiempo real y verificará tu identidad.
+1.  Set up **PostgreSQL** and create a database named `biopass_db`. | *Configura **PostgreSQL** y crea una BD llamada `biopass_db`.*
+2.  Configure your credentials in the `.env` file. | *Configura tus credenciales en el archivo `.env`.*
+3.  Install dependencies: `pip install -r requirements.txt`. | *Instala las dependencias: `pip install -r requirements.txt`.*
+4.  Initialize the schema: `python -m src.init_db`. | *Inicializa el esquema: `python -m src.init_db`.*
+5.  Run the app: `python -m src.biopass_app`. | *Ejecuta la app: `python -m src.biopass_app`.*
