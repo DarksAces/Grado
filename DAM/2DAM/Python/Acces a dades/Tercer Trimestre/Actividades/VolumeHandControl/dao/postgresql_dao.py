@@ -31,7 +31,7 @@ class PostgreSQLDAO:
             self.connected = True
             self._create_tables()
         except Exception as e:
-            print(f"❌ Error connecting to PostgreSQL: {e}")
+            print(f"Error connecting to PostgreSQL: {e}")
             self.connected = False
         self._initialized = True
 

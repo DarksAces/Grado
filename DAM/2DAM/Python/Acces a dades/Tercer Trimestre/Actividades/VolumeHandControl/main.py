@@ -84,8 +84,12 @@ def main():
             cv2.putText(img, db_status, (480, 50), cv2.FONT_HERSHEY_COMPLEX, 1, db_color, 2)
             
             cv2.imshow("Hand Volume Control", img)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            key = cv2.waitKey(1) & 0xFF
+            if key == ord('q'):
                 break
+            elif key == ord('r'):
+                print("Manual refresh of audio handle requested...")
+                vol_control.refresh_volume_handle()
                 
     finally:
         # Closing session
