@@ -1,0 +1,46 @@
+name: 🤖 AI README Generator
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'DAM/**'
+      - 'SMX/**'
+  workflow_dispatch: # Permite ejecutarlo a mano desde GitHub si quieres
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    # Evitamos que el bot entre en un bucle infinito si se llama a sí mismo
+    if: github.actor != 'github-actions[bot]'
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necesario para detectar cambios correctamente
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install google-generativeai
+
+      - name: 🪄 Run README Generator
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/generate_readmes.py --path .
+
+      - name: 📤 Commit & Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: 🤖 auto-generated READMEs via Gemini AI"
+          branch: ${{ github.head_ref }}
+          commit_user_name: GitHub Actions Bot
+          commit_user_email: actions@github.com

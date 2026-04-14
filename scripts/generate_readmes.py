@@ -68,19 +68,30 @@ def get_project_roots(root_dir):
     project_roots = []
     print("--- [3/3] Escaneando carpetas (esto puede tardar)... ---", flush=True)
     for root, dirs, files in os.walk(root_dir):
-        # Filtramos directorios excluidos para no entrar en ellos
-        current_dir_name = os.path.basename(root).lower()
-        if current_dir_name in EXCLUDE_DIRS:
-            dirs[:] = [] # Skip subdirectories if current is excluded
-            continue
-
-        dirs[:] = [d for d in dirs if d.lower() not in EXCLUDE_DIRS]
+        # Filtramos directorios excluidos (punto-carpetas y temporales)
+        dirs[:] = [d for d in dirs if not d.startswith('.') and d.lower() not in {
+            'bin', 'obj', 'build', 'dist', 'target', '__pycache__', 'node_modules', 'vendor'
+        }]
         
-        # Solo consideramos directorios que tengan ARCHIVOS de código directamente
+        # Caso A: El directorio tiene archivos de código directamente
         has_source = any(Path(f).suffix.lower() in EXTENSIONS for f in files)
         
+        # Caso B: El directorio tiene una carpeta 'src' con código dentro
+        if not has_source and 'src' in [d.lower() for d in dirs]:
+            src_path = Path(root) / 'src'
+            for s_root, s_dirs, s_files in os.walk(src_path):
+                if any(Path(f).suffix.lower() in EXTENSIONS for f in s_files):
+                    has_source = True
+                    break
+        
+        # Si hemos encontrado fuentes (aquí o en su 'src'), es una raíz de proyecto
         if has_source:
-            project_roots.append(Path(root))
+            # Evitamos añadir carpetas que están DENTRO de un 'src'
+            if 'src' not in Path(root).parts:
+                project_roots.append(Path(root))
+                # Una vez marcada como raíz, no hace falta buscar más profundo en esta rama
+                # para evitar READMEs anidados innecesarios
+                dirs[:] = [d for d in dirs if d.lower() != 'src'] 
     
     print("\n[OK] Scan complete.")
     return project_roots
@@ -105,15 +116,19 @@ def generate_readme(folder_path, force=False):
     print(f"Generating README for: {folder_path}")
     
     try:
-        files = list(folder_path.iterdir())
-        file_list = ", ".join([f.name for f in files])
-        
-        source_files = [f for f in files if f.suffix.lower() in EXTENSIONS]
+        # Buscamos archivos de código de forma recursiva pero con límite de profundidad
+        source_files = []
+        for root, _, current_files in os.walk(folder_path):
+            if any(p in Path(root).parts for p in ['bin', 'obj', 'target', '.git']): continue
+            source_files.extend([Path(root) / f for f in current_files if Path(f).suffix.lower() in EXTENSIONS])
+            if len(source_files) > 20: break # Limite para no saturar
+            
         if not source_files:
             return
         
-        # Cogemos el archivo más representativo
+        # Cogemos el archivo más representativo (el más grande suele ser el Main)
         main_file = max(source_files, key=lambda f: f.stat().st_size)
+        file_list = ", ".join([f.name for f in source_files[:15]]) # Lista resumida
     except Exception:
         return
 
