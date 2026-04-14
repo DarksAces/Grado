@@ -18,40 +18,47 @@ genai.configure(api_key=API_KEY)
 MODEL_NAME = 'gemini-flash-latest'
 model = genai.GenerativeModel(MODEL_NAME)
 
+# Carpetas que NUNCA deben tener un README propio
 EXCLUDE_DIRS = {
     '.git', 'node_modules', '.github', 'scripts', 'scratch', '__pycache__', 
     'bin', 'obj', 'build', 'dist', 'target', '.idea', '.vs', '.gradle',
-    'src', 'CSS', 'Fotos', 'JavaScript', 'Html', 'images', 'Assets', 'Recursos', 'js', 'css', 'html', 'fotos'
+    'src', 'CSS', 'Fotos', 'JavaScript', 'Html', 'images', 'Assets', 'Recursos', 
+    'js', 'css', 'html', 'fotos', 'fonts', 'img', 'lib', 'vendor', 'db', 'config',
+    'sql', 'model', 'view', 'controller', 'dto', 'service', 'impl', 'test', 'res', 'resources'
 }
 
-EXTENSIONS = {'.java', '.py', '.html', '.ino', '.cpp', '.c', '.js', '.ts', '.sh', '.bat'}
+EXTENSIONS = {'.java', '.py', '.html', '.ino', '.cpp', '.c', '.js', '.ts', '.sh', '.bat', '.cs'}
 
 AI_SIGNATURE = "<!-- AI-GENERATED-README -->"
 
 PROMPT_TEMPLATE = """
-You are an expert technical writer specializing in creating premium README.md files for student portfolios.
-Analyze the following directory structure and code samples from a project folder.
+You are an expert technical writer for premium developer portfolios.
+Analyze the directory and code context provided.
 Generate a high-quality, professional, and BILINGUAL (English and Spanish) README.md.
+
+### QUALITY RULES:
+- If the code context is empty or too generic (less than 10 lines of real logic), do NOT generate a full README. Instead, return the exact string: "SKIP_INSUFFICIENT_CONTEXT".
+- Do NOT use generic names like "ModuleHub" or "Standard Component". Use the actual folder name or project context.
+- Ensure technical accuracy.
 
 ### AESTHETIC GUIDELINES:
 1. Use relevant emojis for titles.
 2. Structure:
    - # Title (Bilingual)
-   - ## 📋 Description | Descripción (A paragraph describing the project's purpose based on the code).
-   - ## ✨ Key Features | Características Clave (Bullet points of what the code does).
-   - ## 🛠️ Tech Stack | Tecnologías (List of languages and tools used).
-   - ## 📂 Project Structure | Estructura del Proyecto (A simplified tree or list of files).
-   - ## 🚀 How to Run | Cómo Ejecutar (Instructions derived from the file types).
+   - ## 📋 Description | Descripción (Detailed purpose).
+   - ## ✨ Key Features | Características Clave (Bullet points).
+   - ## 🛠️ Tech Stack | Tecnologías (List).
+   - ## 📂 Project Structure | Estructura del Proyecto (Tree).
+   - ## 🚀 How to Run | Cómo Ejecutar.
 
 ### CRITICAL:
-- Return ONLY the content of the README.md file.
-- Do NOT include any introductory text, reasoning, or "Here is your README" messages.
-- Do NOT wrap the result in markdown code blocks like ```markdown.
+- Return ONLY the content of the README.md file (or SKIP_INSUFFICIENT_CONTEXT).
+- No markdown wrappers like ```markdown.
 
 ### CONTEXT:
 Folder Name: {folder_name}
 File List: {file_list}
-Code Context (Main File):
+Code Context:
 ```
 {code_context}
 ```
@@ -61,19 +68,18 @@ def get_project_roots(root_dir):
     project_roots = []
     print("--- [3/3] Escaneando carpetas (esto puede tardar)... ---", flush=True)
     for root, dirs, files in os.walk(root_dir):
-        # Filter directories to avoid scanning junk
-        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
-        
-        relative_path = os.path.relpath(root, root_dir)
-        if relative_path != ".":
-            # Print every folder to show constant activity
-            print(f"  Scanning: {relative_path[:60]}...", end="\r", flush=True)
+        # Filtramos directorios excluidos para no entrar en ellos
+        current_dir_name = os.path.basename(root).lower()
+        if current_dir_name in EXCLUDE_DIRS:
+            dirs[:] = [] # Skip subdirectories if current is excluded
+            continue
 
-        # Check if there are source files in THIS directory
-        has_source = any(Path(f).suffix in EXTENSIONS for f in files)
+        dirs[:] = [d for d in dirs if d.lower() not in EXCLUDE_DIRS]
+        
+        # Solo consideramos directorios que tengan ARCHIVOS de código directamente
+        has_source = any(Path(f).suffix.lower() in EXTENSIONS for f in files)
         
         if has_source:
-            # We found a potential project root
             project_roots.append(Path(root))
     
     print("\n[OK] Scan complete.")
@@ -85,7 +91,7 @@ def generate_readme(folder_path, force=False):
     # Smart Skip Logic
     if readme_path.exists() and not force:
         try:
-            with open(readme_path, 'r', encoding='utf-8') as f:
+            with open(readme_path, 'r', encoding='utf-8', errors='ignore') as f:
                 existing_content = f.read()
             if AI_SIGNATURE in existing_content:
                 print(f"Skipping (Already AI-generated): {folder_path.name}")
@@ -98,58 +104,56 @@ def generate_readme(folder_path, force=False):
 
     print(f"Generating README for: {folder_path}")
     
-    files = list(folder_path.iterdir())
-    file_list = ", ".join([f.name for f in files])
-    
-    # Try to find the most "important" file for context
-    source_files = [f for f in files if f.suffix in EXTENSIONS]
-    if not source_files:
-        return
-    
-    main_file = max(source_files, key=lambda f: f.stat().st_size)
-    
-    print(f"  [1/4] Reading source code context...", flush=True)
     try:
-        with open(main_file, 'r', encoding='utf-8') as f:
-            code_context = f.read(5000) # Slightly more context
-    except Exception as e:
-        code_context = f"[Error reading file: {e}]"
+        files = list(folder_path.iterdir())
+        file_list = ", ".join([f.name for f in files])
+        
+        source_files = [f for f in files if f.suffix.lower() in EXTENSIONS]
+        if not source_files:
+            return
+        
+        # Cogemos el archivo más representativo
+        main_file = max(source_files, key=lambda f: f.stat().st_size)
+    except Exception:
+        return
 
-    print(f"  [2/4] Preparing prompt for {folder_path.name}...", flush=True)
+    try:
+        with open(main_file, 'r', encoding='utf-8', errors='replace') as f:
+            code_context = f.read(6000) 
+    except Exception:
+        code_context = "No code context available."
+
     prompt = PROMPT_TEMPLATE.format(
         folder_name=folder_path.name,
         file_list=file_list,
         code_context=code_context
     )
 
-    print(f"  [3/4] Calling Gemini AI API (Waiting for response)...", flush=True)
     try:
-        # Retry logic for 429 errors
-        retries = 5
+        retries = 3
         response = None
         for i in range(retries):
             try:
                 response = model.generate_content(prompt)
                 break
             except exceptions.ResourceExhausted:
-                wait_time = (i + 1) * 30 # Longer wait for free tier
-                print(f"  !! Rate limit hit. Cooling down for {wait_time}s... ({i+1}/{retries})", flush=True)
-                time.sleep(wait_time)
+                time.sleep((i + 1) * 20)
         
-        if not response:
-            print(f"  ERROR: Failed after all retries for {folder_path.name}", flush=True)
+        if not response or not response.text:
             return
 
-        print(f"  [4/4] Writing README.md...", flush=True)
         content = response.text.strip()
         
-        # Clean up any potential markdown block markers from AI
-        if content.startswith("```markdown"):
-            content = content[len("```markdown"):].strip()
-        if content.endswith("```"):
-            content = content[:-3].strip()
+        if "SKIP_INSUFFICIENT_CONTEXT" in content:
+            print(f"  !! Discarding (Insufficient context) for {folder_path.name}")
+            return
 
-        # Add AI Signature
+        # Clean wrappers
+        if content.startswith("```markdown"): content = content[11:].strip()
+        if content.startswith("```"): content = content[3:].strip()
+        if content.endswith("```"): content = content[:-3].strip()
+
+        # Add AI Signature + UTF-8 Fix
         content = f"{content}\n\n{AI_SIGNATURE}"
 
         with open(readme_path, 'w', encoding='utf-8') as f:
@@ -157,7 +161,7 @@ def generate_readme(folder_path, force=False):
         
         print(f"DONE: Created README.md in {folder_path.name}")
     except Exception as e:
-        print(f"ERROR: Error generating README for {folder_path.name}: {e}")
+        print(f"ERROR: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description="Auto-generate READMEs using AI")
@@ -166,26 +170,18 @@ def main():
     args = parser.parse_args()
 
     root_path = Path(args.path).resolve()
-    print(f"Scanning {root_path} for potential projects...")
-    
+    # No documentaremos la raíz del repo ni carpetas de sistema
     roots = get_project_roots(str(root_path))
     
-    if not roots:
-        print("No units found needing documentation.")
-        return
+    if not roots: return
 
-    print(f"Found {len(roots)} potential project roots.")
-    
     if not API_KEY:
         print("Error: GEMINI_API_KEY environment variable not set.")
         sys.exit(1)
 
     for root in roots:
         generate_readme(root, force=args.force)
-        # Add a delay between requests to avoid 429 rate limits
-        if not args.force: # Only delay if we are doing a standard run
-            print("  Waiting 10s to respect rate limits...", flush=True)
-            time.sleep(10)
+        time.sleep(5) # Delay suave
 
 if __name__ == "__main__":
     main()

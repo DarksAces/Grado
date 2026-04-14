@@ -29,8 +29,6 @@ Hardware, operating systems, networking fundamentals, and automation scripts.
 ## 👨‍💻 Author | Autor
 
 **Daniel García Brun**  
-*Full-Stack Developer & Technical Student*
-
 ---
 
 > [!NOTE]
