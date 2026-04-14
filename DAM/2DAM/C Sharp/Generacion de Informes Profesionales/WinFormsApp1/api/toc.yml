@@ -1,0 +1,10 @@
+### YamlMime:TableOfContent
+items:
+- uid: WinFormsApp1
+  name: WinFormsApp1
+  type: Namespace
+  items:
+  - uid: WinFormsApp1.Form1
+    name: Form1
+    type: Class
+memberLayout: SamePage

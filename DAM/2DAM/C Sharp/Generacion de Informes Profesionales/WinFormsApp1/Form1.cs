@@ -4,12 +4,18 @@ using Microsoft.Reporting.WinForms;
 
 namespace WinFormsApp1
 {
+    /// <summary>
+    /// Ventana principal de la aplicación de generación de informes profesionales.
+    /// </summary>
     public partial class Form1 : Form
     {
         // Configuración centralizada para fácil ajuste
         private const string ServerInstance = "(localdb)\\MSSQLLocalDB";
         private string connectionString = $"Server={ServerInstance};Database=InformeProDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="Form1"/>.
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -22,6 +28,9 @@ namespace WinFormsApp1
             CargarCategorias();
         }
 
+        /// <summary>
+        /// Inicializa la base de datos de los informes al cargar la pantalla principal utilizando un script SQL y carga el desplegable.
+        /// </summary>
         private void CargarCategorias()
         {
             try
@@ -90,11 +99,17 @@ namespace WinFormsApp1
             }
         }
 
+        /// <summary>
+        /// Genera el reporte en su estructura básica llamando a la configuración correspondiente.
+        /// </summary>
         private void btnInformeBasico_Click(object sender, EventArgs e)
         {
             GenerarInforme("ReporteBasico.rdlc", false);
         }
 
+        /// <summary>
+        /// Crea una vista del reporte donde los datos se muestran agrupados de forma organizada.
+        /// </summary>
         private void btnInformeAgrupado_Click(object sender, EventArgs e)
         {
             GenerarInforme("ReporteAgrupado.rdlc", false);
@@ -106,6 +121,12 @@ namespace WinFormsApp1
             GenerarInforme("ReporteBasico.rdlc", true);
         }
 
+        /// <summary>
+        /// Método principal que contiene la lógica para renderizar el informe solicitado.
+        /// Comprueba las rutas, inyecta los datos de SQL y sincroniza con el ReportViewer.
+        /// </summary>
+        /// <param name="reportFileName">El nombre del archivo .rdlc que se va a procesar.</param>
+        /// <param name="filtrar">Bandera que indica si se debe aplicar la capa de filtros por categoría.</param>
         private void GenerarInforme(string reportFileName, bool filtrar)
         {
             try

@@ -1,0 +1,6 @@
+{
+  "WinFormsApp1": "WinFormsApp1.yml",
+  "WinFormsApp1.Form1": "WinFormsApp1.Form1.yml",
+  "WinFormsApp1.Form1.#ctor": "WinFormsApp1.Form1.yml",
+  "WinFormsApp1.Form1.Dispose(System.Boolean)": "WinFormsApp1.Form1.yml"
+}

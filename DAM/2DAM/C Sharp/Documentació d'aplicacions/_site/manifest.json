@@ -1,0 +1,159 @@
+{
+  "source_base_path": "D:/Documentos/GitHub/Grado/DAM/2DAM/C Sharp/Documentació d'aplicacions",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Calculadora/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "Calculadora/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Calculadora/docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "Calculadora/docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Calculadora/docs/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "Calculadora/docs/introduction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "Calculadora/docs/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "Calculadora/docs/toc.html"
+        },
+        ".json": {
+          "relative_path": "Calculadora/docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WinFormsApp1.Form1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinFormsApp1.Form1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinFormsApp1.Form1",
+      "Summary": "<p sourcefile=\"api/WinFormsApp1.Form1.yml\" sourcestartlinenumber=\"1\">Ventana principal de la calculadora de precios.\nContiene la lógica para calcular precios finales aplicando descuentos e impuestos.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WinFormsApp1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WinFormsApp1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WinFormsApp1",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/introduction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/toc.html"
+        },
+        ".json": {
+          "relative_path": "docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

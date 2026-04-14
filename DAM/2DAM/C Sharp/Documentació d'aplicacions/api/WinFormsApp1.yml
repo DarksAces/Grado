@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: WinFormsApp1
+  commentId: N:WinFormsApp1
+  id: WinFormsApp1
+  children:
+  - WinFormsApp1.Form1
+  langs:
+  - csharp
+  - vb
+  name: WinFormsApp1
+  nameWithType: WinFormsApp1
+  fullName: WinFormsApp1
+  type: Namespace
+  assemblies:
+  - WinFormsApp1
+references:
+- uid: WinFormsApp1.Form1
+  commentId: T:WinFormsApp1.Form1
+  href: WinFormsApp1.Form1.html
+  name: Form1
+  nameWithType: Form1
+  fullName: WinFormsApp1.Form1
