@@ -1,0 +1,27 @@
+<odoo>
+    <!-- Acciones de Ventana -->
+    <record id="action_library_resource" model="ir.actions.act_window">
+        <field name="name">Recursos de Conocimiento</field>
+        <field name="res_model">library.resource</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_library_category" model="ir.actions.act_window">
+        <field name="name">Categorías</field>
+        <field name="res_model">library.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_library_rental" model="ir.actions.act_window">
+        <field name="name">Asignaciones a Empleados</field>
+        <field name="res_model">library.rental</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Estructura de Menús -->
+    <menuitem id="menu_library_root" name="Conocimiento" sequence="10"/>
+    <menuitem id="menu_library_resource" name="Recursos" parent="menu_library_root" action="action_library_resource" sequence="10"/>
+    <menuitem id="menu_library_rental" name="Asignaciones" parent="menu_library_root" action="action_library_rental" sequence="20"/>
+    <menuitem id="menu_library_config" name="Configuración" parent="menu_library_root" sequence="100"/>
+    <menuitem id="menu_library_category" name="Categorías" parent="menu_library_config" action="action_library_category" sequence="10"/>
+</odoo>

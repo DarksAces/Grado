@@ -1,0 +1,35 @@
+<odoo>
+    <record id="view_library_rental_tree" model="ir.ui.view">
+        <field name="name">library.rental.tree</field>
+        <field name="model">library.rental</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="state == 'overdue'" decoration-success="state == 'completed'">
+                <field name="employee_id"/>
+                <field name="resource_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_library_rental_form" model="ir.ui.view">
+        <field name="name">library.rental.form</field>
+        <field name="model">library.rental</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="resource_id"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
