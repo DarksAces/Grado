@@ -16,7 +16,7 @@ items:
   type: Class
   source:
     remote:
-      path: DAM/2DAM/C Sharp/Documentació d'aplicacions/Calculadora/Form1.Designer.cs
+      path: DAM/2DAM/C Sharp/Interfices/Documentació d'aplicacions/Calculadora/Form1.Designer.cs
       branch: main
       repo: https://github.com/DarksAces/Grado.git
     id: Form1
@@ -578,7 +578,7 @@ items:
   type: Constructor
   source:
     remote:
-      path: DAM/2DAM/C Sharp/Documentació d'aplicacions/Calculadora/Form1.cs
+      path: DAM/2DAM/C Sharp/Interfices/Documentació d'aplicacions/Calculadora/Form1.cs
       branch: main
       repo: https://github.com/DarksAces/Grado.git
     id: .ctor
@@ -609,7 +609,7 @@ items:
   type: Method
   source:
     remote:
-      path: DAM/2DAM/C Sharp/Documentació d'aplicacions/Calculadora/Form1.Designer.cs
+      path: DAM/2DAM/C Sharp/Interfices/Documentació d'aplicacions/Calculadora/Form1.Designer.cs
       branch: main
       repo: https://github.com/DarksAces/Grado.git
     id: Dispose
