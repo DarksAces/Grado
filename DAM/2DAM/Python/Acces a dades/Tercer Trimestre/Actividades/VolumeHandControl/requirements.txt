@@ -1,7 +1,8 @@
 opencv-python
 mediapipe
 pycaw
-psycopg2-binary
+pymongo
 python-dotenv
 comtypes
 numpy
+dnspython

@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 from HandTrackingModule import HandDetector
 from VolumeHandControl import VolumeController
-from dao.postgresql_dao import PostgreSQLDAO
+from dao.mongodb_dao import MongoDAO
 from models.session import Session
 from models.volume_event import VolumeEvent
 
@@ -16,7 +16,7 @@ def main():
     
     detector = HandDetector(detection_con=0.7)
     vol_control = VolumeController()
-    dao = PostgreSQLDAO()
+    dao = MongoDAO()
     
     # Session handling
     start_time = datetime.now()

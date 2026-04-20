@@ -1,55 +1,48 @@
-# Tutorial: Control de Volumen con Gestos de Mano
+# Tutorial: Control de Volumen con Detección de Manos y MongoDB
 
-Este proyecto permite controlar el volumen de Windows mediante la cámara web y gestos de la mano, utilizando MediaPipe para la detección y MongoDB Atlas para el registro de datos.
+Este proyecto permite controlar el volumen de Windows mediante gestos de la mano y registrar la actividad en una base de datos MongoDB Atlas.
 
-## 🚀 Requisitos Previos
+## Requisitos Previos
 
-- Python 3.8 o superior.
-- Una cámara web funcional.
-- Una cuenta en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
-- Un cluster de MongoDB Atlas con una base de datos llamada `hand_tracking_db`.
-
-## 🛠️ Instalación
-
-1. Clona o descarga este repositorio.
-2. Abre una terminal en la carpeta del proyecto.
-3. Instala las dependencias:
+1. **Python 3.10+** instalado.
+2. **Cámara web** funcional.
+3. **Cuenta en MongoDB Atlas**.
+4. Instalar las dependencias:
    ```bash
    pip install -r requirements.txt
    ```
 
-## ⚙️ Configuración
+## Configuración de la Base de Datos
 
-1. Renombra el archivo `.env.template` a `.env`.
-2. Edita el archivo `.env` y añade tu URI de MongoDB Atlas:
+1. Crea un Cluster gratuito en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+2. Crea una base de datos llamada `hand_tracking_db`.
+3. Obtén tu cadena de conexión (URI) y asegúrate de permitir el acceso desde tu dirección IP.
+4. Crea un archivo `.env` en la raíz del proyecto con el siguiente formato:
    ```env
-   MONGODB_URI=mongodb+srv://tu_usuario:tu_password@clusterX.mongodb.net/
+   MONGODB_URI=tu_uri_de_mongodb_atlas
    DATABASE_NAME=hand_tracking_db
    ```
 
-## 🎮 Uso
+## Estructura del Proyecto (MVC + DAO)
 
-1. Ejecuta la aplicación principal:
+- **`main.py`**: El Controlador. Gestiona el bucle principal, la cámara y la lógica de negocio.
+- **`HandTrackingModule.py`**: El Modelo/Módulo de detección. Encapsula MediaPipe para detectar puntos de la mano.
+- **`VolumeHandControl.py`**: Lógica de mapeo. Convierte la distancia entre dedos en niveles de volumen.
+- **`dao/mongodb_dao.py`**: Capa de acceso a datos. Implementa el patrón Singleton y DAO para MongoDB.
+- **`models/`**: Definición de objetos `Session` y `VolumeEvent`.
+
+## Cómo Usar
+
+1. Ejecuta el script principal:
    ```bash
    python main.py
    ```
-2. Aparecerá una ventana con el feed de la cámara.
-3. **Control de Volumen:**
-   - Usa los dedos **pulgar e índice** para ajustar el volumen (la distancia entre ellos determina el nivel).
-   - El cambio **solo se aplica** si el **dedo meñique está bajado**. Si el meñique está levantado, el volumen no cambiará (útil para mover la mano sin afectar el audio).
-4. **Cerrar:** Presiona la tecla `q` para salir.
+2. **Control de Volumen**: Junta o separa los dedos pulgar e índice.
+3. **Activar/Desactivar**: El volumen solo cambiará si el dedo meñique está **bajado**. Si levantas el meñique, el ajuste se detiene (gesto de seguridad).
+4. **Salir**: Presiona la tecla `q` para cerrar la aplicación y finalizar la sesión en la DB.
 
-## 📁 Estructura del Proyecto
+## Indicadores Visuales
 
-- `main.py`: Controlador principal.
-- `HandTrackingModule.py`: Lógica de detección de manos.
-- `VolumeHandControl.py`: Mapeo de distancia a volumen del sistema.
-- `dao/mongodb_dao.py`: Acceso a la base de datos (Patrón DAO y Singleton).
-- `models/`: Clases de datos para Sesiones y Eventos.
-- `config/settings.py`: Carga de variables de entorno.
-
-## 📊 Datos en MongoDB
-
-La aplicación registrará:
-- **Sesiones:** Inicio, fin y duración de cada vez que uses la app.
-- **Eventos de Volumen:** Cada ajuste realizado, incluyendo el volumen anterior, el nuevo y la distancia de los dedos.
+- **Barra de volumen**: Muestra el nivel actual en el lateral izquierdo.
+- **DB OK / DB --**: Indica si la conexión con MongoDB Atlas está activa.
+- **FPS**: Muestra el rendimiento en tiempo real.

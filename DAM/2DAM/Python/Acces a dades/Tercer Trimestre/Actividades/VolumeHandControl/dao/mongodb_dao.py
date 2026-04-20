@@ -19,11 +19,14 @@ class MongoDAO:
         if self._initialized:
             return
         try:
-            self.client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
+            if not MONGODB_URI:
+                raise ValueError("MONGODB_URI is not set in environment variables.")
+            self.client = MongoClient(MONGODB_URI, serverSelectionTimeoutMS=2000)
             self.db = self.client[DATABASE_NAME]
             # Test connection
             self.client.server_info()
             self.connected = True
+            print("Connected to MongoDB Atlas successfully.")
         except Exception as e:
             print(f"Error connecting to MongoDB: {e}")
             self.connected = False
