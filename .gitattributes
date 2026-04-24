@@ -121,6 +121,30 @@ storage/framework/** linguist-generated
 storage/logs/** linguist-generated
 
 # ===========================
+# C# / Unity / .NET
+# ===========================
+**/[Ll]ibrary/** linguist-vendored
+**/[Tt]emp/** linguist-vendored
+**/[Oo]bj/** linguist-vendored
+**/[Bb]in/** linguist-vendored
+**/[Bb]uild/** linguist-vendored
+**/[Ll]ogs/** linguist-vendored
+**/[Uu]ser[Ss]ettings/** linguist-vendored
+**/Assets/Plugins/** linguist-vendored
+**/Packages/** linguist-vendored
+*.meta linguist-generated
+*.unity linguist-generated
+*.asset linguist-generated
+*.prefab linguist-generated
+*.mat linguist-generated
+*.anim linguist-generated
+*.controller linguist-generated
+*.csproj linguist-generated
+*.sln linguist-generated
+*.csproj.user linguist-generated
+*.suo linguist-generated
+
+# ===========================
 # Otros lenguajes (no se ignoran, se cuentan)
 # ===========================
 # PHP, JSON, XML, YAML, etc. — no se marcan como vendored/generated

@@ -48,10 +48,19 @@ env/
 .coverage
 htmlcov/
 
-# === VISUAL STUDIO / C# ===
+# === VISUAL STUDIO / C# / UNITY ===
 .vs/
 [Bb]in/
 [Oo]bj/
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Aa]sset[Ss]tores[Cc]ache/
 *.user
 *.userosscache
 *.sln.docstates
