@@ -1,19 +1,24 @@
 # ===========================
 # C++
 # ===========================
-third_party/** linguist-vendored
-vendor/** linguist-vendored
-libs/** linguist-vendored
-dependencies/** linguist-vendored
+**/third_party/** linguist-vendored
+**/vendor/** linguist-vendored
+**/libs/** linguist-vendored
+**/dependencies/** linguist-vendored
+**/[Ll]ibrary/** linguist-vendored
+# Exclude school exercise libraries but keep Flutter lib/
+**/JavaApplication*/lib/** linguist-vendored
 
 # ===========================
 # Java
 # ===========================
 *.class linguist-generated
 *.jar linguist-vendored
-target/** linguist-generated
-.gradle/** linguist-generated
-gradle/wrapper/** linguist-vendored
+**/target/** linguist-generated
+**/.gradle/** linguist-generated
+**/gradle/wrapper/** linguist-vendored
+gradlew linguist-vendored
+gradlew.bat linguist-vendored
 
 # ===========================
 # Python
@@ -143,12 +148,17 @@ storage/logs/** linguist-generated
 *.sln linguist-generated
 *.csproj.user linguist-generated
 *.suo linguist-generated
+*.Designer.cs linguist-generated
+**/Properties/AssemblyInfo.cs linguist-generated
 
 # ===========================
-# Otros lenguajes (no se ignoran, se cuentan)
+# Documentación y Activos (No cuentan como código)
 # ===========================
-# PHP, JSON, XML, YAML, etc. — no se marcan como vendored/generated
-
-# Si fuera necesario ignorar archivos específicos JSON/XML (generados), podrías usar:
-# *.generated.json linguist-generated
-# *.swagger.json linguist-generated
+*.docx linguist-documentation
+*.pptx linguist-documentation
+*.pdf linguist-documentation
+*.xlsx linguist-documentation
+*.jpg linguist-generated
+*.png linguist-generated
+*.jfif linguist-generated
+*.webp linguist-generated
