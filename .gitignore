@@ -119,3 +119,25 @@ capture/
 
 # Specific Gradle distributions
 **/gradle/wrapper/gradle-*.zip
+
+# Extra cleanup
+[Ee]xport/
+_site/
+*.exe
+*.dll
+debug_audio.wav
+aaa.mp3
+bbb.mp3
+
+# Global junk
+**/.gradle/
+**/gradle/caches/
+**/Library/
+**/Temp/
+**/bin/
+**/obj/
+**/_site/
+**/Export/
+**/.vs/
+**/*.exe
+**/*.dll
