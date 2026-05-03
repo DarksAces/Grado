@@ -1,4 +1,3 @@
-# 🥊 CombatEngine: Text-Based Fighting Evolution (1DAM)
 # 🥊 CombatEngine: Evolución de Juego de Pelea (1DAM)
 
 ## 📋 Description | Descripción
