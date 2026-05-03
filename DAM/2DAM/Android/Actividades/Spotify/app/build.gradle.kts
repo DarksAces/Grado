@@ -29,6 +29,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    @Suppress("UnstableApiUsage")
+    androidResources {
+        // Esto ignora los README.md que causan el error en la carpeta res
+        ignoreAssetsPatterns.add("README.md")
+        ignoreAssetsPatterns.add("*.md")
+    }
 }
 
 dependencies {
