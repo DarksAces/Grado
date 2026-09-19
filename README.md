@@ -1,4 +1,4 @@
-# 📚 Grado: Academic Programming Portfolio | Portafolio Académico de Programación
+# 📚 Academic Programming Portfolio | Portafolio Académico de Programación
 
 Welcome to my central repository for all coding projects, exercises, and practices developed during my technical degrees in **DAM (Multiplatform Application Development)** and **SMX (Microcomputer Systems and Networks)**.
 
